@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Movie;
 use App\Entity\Category;
+use App\Entity\Thematic;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -37,6 +38,40 @@ class MovieRepository extends ServiceEntityRepository
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
+    }
 
+    /**
+     * Get all movies of a thematic
+     *
+     * @param Thematic $thematic
+     * @param integer|null $limit
+     * @return array
+     */
+    public function findByThematic(Thematic $thematic, int $limit = null): array
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->join('m.thematics', 't')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $thematic->getId())
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get movies or a movie by a query
+     *
+     * @param string $query
+     * @return array
+     */
+    public function findByQuery(string $query):array
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->andWhere('m.name = :query')
+            ->setParameter(':query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
     }
 }

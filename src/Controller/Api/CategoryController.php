@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
@@ -22,6 +22,7 @@ class CategoryController extends AbstractController
     public function browse(CategoryRepository $categoryRepository): Response
     {
         $categories = $categoryRepository->findAll();
+
         return $this->json($categories, 200);
     }
 
@@ -33,14 +34,15 @@ class CategoryController extends AbstractController
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function read($slug, MovieRepository $movieRepository): Response
-    {   
-        $category = $movieRepository->findOneBySlug($slug);
-        if(!$category){
-            return $this->json([],404);
-        }else{
-            $movies = $movieRepository->findByCategory($category);
+    public function read(string $slug, CategoryRepository $categoryRepository, MovieRepository $movieRepository): Response
+    {
+        $category = $categoryRepository->findOneBySlug($slug);
+        if (!$category) {
+            return $this->json([], 404);
         }
+
+        $movies = $movieRepository->findByCategory($category);
+
         return $this->json($movies, 200);
     }
 
@@ -53,14 +55,14 @@ class CategoryController extends AbstractController
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function preview($slug, MovieRepository $movieRepository): Response
+    public function preview(string $slug, CategoryRepository $categoryRepository, MovieRepository $movieRepository): Response
     {
-        $category = $movieRepository->findOneBySlug($slug);
-        if(!$category){
-            return $this->json([],404);
-        }else{
-            $previewMovies = $movieRepository->findByCategory($category,10);
-            return $this->json($previewMovies, 200);
+        $category = $categoryRepository->findOneBySlug($slug);
+        if (!$category) {
+            return $this->json([], 404);
         }
+        $previewMovies = $movieRepository->findByCategory($category, 10);
+        
+        return $this->json($previewMovies, 200);
     }
 }
