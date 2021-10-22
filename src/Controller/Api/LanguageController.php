@@ -17,31 +17,29 @@ class LanguageController extends AbstractController
 
         $listLanguage = $languageRepository->findAll();
 
-        return $this->render(
-            'list.html.twig',
-            ['listLanguage' => $listLanguage,
-        ]);
+        return $this->json($listLanguage, 200);
         
     );
     }
 
-        /**
-     * @Route("api/{slug}/language", name="app_language", methods={"GET"})
-     * @param Movie $movie
-     * @param MovieRepository $movieRepository
+    /**
+     * @Route("api/languages/{slug}", name="app_language", methods={"GET"})
+     * @param Language $language
+     * @param LanguageRepository $languageRepository
      * @return Response
      */
-    public function read($slug, MovieRepository $movieRepository): Response
+    public function read($slug, LanguageRepository $languageRepository): Response
     {   
 
-        $detailsMovie = $movieRepository->findByOneSlug($slug);
+        $language = $languageRepository->findByOneSlug($slug);
         
-        if (!$detailsMovie) {
-            return $this->json([], 404);
+        if (!$language) {
+            $languagejson([], 404);
         } else {
-            return $this->json($detailsMovie, 200);
+            return $this->findByLanguage($language);
 
         }
+        return $this->json($movies);
     );
     }
 

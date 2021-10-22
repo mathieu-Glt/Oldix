@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MovieController extends AbstractController
 {
     /**
-     * @Route("api/{slug}/movie", name="app_movie", methods={"GET"})
+     * @Route("api/movie/{slug}", name="app_movie", methods={"GET"})
      * @param Movie $movie
      * @param MovieRepository $movieRepository
      * @return Response
