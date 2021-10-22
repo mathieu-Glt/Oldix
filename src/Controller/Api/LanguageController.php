@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Repository\MovieRepository;
 use App\Repository\LanguageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,37 +11,42 @@ use Symfony\Component\Routing\Annotation\Route;
 class LanguageController extends AbstractController
 {
     /**
+     * Get all languages 
+     * 
      * @Route("api/languages", name="language_list, methods={"GET"})
-     */
-    public function list(LanguageRepository $languageRepository): Response
-    {   
-
-        $listLanguage = $languageRepository->findAll();
-
-        return $this->json($listLanguage, 200);
-        
-    );
-    }
-
-    /**
-     * @Route("api/languages/{slug}", name="app_language", methods={"GET"})
-     * @param Language $language
      * @param LanguageRepository $languageRepository
      * @return Response
      */
-    public function read($slug, LanguageRepository $languageRepository): Response
+    public function browse(LanguageRepository $languageRepository): Response
     {   
 
-        $language = $languageRepository->findByOneSlug($slug);
+        $languages = $languageRepository->findAll();
+        return $this->json($languages, 200);
         
+    
+    }
+
+    /**
+     * Get all movies of a language
+     * 
+     * @Route("api/languages/{slug}", name="app_language", methods={"GET"})
+     * @param Language $language
+     * @param LanguageRepository $languageRepository
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function read($slug, MovieRepository $movieRepository, LanguageRepository $languageRepository): Response
+    {   
+
+        $language = $languageRepository->findOneBySlug($slug);
         if (!$language) {
-            $languagejson([], 404);
+            return $this->json([], 404);
         } else {
-            return $this->findByLanguage($language);
+            $movies = $movieRepository->findByLanguage($language);
 
         }
-        return $this->json($movies);
-    );
+        return $this->json($movies, 200);
+    
     }
 
 }
