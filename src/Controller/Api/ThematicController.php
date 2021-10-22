@@ -2,19 +2,38 @@
 
 namespace App\Controller\Api;
 
+use App\Repository\ThematicRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/api/thematics")
+ */
 class ThematicController extends AbstractController
 {
     /**
-     * @Route("/thematic/thematic", name="thematic_thematic")
+     * @Route("/", name="api_thematics_browse", methods={"GET"})
      */
-    public function index(): Response
+    public function browse(ThematicRepository $thematicRepository): Response
     {
-        return $this->render('thematic_thematic/index.html.twig', [
-            'controller_name' => 'ThematicThematicController',
-        ]);
+        $thematics = $thematicRepository->findAll();
+
+        return $this->json($thematics, 200);
+    }
+
+    /**
+     * @Route("/{slug}", name="api_thematics_read", methods={"GET"})
+     */
+    public function read(string $slug, ThematicRepository $thematicRepository): Response
+    {
+        $thematic = $thematicRepository->findOneBySlug($slug);
+        if(!$thematic){
+            return $this->json([],404);
+        }
+
+        $movies = $thematicRepository->findByThematic($thematic);     
+        
+        return $this->json($movies, 200);
     }
 }
