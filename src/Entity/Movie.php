@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\MovieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MovieRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -21,11 +22,13 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
      */
     private $slug;
 
@@ -36,37 +39,44 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
      */
     private $pictureUrl;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
      */
     private $releasedDate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
      */
     private $realisator;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
      */
     private $synopsis;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="movies")
+     * @Groups({"browse_movie","movies_search"})
      */
     private $category;
 
     /**
      * @ORM\ManyToMany(targetEntity=Thematic::class, inversedBy="movies")
+     * @Groups({"browse_movie","read_category","movies_search"})
      */
     private $thematic;
 
     /**
      * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="movies")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"browse_movie","read_category","movies_search"})
      */
     private $language;
 

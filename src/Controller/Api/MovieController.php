@@ -21,18 +21,17 @@ class MovieController extends AbstractController
      * @return Response
      */
     public function research(MovieRepository $movieRepository, Request $request): Response
-    {
-        $query = $request->request->get('q');
+    {   
+        $query = $request->query->get('q');
         if(!$query){
             return $this->json([],400);
         }
-
         $queryResult = $movieRepository->findByQuery($query);
         if(empty($queryResult)){
             return $this->json([],404);
         }
         
-        return $this->json($queryResult,200);
+        return $this->json($queryResult,200, [],['groups'=>'movies_search']);
     }
 
     /**

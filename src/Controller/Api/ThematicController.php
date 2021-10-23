@@ -19,7 +19,7 @@ class ThematicController extends AbstractController
     {
         $thematics = $thematicRepository->findAll();
 
-        return $this->json($thematics, 200);
+        return $this->json($thematics, 200,[],['groups'=>'browse_thematic']);
     }
 
     /**
@@ -34,6 +34,6 @@ class ThematicController extends AbstractController
 
         $movies = $thematicRepository->findByThematic($thematic);     
         
-        return $this->json($movies, 200);
+        return $this->json($movies, 200,[],['groups'=>'read_thematic']);
     }
 }

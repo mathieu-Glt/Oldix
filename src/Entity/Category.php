@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Movie;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -21,16 +23,19 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse_movie","browse_category","movies_search"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse_movie","browse_category","movies_search"})
      */
     private $slug;
 
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="category")
+     * @Groups({"read_category"})
      */
     private $movies;
 
