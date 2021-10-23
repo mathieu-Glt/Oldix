@@ -4,6 +4,7 @@ namespace App\Controller\BackOffice;
 
 use App\Entity\Movie;
 use App\Form\MovieType;
+use App\Repository\MovieRepository;
 use App\Utils\OmdbApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +21,9 @@ class MovieController extends AbstractController
         return $this->render('back_office/movie/index.html.twig');
     }
 
+    //Add a new movie
     /**
-     * @Route("/backoffice/movies/add", name="back_office_movie")
+     * @Route("/backoffice/movies/add", name="back_office_movie_add")
      */
     public function add(Request $request, OmdbApi $omdbApi)
     {
@@ -53,10 +55,20 @@ class MovieController extends AbstractController
         return $this->render("back_office/movie/add.html.twig", ['form' => $movieForm->createView()]);
     }
 
+
     public function slugger($movieNameToSlug)
     {
         $slugged = preg_replace('~[^\pL\d]+~u', '-', $movieNameToSlug);
         return $slugged;
+    }
+
+    /**
+     * @Route("/backoffice/movies/all", name="back_office_all_movies")
+     */
+    public function allMovies(MovieRepository $movieRepository)
+    {
+        $allMovies = $movieRepository->findAll();
+        return $this->render('back_office/movie/all_movies.html.twig', ['movies' => $allMovies]);
     }
 
 }

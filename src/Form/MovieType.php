@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Language;
+use App\Entity\Thematic;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,6 +22,18 @@ class MovieType extends AbstractType
             ->add('language', EntityType::class, [
                 'class' => Language::class,
                 'choice_label' => "name"
+            ])
+            ->add('thematic', EntityType::class, [
+                'class' => Thematic::class,
+                'choice_label' => "name",
+                'multiple' => true,
+                'expanded' => true,
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => "name",
+                'multiple' => true,
+                'expanded' => true,
             ])
             ->add('Valider', SubmitType::class)
         ;

@@ -1,0 +1,27 @@
+{% extends 'back_office/backoffice_base.html.twig' %}
+
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>Movies :</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+    {% for movie in movies %}
+  <div class="col">
+    <div class="card h-100" style="width: 24rem;">
+      <img src="{{movie.pictureUrl}}" class="card-img-top" alt="..." >
+      <div class="card-body">
+        <h5 class="card-title">{{movie.name}}</h5>
+        <p class="card-text">{{movie.synopsis}}</p>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+  </div>
+</div>
+    {% endfor %}
+
+</div>
+{% endblock %}
