@@ -1,6 +1,5 @@
-{% extends 'base.html.twig' %}
+{% extends 'back_office/backoffice_base.html.twig' %}
 
-{% block title %}Hello MovieController!{% endblock %}
 
 {% block body %}
 
@@ -10,7 +9,6 @@
                 {{ message }}
             </div>
         {% endfor %}
-        <h1>BACK-OFFICE</h1>
-            <button> <a href="{{path('back_office_movie')}}">Add a new movie</a></button>
+        <h1>Welcome in the Oldix's Back-Office</h1>
 </div>
 {% endblock %}
