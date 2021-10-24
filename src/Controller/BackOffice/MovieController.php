@@ -11,21 +11,32 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/backoffice")
+ */
 class MovieController extends AbstractController
 {
     /**
-     * @Route("/backoffice", name="back_office")
+     * Display home page
+     * 
+     * @Route("/", name="backoffice")
+     * @return Response
      */
-    public function homePage()
+    public function homePage():Response
     {
         return $this->render('back_office/movie/index.html.twig');
     }
 
-    //Add a new movie
+    
     /**
-     * @Route("/backoffice/movies/add", name="back_office_movie_add")
+     * Add a new movie in the databse
+     * 
+     * @Route("/movies/add", name="backoffice_add", methods={"GET"})
+     * @param Request $request
+     * @param OmdbApi $omdbApi
+     * @return Response
      */
-    public function add(Request $request, OmdbApi $omdbApi)
+    public function add(Request $request, OmdbApi $omdbApi): Response
     {
         $movie = new Movie();
         $movieForm = $this->createForm(MovieType::class, $movie);
@@ -63,12 +74,22 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/backoffice/movies/all", name="back_office_all_movies")
+     * Display all movies for the back-office
+     * 
+     * @Route("/movies/all", name="backoffice_all", methods={"GET"})
+     * @param MovieRepository $movieRepository
+     * @return Response
      */
-    public function allMovies(MovieRepository $movieRepository)
+    public function allMovies(MovieRepository $movieRepository): Response
     {
         $allMovies = $movieRepository->findAll();
         return $this->render('back_office/movie/all_movies.html.twig', ['movies' => $allMovies]);
     }
+
+    /**
+     * Delete a movie
+     * 
+     * @Route("/")
+     */
 
 }
