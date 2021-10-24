@@ -7,6 +7,8 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -23,6 +25,7 @@ class Movie
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Assert\NotBlank(message="The movie must have a name")
      */
     private $name;
 
@@ -34,42 +37,58 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Assert\NotBlank(message="The movie must have a link")
+     * @Assert\Url(message="This link is not correct")
      */
     private $link;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Assert\NotBlank(message="The movie must have a picture link")
+     * @Assert\Url(message="This link is not correct")
      */
     private $pictureUrl;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Assert\NotBlank(message="The movie must have a released date")
+     * @Assert\Regex(
+     *          pattern="/\d{4}/",
+     *          match=true,
+     *          message="The released date must be like YYYY"
+     * )
      */
     private $releasedDate;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Assert\NotBlank(message="The movie must have a realisator")
      */
     private $realisator;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Assert\NotBlank(message="The movie must have a synopsis")
      */
     private $synopsis;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="movies")
      * @Groups({"browse_movie","movies_search"})
+     * @Assert\NotBlank(message="The movie must be related to at least one category")
+     * @Assert\Valid
      */
     private $category;
 
     /**
      * @ORM\ManyToMany(targetEntity=Thematic::class, inversedBy="movies")
      * @Groups({"browse_movie","read_category","movies_search"})
+     * @Assert\Valid
      */
     private $thematic;
 
@@ -77,6 +96,8 @@ class Movie
      * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="movies")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"browse_movie","read_category","movies_search"})
+     * @Assert\NotBlank(message="The movie must be related to one language")
+     * @Assert\Valid
      */
     private $language;
 

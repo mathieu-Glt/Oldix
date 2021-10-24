@@ -7,6 +7,8 @@ use App\Repository\ThematicRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ThematicRepository::class)
@@ -23,6 +25,10 @@ class Thematic
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"browse_movie","read_category","movies_search","browse_thematic"})
+     * @Assert\NotBlank(message="Thematic must have a name")
+     * @Assert\Regex(
+     *              pattern="/[a-z]+/"
+     *            )
      */
     private $name;
 
@@ -35,6 +41,7 @@ class Thematic
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="thematic")
      * @Groups({"read_thematic"})
+     * @Assert\Valid
      */
     private $movies;
 
