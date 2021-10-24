@@ -91,7 +91,7 @@ class MovieController extends AbstractController
     /**
      * Delete a movie
      * 
-     * @Route("/delete/{slug}", name="backoffice_delete", methods={"GET"})
+     * @Route("/movies/delete/{slug}", name="backoffice_delete", methods={"GET"})
      * @param EntityManager $entityManager
      * @return Response
      */
@@ -107,7 +107,7 @@ class MovieController extends AbstractController
     /**
      * Edit a movie
      * 
-     * @Route("/edit/{slug}", name="backoffice_edit", methods={"GET", "POST"})
+     * @Route("/movies/edit/{slug}", name="backoffice_edit", methods={"GET", "POST"})
      * @param EntityManager $entityManager
      * @param MovieRepository $movieRepository
      * @param Request $request

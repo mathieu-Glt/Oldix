@@ -1,0 +1,20 @@
+{% extends 'back_office/backoffice_base.html.twig' %}
+
+{% block body %}
+  {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+          {{ message }}
+        </div>
+  {% endfor %}
+<h1>Categories =</h1>
+
+<ul class="list-group">
+  {% for category in categories %}
+    <li class="list-group-item ">
+      {{category.name}}
+      <a href="{{path("backoffice_categories_edit", {"slug": category.slug})}}"><button>Edit</button></a>
+      <a href="{{path("backoffice_categories_delete", {"slug": category.slug})}}"><button>Delete</button></a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
