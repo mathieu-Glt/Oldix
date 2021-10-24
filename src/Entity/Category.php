@@ -24,7 +24,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","browse_category","movies_search"})
+     * @Groups({"browse_movie","browse_category","movies_search","movie_read"})
      * @Assert\NotBlank(message="Category must have a name")
      * @Assert\Regex(
      *              pattern="/[a-z]+/"
@@ -34,7 +34,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","browse_category","movies_search"})
+     * @Groups({"browse_movie","browse_category","movies_search","movie_read"})
      */
     private $slug;
 

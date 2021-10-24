@@ -24,20 +24,20 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
      * @Assert\NotBlank(message="The movie must have a name")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
      * @Assert\NotBlank(message="The movie must have a link")
      * @Assert\Url(message="This link is not correct")
      */
@@ -45,7 +45,7 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
      * @Assert\NotBlank(message="The movie must have a picture link")
      * @Assert\Url(message="This link is not correct")
      */
@@ -53,7 +53,7 @@ class Movie
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
      * @Assert\NotBlank(message="The movie must have a released date")
      * @Assert\Regex(
      *          pattern="/\d{4}/",
@@ -65,21 +65,21 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
      * @Assert\NotBlank(message="The movie must have a realisator")
      */
     private $realisator;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
      * @Assert\NotBlank(message="The movie must have a synopsis")
      */
     private $synopsis;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="movies")
-     * @Groups({"browse_movie","movies_search"})
+     * @Groups({"browse_movie","movies_search","movie_read"})
      * @Assert\NotBlank(message="The movie must be related to at least one category")
      * @Assert\Valid
      */
@@ -87,7 +87,7 @@ class Movie
 
     /**
      * @ORM\ManyToMany(targetEntity=Thematic::class, inversedBy="movies")
-     * @Groups({"browse_movie","read_category","movies_search"})
+     * @Groups({"browse_movie","read_category","movies_search","movie_read"})
      * @Assert\Valid
      */
     private $thematic;
@@ -95,7 +95,7 @@ class Movie
     /**
      * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="movies")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"browse_movie","read_category","movies_search"})
+     * @Groups({"browse_movie","read_category","movies_search","movie_read"})
      * @Assert\NotBlank(message="The movie must be related to one language")
      * @Assert\Valid
      */

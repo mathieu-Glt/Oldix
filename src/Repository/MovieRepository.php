@@ -51,7 +51,7 @@ class MovieRepository extends ServiceEntityRepository
     {
         return $this
             ->createQueryBuilder('m')
-            ->join('m.thematics', 't')
+            ->join('m.thematic', 't')
             ->andWhere('t.id = :id')
             ->setParameter('id', $thematic->getId())
             ->setMaxResults($limit)

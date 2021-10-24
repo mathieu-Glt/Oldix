@@ -24,7 +24,7 @@ class Thematic
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","browse_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","browse_thematic","movie_read"})
      * @Assert\NotBlank(message="Thematic must have a name")
      * @Assert\Regex(
      *              pattern="/[a-z]+/"
@@ -34,7 +34,7 @@ class Thematic
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","browse_thematic"})
+     * @Groups({"browse_movie","read_category","movies_search","browse_thematic","movie_read"})
      */
     private $slug;
 
