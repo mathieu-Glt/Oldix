@@ -1,0 +1,14 @@
+{% extends 'back_office/backoffice_base.html.twig' %}
+
+
+{% block body %}
+
+<div class="example-wrapper">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <h1>Welcome in the Oldix's Back-Office</h1>
+</div>
+{% endblock %}

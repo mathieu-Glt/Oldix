@@ -1,0 +1,35 @@
+{% extends 'back_office/backoffice_base.html.twig' %}
+
+
+{% block body %}
+
+{# Flash Message "Movie deleted" #}
+  {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+          {{ message }}
+        </div>
+  {% endfor %}
+<div class="example-wrapper">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+    {# Loop display each movie card #}
+    {% for movie in movies %}
+      <div class="col">
+        <div class="card h-100" style="width: 24rem;">
+          <img src="{{movie.pictureUrl}}" class="card-img-top" alt="..." >
+            <div class="card-body">
+              <h5 class="card-title">{{movie.name}}</h5>
+              <h8 class="card-title">{{movie.realisator}}</h8>
+              <h8 class="card-title">{{movie.releasedDate}}</h8>
+              <p class="card-text font-italic">{{movie.synopsis}}</p>
+              <a href="{{movie.link}}" target="blank">Watch</a>
+              <a href="{{movie.pictureUrl}}" target="blank">Poster</a>
+            </div>
+            <div class="card-footer">
+              <a href="{{path("backoffice_edit", {"slug": movie.slug})}}"> <button type="button" class="btn btn-primary">Edit</button></a>
+              <a href="{{path("backoffice_delete", {"slug": movie.slug})}}"><button type="button" class="btn btn-danger">Delete</button></a>
+            </div>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+{% endblock %}

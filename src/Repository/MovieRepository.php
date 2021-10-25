@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Movie;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Category;
+use App\Entity\Thematic;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Movie|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +21,57 @@ class MovieRepository extends ServiceEntityRepository
         parent::__construct($registry, Movie::class);
     }
 
-    // /**
-    //  * @return Movie[] Returns an array of Movie objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Get all movies of a category
+     *
+     * @param Category $category
+     * @param integer|null $limit
+     * @return array
+     */
+    public function findByCategory(Category $category, int $limit = null): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+        return $this
+            ->createQueryBuilder('m')
+            ->join('m.category', 'c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $category->getId())
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Movie
+    /**
+     * Get all movies of a thematic
+     *
+     * @param Thematic $thematic
+     * @param integer|null $limit
+     * @return array
+     */
+    public function findByThematic(Thematic $thematic, int $limit = null): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this
+            ->createQueryBuilder('m')
+            ->join('m.thematic', 't')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $thematic->getId())
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+    /**
+     * Get movies or a movie by a query
+     *
+     * @param string $query
+     * @return array
+     */
+    public function findByQuery(string $query):array
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->andWhere('m.name LIKE :query')
+            ->setParameter(':query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }
