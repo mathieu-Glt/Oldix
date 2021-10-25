@@ -23,7 +23,7 @@ class CategoryController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
 
-        return $this->json($categories, 200);
+        return $this->json($categories, 200,[],['groups' => 'browse_category']);
     }
 
     /**
@@ -43,7 +43,7 @@ class CategoryController extends AbstractController
 
         $movies = $movieRepository->findByCategory($category);
 
-        return $this->json($movies, 200);
+        return $this->json($movies, 200,[],['groups' => 'read_category']);
     }
 
     /**
@@ -63,6 +63,6 @@ class CategoryController extends AbstractController
         }
         $previewMovies = $movieRepository->findByCategory($category, 10);
         
-        return $this->json($previewMovies, 200);
+        return $this->json($previewMovies, 200,[],['groups' => 'read_category']);
     }
 }

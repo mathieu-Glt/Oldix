@@ -32,7 +32,7 @@ class MovieRepository extends ServiceEntityRepository
     {
         return $this
             ->createQueryBuilder('m')
-            ->join('m.categories', 'c')
+            ->join('m.category', 'c')
             ->andWhere('c.id = :id')
             ->setParameter('id', $category->getId())
             ->setMaxResults($limit)
@@ -51,7 +51,7 @@ class MovieRepository extends ServiceEntityRepository
     {
         return $this
             ->createQueryBuilder('m')
-            ->join('m.thematics', 't')
+            ->join('m.thematic', 't')
             ->andWhere('t.id = :id')
             ->setParameter('id', $thematic->getId())
             ->setMaxResults($limit)
@@ -69,7 +69,7 @@ class MovieRepository extends ServiceEntityRepository
     {
         return $this
             ->createQueryBuilder('m')
-            ->andWhere('m.name = :query')
+            ->andWhere('m.name LIKE :query')
             ->setParameter(':query', '%' . $query . '%')
             ->getQuery()
             ->getResult();

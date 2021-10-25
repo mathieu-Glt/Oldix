@@ -22,17 +22,16 @@ class MovieController extends AbstractController
      */
     public function research(MovieRepository $movieRepository, Request $request): Response
     {
-        $query = $request->request->get('q');
-        if(!$query){
-            return $this->json([],400);
+        $query = $request->query->get('q');
+        if (!$query) {
+            return $this->json([], 400);
+        }
+        $queryResult = $movieRepository->findByQuery($query);
+        if (empty($queryResult)) {
+            return $this->json([], 404);
         }
 
-        $queryResult = $movieRepository->findByQuery($query);
-        if(empty($queryResult)){
-            return $this->json([],404);
-        }
-        
-        return $this->json($queryResult,200);
+        return $this->json($queryResult, 200, [], ['groups' => 'movies_search']);
     }
 
     /**
@@ -41,13 +40,30 @@ class MovieController extends AbstractController
      * @param MovieRepository $movieRepository
      * @return Response
      */
-    public function random(MovieRepository $movieRepository):Response
+    public function random(MovieRepository $movieRepository): Response
     {
         $allMovies = $movieRepository->findAll();
-        
-        $randomKey = array_rand($allMovies,1);
+
+        $randomKey = array_rand($allMovies, 1);
         $randomMovie = $allMovies[$randomKey];
 
-        return $this->json($randomMovie,200);
+        return $this->json($randomMovie, 200);
+    }
+
+    /**
+     * 
+     * @Route("/{slug}", name="movie_read")
+     * @param string $slug
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function read(string $slug, MovieRepository $movieRepository): Response
+    {
+        $movie = $movieRepository->findOneBySlug($slug);
+
+        if (!$movie) {
+            return $this->json([], 404);
+        }
+        return $this->json($movie, 200, [], ['groups' => 'movie_read']);
     }
 }
