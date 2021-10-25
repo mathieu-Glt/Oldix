@@ -42,9 +42,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $movies;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Movie::class, inversedBy="users")
+     */
+    private $favoriteMovies;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
+        $this->favoriteMovies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $movie->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Movie[]
+     */
+    public function getFavoriteMovies(): Collection
+    {
+        return $this->favoriteMovies;
+    }
+
+    public function addFavoriteMovie(Movie $favoriteMovie): self
+    {
+        if (!$this->favoriteMovies->contains($favoriteMovie)) {
+            $this->favoriteMovies[] = $favoriteMovie;
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteMovie(Movie $favoriteMovie): self
+    {
+        $this->favoriteMovies->removeElement($favoriteMovie);
 
         return $this;
     }

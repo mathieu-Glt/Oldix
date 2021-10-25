@@ -13,7 +13,7 @@ class LanguageController extends AbstractController
     /**
      * Get all languages 
      * 
-     * @Route("api/languages", name="language_list, methods={"GET"})
+     * @Route("api/languages", name="language_list", methods={"GET"})
      * @param LanguageRepository $languageRepository
      * @return Response
      */
