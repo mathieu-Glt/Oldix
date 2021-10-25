@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller\Api;
 
 use App\Repository\MovieRepository;
@@ -7,6 +8,7 @@ use App\Repository\ThematicRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 /**
  * @Route("/api/thematics")
@@ -41,5 +43,6 @@ class ThematicController extends AbstractController
         $movies = $movieRepository->findByThematic($thematic);     
         
         return $this->json($movies, 200,[],['groups'=>'read_thematic']);
+
     }
 }

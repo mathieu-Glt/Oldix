@@ -9,12 +9,43 @@ use Symfony\Component\Routing\Annotation\Route;
 class LanguageController extends AbstractController
 {
     /**
-     * @Route("/language", name="language")
+
+     * Get all languages 
+     * 
+     * @Route("api/languages", name="language_list, methods={"GET"})
+     * @param LanguageRepository $languageRepository
+     * @return Response
      */
-    public function index(): Response
-    {
-        return $this->render('language/index.html.twig', [
-            'controller_name' => 'LanguageController',
-        ]);
+    public function browse(LanguageRepository $languageRepository): Response
+    {   
+
+        $languages = $languageRepository->findAll();
+        return $this->json($languages, 200);
+        
+    
     }
+
+    /**
+     * Get all movies of a language
+     * 
+     * @Route("api/languages/{slug}", name="app_language", methods={"GET"})
+     * @param LanguageRepository $languageRepository
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function read(string $slug, MovieRepository $movieRepository, LanguageRepository $languageRepository): Response
+    {   
+
+        $language = $languageRepository->findOneBySlug($slug);
+        if (!$language) {
+            return $this->json([], 404);
+        } else {
+            $movies = $movieRepository->findByLanguage($language);
+
+        }
+        return $this->json($movies, 200);
+    
+    }
+
+
 }

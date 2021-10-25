@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Repository\MovieRepository;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,4 +67,5 @@ class MovieController extends AbstractController
         }
         return $this->json($movie, 200, [], ['groups' => 'movie_read']);
     }
+
 }

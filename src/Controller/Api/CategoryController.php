@@ -64,5 +64,6 @@ class CategoryController extends AbstractController
         $previewMovies = $movieRepository->findByCategory($category, 10);
         
         return $this->json($previewMovies, 200,[],['groups' => 'read_category']);
+
     }
 }
