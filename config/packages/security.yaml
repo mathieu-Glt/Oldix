@@ -20,6 +20,10 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            custom_authenticator: App\Security\BackOfficeAuthenticator
+            logout:
+                path: app_logout
+                target: backoffice
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

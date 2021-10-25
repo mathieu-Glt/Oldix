@@ -106,10 +106,16 @@ class Movie
      */
     private $user;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteMovies")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
         $this->thematic = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -269,6 +275,33 @@ class Movie
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addFavoriteMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeFavoriteMovie($this);
+        }
 
         return $this;
     }
