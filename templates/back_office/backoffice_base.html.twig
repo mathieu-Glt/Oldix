@@ -23,20 +23,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{path("back_office")}}">Home</a>
+                <a class="nav-link active" aria-current="page" href="{{path("backoffice")}}">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{path("back_office_movie_add")}}">Add a Movie</a>
+                <a class="nav-link" href="{{path("backoffice_add")}}">Add a Movie</a>
                 </li>
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Movies
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">All</a></li>
+                    <li><a class="dropdown-item" href="{{path("backoffice_all")}}">All</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Categories</a></li>
-                    <li><a class="dropdown-item" href="#">Thematics</a></li>
+                    <li><a class="dropdown-item" href="{{path("backoffice_categories_all")}}">Categories</a></li>
+                    <li><a class="dropdown-item" href="{{path("backoffice_thematics_all")}}">Thematics</a></li>
                 </ul>
                 </li>
                 <li class="nav-item">
