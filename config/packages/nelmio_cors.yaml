@@ -7,10 +7,4 @@ nelmio_cors:
         expose_headers: ['Link']
         max_age: 3600
     paths:
-        '^/api':
-        origin_regex: true
-        allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
-        allow_methods: ['GET', 'OPTIONS']
-        allow_headers: ['Content-Type']
-        expose_headers: ['Link']
-        max_age: 3600
+        '^/api': null
