@@ -8,13 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/api/languages", name="api_languages_")
+ */
 class LanguageController extends AbstractController
 {
     /**
 
      * Get all languages 
      * 
-     * @Route("api/languages", name="language_list", methods={"GET"})
+     * @Route("/", name="browse", methods={"GET"})
      * @param LanguageRepository $languageRepository
      * @return Response
      */
@@ -28,7 +31,7 @@ class LanguageController extends AbstractController
     /**
      * Get all movies of a language
      * 
-     * @Route("api/languages/{slug}", name="app_language", methods={"GET"})
+     * @Route("/{slug}", name="read", methods={"GET"})
      * @param LanguageRepository $languageRepository
      * @param MovieRepository $movieRepository
      * @return Response

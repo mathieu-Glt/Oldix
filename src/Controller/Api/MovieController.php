@@ -10,13 +10,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/api/movies")
+ * @Route("/api/movies", name="api_movies_")
  */
 class MovieController extends AbstractController
 {
     /**
      * 
-     * @Route("/research", name="api_movie_research", methods={"GET"})
+     * @Route("/research", name="research", methods={"GET"})
      * @param MovieRepository $movieRepository
      * @param Request $request
      * @return Response
@@ -43,7 +43,7 @@ class MovieController extends AbstractController
 
     /**
      * 
-     * @Route("/random", name="api_movies_random", methods={"GET"})
+     * @Route("/random", name="random", methods={"GET"})
      * @param MovieRepository $movieRepository
      * @return Response
      */
@@ -58,7 +58,7 @@ class MovieController extends AbstractController
     }
     /**
      * 
-     * @Route("/{slug}", name="movie_read")
+     * @Route("/{slug}", name="read")
      * @param string $slug
      * @param MovieRepository $movieRepository
      * @return Response

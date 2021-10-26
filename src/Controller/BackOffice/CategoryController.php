@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice")
+ * @Route("/backoffice/categories", name="backoffice_categories_")
  * @IsGranted("ROLE_ADMIN")
  */
 class CategoryController extends AbstractController
@@ -22,11 +22,11 @@ class CategoryController extends AbstractController
     /**
      * Display all categories for the back-office
      * 
-     * @Route("/categories/all", name="backoffice_categories_all", methods={"GET"})
+     * @Route("all", name="browse", methods={"GET"})
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function allCategories(CategoryRepository $categoryRepository): Response
+    public function browse(CategoryRepository $categoryRepository): Response
     {
         $allCategories = $categoryRepository->findAll();
         return $this->render('back_office/category/all_categories.html.twig', ['categories' => $allCategories]);
@@ -35,7 +35,7 @@ class CategoryController extends AbstractController
     /**
      * Delete a category
      * 
-     * @Route("/categories/delete/{slug}", name="backoffice_categories_delete", methods={"GET", "DELETE"})
+     * @Route("delete/{slug}", name="delete", methods={"GET", "DELETE"})
      * @param EntityManagerInterface $entityManager
      * @param CategoryRepository $categoryRepository
      * @return Response
@@ -52,7 +52,7 @@ class CategoryController extends AbstractController
     /**
      * Edit a Category
      * 
-     * @Route("/categories/edit/{slug}", name="backoffice_categories_edit", methods={"GET", "POST"})
+     * @Route("edit/{slug}", name="edit", methods={"GET", "POST"})
      * @param EntityManager $entityManager
      * @param CategoryRepository $categoryRepository
      * @param Request $request
@@ -74,7 +74,7 @@ class CategoryController extends AbstractController
     /**
      * Add a new cateogory
      * 
-     * @Route("/categories/add", name="backoffice_categories_add")
+     * @Route("add", name="add")
      * @param EntityManager $entityManager
      * @param Request $request
      * @return Response

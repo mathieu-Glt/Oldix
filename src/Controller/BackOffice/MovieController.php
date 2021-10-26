@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice")
+ * @Route("/backoffice/movies", name="backoffice_movies_")
  * @IsGranted("ROLE_ADMIN")
  */
 class MovieController extends AbstractController
@@ -25,7 +25,7 @@ class MovieController extends AbstractController
     /**
      * Add a new movie in the databse
      * 
-     * @Route("/movies/add", name="backoffice_add", methods={"GET","POST"})
+     * @Route("add", name="add", methods={"GET","POST"})
      * @param Request $request
      * @param OmdbApi $omdbApi
      * @return Response
@@ -64,11 +64,11 @@ class MovieController extends AbstractController
     /**
      * Display all movies for the back-office
      * 
-     * @Route("/movies/all", name="backoffice_all", methods={"GET"})
+     * @Route("all", name="browse", methods={"GET"})
      * @param MovieRepository $movieRepository
      * @return Response
      */
-    public function allMovies(MovieRepository $movieRepository): Response
+    public function browse(MovieRepository $movieRepository): Response
     {
         $allMovies = $movieRepository->findAll();
         return $this->render('back_office/movie/all_movies.html.twig', ['movies' => $allMovies]);
@@ -77,7 +77,7 @@ class MovieController extends AbstractController
     /**
      * Delete a movie
      * 
-     * @Route("/movies/delete/{slug}", name="backoffice_delete", methods={"GET"})
+     * @Route("delete/{slug}", name="delete", methods={"GET"})
      * @param EntityManager $entityManager
      * @return Response
      */
@@ -93,7 +93,7 @@ class MovieController extends AbstractController
     /**
      * Edit a movie
      * 
-     * @Route("/movies/edit/{slug}", name="backoffice_edit", methods={"GET", "POST"})
+     * @Route("edit/{slug}", name="edit", methods={"GET", "POST"})
      * @param EntityManager $entityManager
      * @param MovieRepository $movieRepository
      * @param Request $request

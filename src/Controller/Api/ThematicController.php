@@ -11,12 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * @Route("/api/thematics")
+ * @Route("/api/thematics", name="api_thematic_")
  */
 class ThematicController extends AbstractController
 {
     /**
-     * @Route("/", name="api_thematics_browse", methods={"GET"})
+     * @Route("/", name="browse", methods={"GET"})
      */
     public function browse(ThematicRepository $thematicRepository): Response
     {
@@ -27,7 +27,7 @@ class ThematicController extends AbstractController
 
     /**
      * 
-     * @Route("/{slug}", name="api_thematics_read", methods={"GET"})
+     * @Route("/{slug}", name="read", methods={"GET"})
      * @param string $slug
      * @param ThematicRepository $thematicRepository
      * @param MovieRepository $movieRepository

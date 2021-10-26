@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice")
+ * @Route("/backoffice/thematics", name="backoffice_thematics_")
  * @IsGranted("ROLE_ADMIN")
  */
 class ThematicController extends AbstractController
@@ -21,11 +21,11 @@ class ThematicController extends AbstractController
     /**
      * Display all thematics for the back-office
      * 
-     * @Route("/thematics/all", name="backoffice_thematics_all", methods={"GET"})
+     * @Route("all", name="browse", methods={"GET"})
      * @param ThematicRepository $thematicRepository
      * @return Response
      */
-    public function allMovies(ThematicRepository $thematicRepository): Response
+    public function browse(ThematicRepository $thematicRepository): Response
     {
         $allThematics = $thematicRepository->findAll();
         return $this->render('back_office/thematic/all_thematics.html.twig', ['thematics' => $allThematics]);
@@ -34,7 +34,7 @@ class ThematicController extends AbstractController
     /**
      * Delete a Thematic
      * 
-     * @Route("/thematics/delete/{slug}", name="backoffice_thematics_delete", methods={"GET", "DELETE"})
+     * @Route("delete/{slug}", name="delete", methods={"GET", "DELETE"})
      * @param ThematicRepository $thematicRepository
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -51,7 +51,7 @@ class ThematicController extends AbstractController
     /**
      * Edit a Thematic
      * 
-     * @Route("/thematics/edit/{slug}", name="backoffice_thematics_edit", methods={"GET", "POST"})
+     * @Route("edit/{slug}", name="edit", methods={"GET", "POST"})
      * @param EntityManager $entityManager
      * @param ThematicRepository $thematicRepository
      * @param Request $request
@@ -73,7 +73,7 @@ class ThematicController extends AbstractController
     /**
      * Add a new thematic
      * 
-     * @Route("/thematic/add", name="backoffice_thematic_add")
+     * @Route("add", name="add")
      * @param EntityManager $entityManager
      * @param Request $request
      * @return Response
