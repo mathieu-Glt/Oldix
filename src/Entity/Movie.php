@@ -45,35 +45,25 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
-     * @Assert\NotBlank(message="The movie must have a picture link")
-     * @Assert\Url(message="This link is not correct")
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})     
      */
     private $pictureUrl;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
-     * @Assert\NotBlank(message="The movie must have a released date")
-     * @Assert\Regex(
-     *          pattern="/\d{4}/",
-     *          match=true,
-     *          message="The released date must be like YYYY"
-     * )
      */
     private $releasedDate;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
-     * @Assert\NotBlank(message="The movie must have a realisator")
      */
     private $realisator;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read"})
-     * @Assert\NotBlank(message="The movie must have a synopsis")
      */
     private $synopsis;
 

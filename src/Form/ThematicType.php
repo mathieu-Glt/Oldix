@@ -14,7 +14,6 @@ class ThematicType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('slug')
             ->add('Valider', SubmitType::class)
         ;
     }

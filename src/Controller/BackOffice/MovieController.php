@@ -87,7 +87,7 @@ class MovieController extends AbstractController
         $entityManager->remove($movieToRemove);
         $entityManager->flush();
         $this->addFlash('success', "Movie deleted");
-        return $this->redirectToRoute("backoffice_all");
+        return $this->redirectToRoute("backoffice_movies_all");
     }
 
     /**
@@ -107,7 +107,7 @@ class MovieController extends AbstractController
         if ($movieForm->isSubmitted() && $movieForm->isValid()) {
             $entityManager->flush();
             $this->addFlash('success', "Movie edited");
-            return $this->redirectToRoute('backoffice_all');
+            return $this->redirectToRoute('backoffice_movies_all');
         }
         return $this->render("back_office/movie/edit.html.twig", ["form" => $movieForm->createView()]);
     }
