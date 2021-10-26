@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use App\Utils\OmdbApi;
+use App\Utils\Slug;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,18 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MovieController extends AbstractController
 {
-    /**
-     * Display home page
-     * 
-     * @Route("/", name="backoffice")
-     * @return Response
-     */
-    public function homePage():Response
-    {
-        return $this->render('back_office/movie/index.html.twig');
-    }
 
-    
     /**
      * Add a new movie in the databse
      * 
@@ -40,7 +30,7 @@ class MovieController extends AbstractController
      * @param OmdbApi $omdbApi
      * @return Response
      */
-    public function add(Request $request, OmdbApi $omdbApi): Response
+    public function add(Request $request, OmdbApi $omdbApi, Slug $slug): Response
     {
         $movie = new Movie();
         $movieForm = $this->createForm(MovieType::class, $movie);
@@ -55,7 +45,7 @@ class MovieController extends AbstractController
             $movieRealisator = $array["Director"];
             $moviePoster = $array["Poster"];
             $movieNameLowed = strtolower($movieTitle);
-            $movieNameSlugged = $this->slugger($movieNameLowed);
+            $movieNameSlugged = $slug->slugger($movieNameLowed);
             $movie->setName($movieTitle);
             $movie->setReleasedDate($movieYear);
             $movie->setRealisator($movieRealisator);
@@ -70,12 +60,6 @@ class MovieController extends AbstractController
         return $this->render("back_office/movie/add.html.twig", ['form' => $movieForm->createView()]);
     }
 
-
-    public function slugger($movieNameToSlug)
-    {
-        $slugged = preg_replace('~[^\pL\d]+~u', '-', $movieNameToSlug);
-        return $slugged;
-    }
 
     /**
      * Display all movies for the back-office

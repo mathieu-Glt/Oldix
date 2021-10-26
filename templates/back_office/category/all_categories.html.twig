@@ -6,7 +6,8 @@
           {{ message }}
         </div>
   {% endfor %}
-<h1>Categories =</h1>
+<h1>Categories </h1>
+<a href="{{path("backoffice_categories_add")}}">Add a category</a>
 
 <ul class="list-group">
   {% for category in categories %}
