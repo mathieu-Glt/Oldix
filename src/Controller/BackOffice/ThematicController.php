@@ -2,6 +2,7 @@
 
 namespace App\Controller\BackOffice;
 
+use App\Entity\Thematic;
 use App\Form\ThematicType;
 use App\Repository\ThematicRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -67,6 +68,28 @@ class ThematicController extends AbstractController
         return $this->redirectToRoute('backoffice_thematics_all');
        }
        return $this->render("back_office/thematic/edit.html.twig", ["form" => $thematicForm->createView()]);
+    }
+
+    /**
+     * Add a new thematic
+     * 
+     * @Route("/thematic/add", name="backoffice_thematic_add")
+     * @param EntityManager $entityManager
+     * @param Request $request
+     * @return Response
+     */
+    public function add(EntityManagerInterface $entityManager, Request $request)
+    {
+        $thematic = new Thematic();
+        $thematicForm = $this->createForm(ThematicType::class, $thematic);
+        $thematicForm->handleRequest($request);
+        if($thematicForm->isSubmitted() && $thematicForm->isValid()){
+            $entityManager->persist($thematic);
+            $entityManager->flush();
+            $this->addFlash("success", "New category created");
+            return $this->redirectToRoute('backoffice_categories_all');
+        }
+        return $this->render('back_office/thematic/add.html.twig', ["form" => $thematicForm->createView()]);
     }
 
 
