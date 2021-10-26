@@ -1,21 +1,39 @@
 {% extends 'back_office/backoffice_base.html.twig' %}
 
 {% block body %}
-  {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-          {{ message }}
-        </div>
-  {% endfor %}
-<h1>Categories </h1>
-<a href="{{path("backoffice_categories_add")}}">Add a category</a>
+	<div class="container mt-3">
+		<h1 class="text-center">List of categories
+		</h1>
+		<div class="d-flex justify-content-end">
+			<a class="d-block btn btn-secondary " href="{{path("backoffice_categories_add")}}">Add a category</a>
+		</div>
 
-<ul class="list-group">
-  {% for category in categories %}
-    <li class="list-group-item ">
-      {{category.name}}
-      <a href="{{path("backoffice_categories_edit", {"slug": category.slug})}}"><button>Edit</button></a>
-      <a href="{{path("backoffice_categories_delete", {"slug": category.slug})}}"><button>Delete</button></a>
-    </li>
-  {% endfor %}
-</ul>
+	<table class="table mt-2">
+		<thead class="thead-dark">
+			<tr>
+				<th class="text-center" scope="col">#</th>
+				<th class="text-center" scope="col">Name</th>
+				<th class="text-center" scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for category in categories %}
+				<tr>
+					<th class="text-center"scope="row">{{category.id}}</th>
+					<td class="text-center">{{category.name}}</td>
+					<td class="d-flex justify-content-center">
+						<a class="d-block btn btn-warning mr-3" href="{{path("backoffice_categories_edit", {"slug": category.slug})}}">
+                            Edit
+                        </a>
+						<a class="d-block btn btn-danger" href="{{path("backoffice_categories_delete", {"slug": category.slug})}}">
+                            Delete
+                        </a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	</div>
+
+
 {% endblock %}
