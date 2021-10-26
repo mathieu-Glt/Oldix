@@ -5,6 +5,7 @@ namespace App\Controller\BackOffice;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Utils\Slug;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -46,7 +47,7 @@ class CategoryController extends AbstractController
         $entityManager->remove($categoryToDelete);
         $entityManager->flush();
         $this->addFlash("success", "Category deleted");
-        return $this->redirectToRoute("backoffice_categories_all");
+        return $this->redirectToRoute("backoffice_categories_browse");
     }
 
     /**
@@ -66,7 +67,7 @@ class CategoryController extends AbstractController
        if($categoryForm->isSubmitted() && $categoryForm->isValid()){
         $entityManager->flush();
         $this->addFlash('success', "Category edited");
-        return $this->redirectToRoute('backoffice_categories_all');
+        return $this->redirectToRoute('backoffice_categories_browse');
        }
        return $this->render("back_office/category/edit.html.twig", ["form" => $categoryForm->createView()]);
     }
@@ -79,16 +80,18 @@ class CategoryController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function add(EntityManagerInterface $entityManager, Request $request)
+    public function add(EntityManagerInterface $entityManager, Request $request, Slug $slug)
     {
         $category = new Category();
         $categoryForm = $this->createForm(CategoryType::class, $category);
         $categoryForm->handleRequest($request);
         if($categoryForm->isSubmitted() && $categoryForm->isValid()){
+            $categorySlug = $slug->slugger($category->getName());
+            $category->setSlug($categorySlug);
             $entityManager->persist($category);
             $entityManager->flush();
             $this->addFlash("success", "New category created");
-            return $this->redirectToRoute('backoffice_categories_all');
+            return $this->redirectToRoute('backoffice_categories_browse');
         }
         return $this->render('back_office/category/add.html.twig', ["form" => $categoryForm->createView()]);
     }

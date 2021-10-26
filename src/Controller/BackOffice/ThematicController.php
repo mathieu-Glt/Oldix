@@ -5,6 +5,7 @@ namespace App\Controller\BackOffice;
 use App\Entity\Thematic;
 use App\Form\ThematicType;
 use App\Repository\ThematicRepository;
+use App\Utils\Slug;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -45,7 +46,7 @@ class ThematicController extends AbstractController
         $entityManager->remove($thematicToDelete);
         $entityManager->flush();
         $this->addFlash("success", "Thematic deleted");
-        return $this->redirectToRoute("backoffice_thematics_all");
+        return $this->redirectToRoute("backoffice_thematics_browse");
     }
 
     /**
@@ -65,7 +66,7 @@ class ThematicController extends AbstractController
        if($thematicForm->isSubmitted() && $thematicForm->isValid()){
         $entityManager->flush();
         $this->addFlash('success', "Thematic edited");
-        return $this->redirectToRoute('backoffice_thematics_all');
+        return $this->redirectToRoute('backoffice_thematics_browse');
        }
        return $this->render("back_office/thematic/edit.html.twig", ["form" => $thematicForm->createView()]);
     }
@@ -78,16 +79,18 @@ class ThematicController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function add(EntityManagerInterface $entityManager, Request $request)
+    public function add(EntityManagerInterface $entityManager, Request $request, Slug $slug)
     {
         $thematic = new Thematic();
         $thematicForm = $this->createForm(ThematicType::class, $thematic);
         $thematicForm->handleRequest($request);
         if($thematicForm->isSubmitted() && $thematicForm->isValid()){
+            $thematicSlugged = $slug->slugger($thematic->getName());
+            $thematic->setSlug($thematicSlugged);
             $entityManager->persist($thematic);
             $entityManager->flush();
             $this->addFlash("success", "New category created");
-            return $this->redirectToRoute('backoffice_categories_all');
+            return $this->redirectToRoute('backoffice_thematics_browse');
         }
         return $this->render('back_office/thematic/add.html.twig', ["form" => $thematicForm->createView()]);
     }
