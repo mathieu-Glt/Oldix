@@ -22,7 +22,7 @@ class ThematicController extends AbstractController
     {
         $thematics = $thematicRepository->findAll();
 
-        return $this->json($thematics, 200,[],['groups'=>'browse_thematic']);
+        return $this->json($thematics, 200, [], ['groups' => 'browse_thematic']);
     }
 
     /**
@@ -36,13 +36,15 @@ class ThematicController extends AbstractController
     public function read(string $slug, ThematicRepository $thematicRepository, MovieRepository $movieRepository): Response
     {
         $thematic = $thematicRepository->findOneBySlug($slug);
-        if(!$thematic){
-            return $this->json([],404);
+        if (!$thematic) {
+            return $this->json([
+                'message' => 'This thematic does not exist',
+                'errorCode' => '404'
+            ], 404);
         }
 
-        $movies = $movieRepository->findByThematic($thematic);     
-        
-        return $this->json($movies, 200,[],['groups'=>'read_thematic']);
+        $movies = $movieRepository->findByThematic($thematic);
 
+        return $this->json($movies, 200, [], ['groups' => 'read_thematic']);
     }
 }

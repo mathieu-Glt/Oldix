@@ -35,7 +35,7 @@ class MovieController extends AbstractController
         $movie = new Movie();
         $movieForm = $this->createForm(MovieType::class, $movie);
         $movieForm->handleRequest($request);
-        if($movieForm->isSubmitted() && $movieForm->isValid()){
+        if ($movieForm->isSubmitted() && $movieForm->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $infosFromApi = $omdbApi->getInfosFromApi($movie->getName());
             $array = (array) $infosFromApi;
@@ -81,13 +81,13 @@ class MovieController extends AbstractController
      * @param EntityManager $entityManager
      * @return Response
      */
-    public function delete($slug, EntityManagerInterface $entityManager, MovieRepository $movieRepository): Response 
+    public function delete($slug, EntityManagerInterface $entityManager, MovieRepository $movieRepository): Response
     {
-       $movieToRemove = $movieRepository->findOneBySlug($slug);
-       $entityManager->remove($movieToRemove);
-       $entityManager->flush();
-       $this->addFlash('success', "Movie deleted");
-       return $this->redirectToRoute("backoffice_all");
+        $movieToRemove = $movieRepository->findOneBySlug($slug);
+        $entityManager->remove($movieToRemove);
+        $entityManager->flush();
+        $this->addFlash('success', "Movie deleted");
+        return $this->redirectToRoute("backoffice_all");
     }
 
     /**
@@ -99,17 +99,16 @@ class MovieController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function edit($slug, EntityManagerInterface $entityManager, MovieRepository $movieRepository, Request $request): Response 
+    public function edit($slug, EntityManagerInterface $entityManager, MovieRepository $movieRepository, Request $request): Response
     {
-       $movieToEdit = $movieRepository->findOneBySlug($slug);
-       $movieForm = $this->createForm(MovieType::class, $movieToEdit);
-       $movieForm->handleRequest($request);
-       if($movieForm->isSubmitted() && $movieForm->isValid()){
-        $entityManager->flush();
-        $this->addFlash('success', "Movie edited");
-        return $this->redirectToRoute('backoffice_all');
-       }
-       return $this->render("back_office/movie/edit.html.twig", ["form" => $movieForm->createView()]);
+        $movieToEdit = $movieRepository->findOneBySlug($slug);
+        $movieForm = $this->createForm(MovieType::class, $movieToEdit);
+        $movieForm->handleRequest($request);
+        if ($movieForm->isSubmitted() && $movieForm->isValid()) {
+            $entityManager->flush();
+            $this->addFlash('success', "Movie edited");
+            return $this->redirectToRoute('backoffice_all');
+        }
+        return $this->render("back_office/movie/edit.html.twig", ["form" => $movieForm->createView()]);
     }
-
 }
