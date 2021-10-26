@@ -19,12 +19,10 @@ class LanguageController extends AbstractController
      * @return Response
      */
     public function browse(LanguageRepository $languageRepository): Response
-    {   
+    {
 
         $languages = $languageRepository->findAll();
-        return $this->json($languages, 200);
-        
-    
+        return $this->json($languages, 200, [], ['groups' => 'browse_language']);
     }
 
     /**
@@ -36,18 +34,17 @@ class LanguageController extends AbstractController
      * @return Response
      */
     public function read(string $slug, MovieRepository $movieRepository, LanguageRepository $languageRepository): Response
-    {   
+    {
 
         $language = $languageRepository->findOneBySlug($slug);
         if (!$language) {
-            return $this->json([], 404);
+            return $this->json([
+                'message' => 'This language does not exist',
+                'errorCode' => '404'
+            ], 404);
         } else {
             $movies = $movieRepository->findByLanguage($language);
-
         }
-        return $this->json($movies, 200);
-    
+        return $this->json($movies, 200, [], ['groups' => 'movie_read']);
     }
-
-
 }

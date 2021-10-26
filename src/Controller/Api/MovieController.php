@@ -25,11 +25,17 @@ class MovieController extends AbstractController
     {
         $query = $request->query->get('q');
         if (!$query) {
-            return $this->json([], 400);
+            return $this->json([
+                'message' => 'You must add a query content',
+                'errorCode' => '400'
+            ], 400);
         }
         $queryResult = $movieRepository->findByQuery($query);
         if (empty($queryResult)) {
-            return $this->json([], 404);
+            return $this->json([
+                'message' => 'This query has no results.',
+                'errorCode' => '404'
+            ], 404);
         }
 
         return $this->json($queryResult, 200, [], ['groups' => 'movies_search']);
@@ -47,10 +53,8 @@ class MovieController extends AbstractController
 
         $randomKey = array_rand($allMovies, 1);
         $randomMovie = $allMovies[$randomKey];
-
-        return $this->json($randomMovie, 200);
+        return $this->json($randomMovie, 200, [], ['groups' => 'movie_read']);
     }
-
     /**
      * 
      * @Route("/{slug}", name="movie_read")
@@ -63,9 +67,11 @@ class MovieController extends AbstractController
         $movie = $movieRepository->findOneBySlug($slug);
 
         if (!$movie) {
-            return $this->json([], 404);
+            return $this->json([
+                'message' => 'This movie does not exist',
+                'errorCode' => '404'
+            ], 404);
         }
         return $this->json($movie, 200, [], ['groups' => 'movie_read']);
     }
-
 }
