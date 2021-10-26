@@ -44,10 +44,8 @@ class MovieController extends AbstractController
     public function random(MovieRepository $movieRepository): Response
     {
         $allMovies = $movieRepository->findAll();
-
         $randomKey = array_rand($allMovies, 1);
         $randomMovie = $allMovies[$randomKey];
-
         return $this->json($randomMovie, 200);
     }
 
