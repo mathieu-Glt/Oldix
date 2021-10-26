@@ -10,12 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/api/categories")
+ * @Route("/api/categories", name="api_category")
  */
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/", name="app_category_browse", methods={"GET"})
+     * @Route("/", name="browse", methods={"GET"})
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
@@ -29,7 +29,7 @@ class CategoryController extends AbstractController
     /**
      * Get all movies of a category
      * 
-     * @Route("/{slug}", name="app_category_read", methods={"GET"})
+     * @Route("/{slug}", name="read", methods={"GET"})
      * @param Category $category
      * @param CategoryRepository $categoryRepository
      * @return Response
@@ -53,7 +53,7 @@ class CategoryController extends AbstractController
      * 
      * Get 10 first movies of a category
      * 
-     * @Route("/{slug}/preview", name="app_category_preview", methods={"GET"})
+     * @Route("/{slug}/preview", name="preview", methods={"GET"})
      * @param [type] $slug
      * @param CategoryRepository $categoryRepository
      * @return Response
