@@ -101,11 +101,23 @@ class Movie
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="movie")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="movie")
+     */
+    private $rates;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
         $this->thematic = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->rates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -291,6 +303,66 @@ class Movie
     {
         if ($this->users->removeElement($user)) {
             $user->removeFavoriteMovie($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getMovie() === $this) {
+                $comment->setMovie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rate[]
+     */
+    public function getRates(): Collection
+    {
+        return $this->rates;
+    }
+
+    public function addRate(Rate $rate): self
+    {
+        if (!$this->rates->contains($rate)) {
+            $this->rates[] = $rate;
+            $rate->setMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRate(Rate $rate): self
+    {
+        if ($this->rates->removeElement($rate)) {
+            // set the owning side to null (unless already changed)
+            if ($rate->getMovie() === $this) {
+                $rate->setMovie(null);
+            }
         }
 
         return $this;
