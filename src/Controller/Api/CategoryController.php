@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/api/categories", name="api_category")
+ * @Route("/api/categories", name="api_category_")
  */
 class CategoryController extends AbstractController
 {

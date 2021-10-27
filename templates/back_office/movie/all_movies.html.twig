@@ -3,33 +3,43 @@
 
 {% block body %}
 
-{# Flash Message "Movie deleted" #}
-  {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-          {{ message }}
-        </div>
-  {% endfor %}
-<div class="example-wrapper">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-    {# Loop display each movie card #}
-    {% for movie in movies %}
-      <div class="col">
-        <div class="card h-100" style="width: 24rem;">
-          <img src="{{movie.pictureUrl}}" class="card-img-top" alt="..." >
-            <div class="card-body">
-              <h5 class="card-title">{{movie.name}}</h5>
-              <h8 class="card-title">{{movie.realisator}}</h8>
-              <h8 class="card-title">{{movie.releasedDate}}</h8>
-              <p class="card-text font-italic">{{movie.synopsis}}</p>
-              <a href="{{movie.link}}" target="blank">Watch</a>
-              <a href="{{movie.pictureUrl}}" target="blank">Poster</a>
-            </div>
-            <div class="card-footer">
-              <a href="{{path("backoffice_movies_edit", {"slug": movie.slug})}}"> <button type="button" class="btn btn-primary">Edit</button></a>
-              <a href="{{path("backoffice_movies_delete", {"slug": movie.slug})}}"><button type="button" class="btn btn-danger">Delete</button></a>
-            </div>
-        </div>
-      </div>
-    {% endfor %}
-</div>
+	<div class="container mt-3">
+		<div
+			class="example-wrapper row">
+			{# Loop display each movie card #}
+			{% for movie in movies %}
+				<div class="col-4 mt-3">
+					<div class="card h-100" style="width: 23rem;">
+						<div class=" mb-2 d-flex justify-content-between">
+							<a class="btn btn-sm btn-warning" href="{{path("backoffice_movies_edit", {"slug": movie.slug})}}">
+								Edit
+							</a>
+							<a class="btn btn-sm btn-danger" href="{{path("backoffice_movies_delete", {"slug": movie.slug})}}">
+								Delete
+							</a>
+						</div>
+						<img class="ml-auto mr-auto" src="{{movie.pictureUrl}}" width="250px">
+						<div class="card-body">
+							<h5 class="card-title">{{movie.name}}</h5>
+							<h8 class="card-title">{{movie.realisator}}</h8>
+							<h8 class="card-title">{{movie.releasedDate}}</h8>
+							<p class="card-text font-italic">{{movie.synopsis}}</p>
+
+						</div>
+						<div class="card-footer">
+							<div class="d-flex justify-content-around">
+								<a href="{{movie.link}}" class="text-dark" target="_blank">
+									<i class="bi h3 bi-tv"></i>
+								</a>
+								<a href="{{movie.pictureUrl}}" class="text-dark" target="_blank">
+									<i class="bi h3 bi-image"></i>
+								</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

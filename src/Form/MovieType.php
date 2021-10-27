@@ -35,7 +35,6 @@ class MovieType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
-            ->add('Valider', SubmitType::class)
         ;
     }
 

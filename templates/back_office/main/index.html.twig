@@ -15,7 +15,7 @@
 			</p>
 		</div>
 	</div>
-	<div class="container mt-2">
+	<div class="container">
 		<div class="row">
 			<div class="col-9">
 				<h2 class="text-center">Oldix API</h2>
@@ -27,7 +27,7 @@
 							<th scope="col">Method</th>
 							<th scope="col">Route</th>
 							<th scope="col">Description</th>
-							<th scope="col">Example link (TODO: Modifier les liens)</th>                        
+							<th scope="col">Example links</th>                        
 						</tr>
 					</thead>
 					<tbody>
@@ -35,37 +35,37 @@
 							<td>GET</td>
 							<td>/api/movies/research</td>
 							<td>GET movies with a research query</td>
-                            <td><a href="/api/movies/research?q=Freaks">Example link</a></td>
+                            <td><a href="{{path('api_movies_research')}}?q=maniac">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/movies/random</td>
 							<td>GET a random movie</td>
-                            <td><a href="/api/movies/random">Example link</a></td>
+                            <td><a href="{{path('api_movies_random')}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/movies/{slug}</td>
 							<td>GET details about a movie</td>
-                            <td><a href="/api/movies/{slug}">Example link</a></td>
+                            <td><a href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/categories</td>
 							<td>GET all categories</td>
-                            <td><a href="/api/categories">Example link</a></td>
+                            <td><a href="{{path('api_category_read',{'slug':'horror'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/categories/{slug}</td>
 							<td>GET all movies related to a category</td>
-                            <td><a href="/api/categories/{slug}">Example link</a></td>
+                            <td><a href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/categories/{slug}/movies/preview</td>
 							<td>GET 10 movies related to a category</td>
-                            <td><a href="/api/categories/{slug}/movies/preview">Example link</a></td>
+                            <td><a href="{{path('api_category_preview',{'slug':'horror'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
@@ -77,19 +77,19 @@
 							<td>GET</td>
 							<td>/api/thematics/{slug}</td>
 							<td>GET all movies related to a thematic</td>
-                            <td><a href="/api/thematics/{slug}">Example link</a></td>
+                            <td><a href="{{path('api_thematic_read',{'slug':'charlie-chaplin'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/languages</td>
 							<td>GET languages</td>
-                            <td><a href="/api/languages">Example link</a></td>
+                            <td><a href="{{path('api_languages_browse')}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/languages/{slug}</td>
 							<td>GET all movies related to a language</td>
-                            <td><a href="/api/languages/{slug}">Example link</a></td>
+                            <td><a href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -98,7 +98,7 @@
 				<div class="row mb-5 d-flex flex-column align-items-center">
 					<h2>Oldix Backoffice</h2>
 					<p class="text-center">You can access to the oldix backoffice</p>
-					<a href="#" class="d-block btn btn-dark rounded">Access to the Backoffice</a>
+					<a href="{{path('backoffice')}}" class="d-block btn btn-dark rounded">Access to the Backoffice</a>
 				</div>
 				<div class="row mt-5 d-flex flex-column align-items-center">
 					<h2>Oldix Website</h2>
