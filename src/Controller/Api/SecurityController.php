@@ -29,7 +29,7 @@ class SecurityController extends AbstractController
     public function registration(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordEncoder, UserRepository $userRepository):JsonResponse
     {
         $user = $serializer->deserialize($request->getContent(), User::class, 'json');
-
+       
         //Check if request is valid
         $errors = $validator->validate($user);
         $errorMessages = [];
