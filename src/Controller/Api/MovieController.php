@@ -58,7 +58,7 @@ class MovieController extends AbstractController
     }
     /**
      * 
-     * @Route("/{slug}", name="read")
+     * @Route("/{slug}", name="read", methods={"GET"}, requirements={"slug":"^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      * @param string $slug
      * @param MovieRepository $movieRepository
      * @return Response

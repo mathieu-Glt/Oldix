@@ -27,7 +27,7 @@ class ThematicController extends AbstractController
 
     /**
      * 
-     * @Route("/{slug}", name="read", methods={"GET"})
+     * @Route("/{slug}", name="read", methods={"GET"}, requirements={"slug":"^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      * @param string $slug
      * @param ThematicRepository $thematicRepository
      * @param MovieRepository $movieRepository

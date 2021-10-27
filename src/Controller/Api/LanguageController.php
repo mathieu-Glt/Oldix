@@ -31,7 +31,7 @@ class LanguageController extends AbstractController
     /**
      * Get all movies of a language
      * 
-     * @Route("/{slug}", name="read", methods={"GET"})
+     * @Route("/{slug}", name="read", methods={"GET"}, requirements={"slug":"^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      * @param LanguageRepository $languageRepository
      * @param MovieRepository $movieRepository
      * @return Response
