@@ -45,6 +45,11 @@ class Category
      */
     private $movies;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="categories")
+     */
+    private $owner;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
@@ -102,6 +107,18 @@ class Category
         if ($this->movies->removeElement($movie)) {
             $movie->removeCategory($this);
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }

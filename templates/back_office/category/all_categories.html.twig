@@ -25,9 +25,11 @@
 						<a class="d-block btn btn-warning mr-3" href="{{path("backoffice_categories_edit", {"slug": category.slug})}}">
                             Edit
                         </a>
+						{% if is_granted("category_delete", category) %}
 						<a class="d-block btn btn-danger" href="{{path("backoffice_categories_delete", {"slug": category.slug})}}">
                             Delete
                         </a>
+						{% endif %}
 					</td>
 				</tr>
 			{% endfor %}
