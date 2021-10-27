@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice/movies", name="backoffice_movies_")
+ * @Route("/backoffice/movies/", name="backoffice_movies_")
  * @IsGranted("ROLE_ADMIN")
  */
 class MovieController extends AbstractController
@@ -87,7 +87,7 @@ class MovieController extends AbstractController
         $entityManager->remove($movieToRemove);
         $entityManager->flush();
         $this->addFlash('success', "Movie deleted");
-        return $this->redirectToRoute("backoffice_movies_all");
+        return $this->redirectToRoute("backoffice_movies_browse");
     }
 
     /**
