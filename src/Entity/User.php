@@ -54,11 +54,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users")
+     */
+    private $favoriteCategory;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Thematic::class, inversedBy="users")
+     */
+    private $favoriteThematic;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
         $this->favoriteMovies = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->favoriteCategory = new ArrayCollection();
+        $this->favoriteThematic = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -228,6 +251,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($category->getOwner() === $this) {
                 $category->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getFavoriteCategory(): Collection
+    {
+        return $this->favoriteCategory;
+    }
+
+    public function addFavoriteCategory(Category $favoriteCategory): self
+    {
+        if (!$this->favoriteCategory->contains($favoriteCategory)) {
+            $this->favoriteCategory[] = $favoriteCategory;
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteCategory(Category $favoriteCategory): self
+    {
+        $this->favoriteCategory->removeElement($favoriteCategory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Thematic[]
+     */
+    public function getFavoriteThematic(): Collection
+    {
+        return $this->favoriteThematic;
+    }
+
+    public function addFavoriteThematic(Thematic $favoriteThematic): self
+    {
+        if (!$this->favoriteThematic->contains($favoriteThematic)) {
+            $this->favoriteThematic[] = $favoriteThematic;
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteThematic(Thematic $favoriteThematic): self
+    {
+        $this->favoriteThematic->removeElement($favoriteThematic);
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 

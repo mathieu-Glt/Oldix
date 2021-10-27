@@ -50,9 +50,15 @@ class Category
      */
     private $owner;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteCategory")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,6 +125,33 @@ class Category
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addFavoriteCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeFavoriteCategory($this);
+        }
 
         return $this;
     }
