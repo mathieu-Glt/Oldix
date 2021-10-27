@@ -29,7 +29,7 @@ class CategoryController extends AbstractController
     /**
      * Get all movies of a category
      * 
-     * @Route("/{slug}", name="read", methods={"GET"})
+     * @Route("/{slug}", name="read", methods={"GET"}, requirements={"slug":"^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      * @param Category $category
      * @param CategoryRepository $categoryRepository
      * @return Response
@@ -53,7 +53,7 @@ class CategoryController extends AbstractController
      * 
      * Get 10 first movies of a category
      * 
-     * @Route("/{slug}/preview", name="preview", methods={"GET"})
+     * @Route("/{slug}/preview", name="preview", methods={"GET"}, requirements={"slug":"^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      * @param [type] $slug
      * @param CategoryRepository $categoryRepository
      * @return Response
