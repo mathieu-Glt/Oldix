@@ -25,9 +25,13 @@
 							<a class="d-block btn btn-warning mr-3" href="{{path("backoffice_thematics_edit", {"slug": thematic.slug})}}">
 								Edit
 							</a>
-							<a class="d-block btn btn-danger" href="{{path("backoffice_thematics_delete", {"slug": thematic.slug})}}">
-								Delete
-							</a>
+
+							{% if is_granted("thematic-delete", thematic) %}
+								<a class="d-block btn btn-danger" href="{{path("backoffice_thematics_delete", {"slug": thematic.slug})}}">
+									Delete
+								</a>
+							{% endif %}
+
 						</td>
 					</tr>
 				{% endfor %}

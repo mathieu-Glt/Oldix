@@ -54,11 +54,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Thematic::class, mappedBy="user")
+     */
+    private $thematics;
+
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
         $this->favoriteMovies = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->thematics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -233,4 +240,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Thematic[]
+     */
+    public function getThematics(): Collection
+    {
+        return $this->thematics;
+    }
+
+    public function addThematic(Thematic $thematic): self
+    {
+        if (!$this->thematics->contains($thematic)) {
+            $this->thematics[] = $thematic;
+            $thematic->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeThematic(Thematic $thematic): self
+    {
+        if ($this->thematics->removeElement($thematic)) {
+            // set the owning side to null (unless already changed)
+            if ($thematic->getUser() === $this) {
+                $thematic->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

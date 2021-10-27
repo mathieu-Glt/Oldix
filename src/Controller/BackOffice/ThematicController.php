@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice/thematics", name="backoffice_thematics_")
+ * @Route("/backoffice/thematics/", name="backoffice_thematics_")
  * @IsGranted("ROLE_ADMIN")
  */
 class ThematicController extends AbstractController

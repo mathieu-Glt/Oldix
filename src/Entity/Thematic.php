@@ -45,6 +45,12 @@ class Thematic
      */
     private $movies;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="thematics")
+     */
+    private $user;
+
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
@@ -105,4 +111,17 @@ class Thematic
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 }
