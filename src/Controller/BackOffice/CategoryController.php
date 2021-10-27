@@ -3,11 +3,13 @@
 namespace App\Controller\BackOffice;
 
 use App\Entity\Category;
+use App\Entity\User;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use App\Utils\Slug;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
+use Prophecy\Argument\Token\TokenInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice/categories", name="backoffice_categories_")
+ * @Route("/backoffice/categories/", name="backoffice_categories_")
  * @IsGranted("ROLE_ADMIN")
  */
 class CategoryController extends AbstractController
@@ -88,6 +90,7 @@ class CategoryController extends AbstractController
         if($categoryForm->isSubmitted() && $categoryForm->isValid()){
             $categorySlug = $slug->slugger($category->getName());
             $category->setSlug($categorySlug);
+            $category->setOwner($this->getUser());
             $entityManager->persist($category);
             $entityManager->flush();
             $this->addFlash("success", "New category created");
