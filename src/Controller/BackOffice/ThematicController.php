@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice/thematics", name="backoffice_thematics_")
+ * @Route("/backoffice/thematics/", name="backoffice_thematics_")
  * @IsGranted("ROLE_ADMIN")
  */
 class ThematicController extends AbstractController
@@ -41,7 +41,8 @@ class ThematicController extends AbstractController
      * @return Response
      */
     public function delete($slug, ThematicRepository $thematicRepository, EntityManagerInterface $entityManager): Response
-    {
+    {   
+        $this->denyAccessUnlessGranted('thematic-delete', null, 'access denied');
         $thematicToDelete = $thematicRepository->findOneBySlug($slug);
         $entityManager->remove($thematicToDelete);
         $entityManager->flush();
@@ -59,7 +60,8 @@ class ThematicController extends AbstractController
      * @return Response
      */
     public function edit($slug, EntityManagerInterface $entityManager,ThematicRepository $thematicRepository, Request $request): Response 
-    {
+    {   
+        $this->denyAccessUnlessGranted('thematic-delete', null, 'access denied');
        $thematicToEdit = $thematicRepository->findOneBySlug($slug);
        $thematicForm = $this->createForm(ThematicType::class, $thematicToEdit);
        $thematicForm->handleRequest($request);
@@ -87,6 +89,7 @@ class ThematicController extends AbstractController
         if($thematicForm->isSubmitted() && $thematicForm->isValid()){
             $thematicSlugged = $slug->slugger($thematic->getName());
             $thematic->setSlug($thematicSlugged);
+            $thematic->setOwner($this->getUser());
             $entityManager->persist($thematic);
             $entityManager->flush();
             $this->addFlash("success", "New category created");

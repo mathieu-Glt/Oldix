@@ -45,10 +45,17 @@ class Thematic
      */
     private $movies;
 
-    /**
+    
+    /** 
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteThematic")
      */
     private $users;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="thematic")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
 
     public function __construct()
     {
@@ -135,6 +142,18 @@ class Thematic
         if ($this->users->removeElement($user)) {
             $user->removeFavoriteThematic($this);
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }

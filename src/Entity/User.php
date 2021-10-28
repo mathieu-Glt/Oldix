@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $categories;
 
-    /**
+    /** 
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users")
      */
     private $favoriteCategory;
@@ -74,14 +74,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Thematic::class, mappedBy="owner")
+     */
+    private $thematic;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
         $this->favoriteMovies = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->thematics = new ArrayCollection();
         $this->favoriteCategory = new ArrayCollection();
         $this->favoriteThematic = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->thematic = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -257,7 +264,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
+
+    /** 
      * @return Collection|Category[]
      */
     public function getFavoriteCategory(): Collection
@@ -298,6 +306,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    
     public function removeFavoriteThematic(Thematic $favoriteThematic): self
     {
         $this->favoriteThematic->removeElement($favoriteThematic);
@@ -341,6 +350,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Thematic[]
+     */
+    public function getThematic(): Collection
+    {
+        return $this->thematic;
+    }
+
+    public function addThematic(Thematic $thematic): self
+    {
+        if (!$this->thematic->contains($thematic)) {
+            $this->thematic[] = $thematic;
+            $thematic->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeThematic(Thematic $thematic): self
+    {
+        if ($this->thematic->removeElement($thematic)) {
+            // set the owning side to null (unless already changed)
+            if ($thematic->getOwner() === $this) {
+                $thematic->setOwner(null);
             }
         }
 
