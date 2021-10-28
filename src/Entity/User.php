@@ -54,11 +54,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $categories;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Thematic::class, mappedBy="user")
+    /** 
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users")
      */
-    private $thematics;
+    private $favoriteCategory;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Thematic::class, inversedBy="users")
+     */
+    private $favoriteThematic;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Thematic::class, mappedBy="owner")
+     */
+    private $thematic;
 
     public function __construct()
     {
@@ -66,6 +85,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->favoriteMovies = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->thematics = new ArrayCollection();
+        $this->favoriteCategory = new ArrayCollection();
+        $this->favoriteThematic = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->thematic = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -241,19 +264,111 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+    /** 
+     * @return Collection|Category[]
+     */
+    public function getFavoriteCategory(): Collection
+    {
+        return $this->favoriteCategory;
+    }
+
+    public function addFavoriteCategory(Category $favoriteCategory): self
+    {
+        if (!$this->favoriteCategory->contains($favoriteCategory)) {
+            $this->favoriteCategory[] = $favoriteCategory;
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteCategory(Category $favoriteCategory): self
+    {
+        $this->favoriteCategory->removeElement($favoriteCategory);
+
+        return $this;
+    }
+
     /**
      * @return Collection|Thematic[]
      */
-    public function getThematics(): Collection
+    public function getFavoriteThematic(): Collection
     {
-        return $this->thematics;
+        return $this->favoriteThematic;
+    }
+
+    public function addFavoriteThematic(Thematic $favoriteThematic): self
+    {
+        if (!$this->favoriteThematic->contains($favoriteThematic)) {
+            $this->favoriteThematic[] = $favoriteThematic;
+        }
+
+        return $this;
+    }
+
+    
+    public function removeFavoriteThematic(Thematic $favoriteThematic): self
+    {
+        $this->favoriteThematic->removeElement($favoriteThematic);
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Thematic[]
+     */
+    public function getThematic(): Collection
+    {
+        return $this->thematic;
     }
 
     public function addThematic(Thematic $thematic): self
     {
-        if (!$this->thematics->contains($thematic)) {
-            $this->thematics[] = $thematic;
-            $thematic->setUser($this);
+        if (!$this->thematic->contains($thematic)) {
+            $this->thematic[] = $thematic;
+            $thematic->setOwner($this);
         }
 
         return $this;
@@ -261,14 +376,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeThematic(Thematic $thematic): self
     {
-        if ($this->thematics->removeElement($thematic)) {
+        if ($this->thematic->removeElement($thematic)) {
             // set the owning side to null (unless already changed)
-            if ($thematic->getUser() === $this) {
-                $thematic->setUser(null);
+            if ($thematic->getOwner() === $this) {
+                $thematic->setOwner(null);
             }
         }
 
         return $this;
     }
-
 }

@@ -45,15 +45,22 @@ class Thematic
      */
     private $movies;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="thematics")
+    
+    /** 
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteThematic")
      */
-    private $user;
+    private $users;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="thematic")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
 
     public function __construct()
     {
         $this->movies = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,16 +119,42 @@ class Thematic
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
     {
-        return $this->user;
+        return $this->users;
     }
 
-    public function setUser(?User $user): self
+    public function addUser(User $user): self
     {
-        $this->user = $user;
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addFavoriteThematic($this);
+        }
 
         return $this;
     }
 
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeFavoriteThematic($this);
+        }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
 }

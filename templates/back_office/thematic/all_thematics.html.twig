@@ -22,9 +22,12 @@
 						<th class="text-center" scope="row">{{thematic.id}}</th>
 						<td class="text-center">{{thematic.name}}</td>
 						<td class="d-flex justify-content-center">
-							<a class="d-block btn btn-warning mr-3" href="{{path("backoffice_thematics_edit", {"slug": thematic.slug})}}">
-								Edit
-							</a>
+							{% if is_granted("thematic-delete", thematic) %}
+
+								<a class="d-block btn btn-warning mr-3" href="{{path("backoffice_thematics_edit", {"slug": thematic.slug})}}">
+									Edit
+								</a>
+							{% endif %}
 
 							{% if is_granted("thematic-delete", thematic) %}
 								<a class="d-block btn btn-danger" href="{{path("backoffice_thematics_delete", {"slug": thematic.slug})}}">

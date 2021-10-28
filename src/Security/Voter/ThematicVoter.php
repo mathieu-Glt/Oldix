@@ -44,7 +44,7 @@ class ThematicVoter extends Voter
     
     private function canDelete(Thematic $thematic, User $user)
     {
-        return $user === $thematic->getUser();
+        return $user === $thematic->getOwner();
 
     }
 
