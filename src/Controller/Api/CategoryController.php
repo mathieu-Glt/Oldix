@@ -3,8 +3,9 @@
 namespace App\Controller\Api;
 
 use App\Entity\Category;
-use App\Repository\CategoryRepository;
 use App\Repository\MovieRepository;
+use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,8 +59,9 @@ class CategoryController extends AbstractController
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function preview(string $slug, CategoryRepository $categoryRepository, MovieRepository $movieRepository): Response
+    public function preview(Request $request,string $slug, CategoryRepository $categoryRepository, MovieRepository $movieRepository): Response
     {
+        dd($request);
         $category = $categoryRepository->findOneBySlug($slug);
         if (!$category) {
             return $this->json([

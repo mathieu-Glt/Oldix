@@ -25,6 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="User must have an email")
+     * @Assert\Email(message="This value should be like XXX@XXX.com")
      */
     private $email;
 
@@ -36,6 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="User must have a password")
      */
     private $password;
 
