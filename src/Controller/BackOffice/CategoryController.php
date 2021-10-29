@@ -46,6 +46,7 @@ class CategoryController extends AbstractController
     public function delete($slug, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
     {
         $categoryToDelete = $categoryRepository->findOneBySlug($slug);
+        $this->denyAccessUnlessGranted("category_delete", $categoryToDelete, "access denied");
         $entityManager->remove($categoryToDelete);
         $entityManager->flush();
         $this->addFlash("success", "Category deleted");
@@ -64,6 +65,7 @@ class CategoryController extends AbstractController
     public function edit($slug, EntityManagerInterface $entityManager,CategoryRepository $categoryRepository, Request $request): Response 
     {
        $categoryToEdit = $categoryRepository->findOneBySlug($slug);
+       $this->denyAccessUnlessGranted("category_delete", $categoryToEdit, "access denied");
        $categoryForm = $this->createForm(CategoryType::class, $categoryToEdit);
        $categoryForm->handleRequest($request);
        if($categoryForm->isSubmitted() && $categoryForm->isValid()){
