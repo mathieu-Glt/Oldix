@@ -111,6 +111,16 @@ class Movie
      */
     private $rates;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $runTime;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $actors;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -364,6 +374,30 @@ class Movie
                 $rate->setMovie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRunTime(): ?string
+    {
+        return $this->runTime;
+    }
+
+    public function setRunTime(?string $runTime): self
+    {
+        $this->runTime = $runTime;
+
+        return $this;
+    }
+
+    public function getActors(): ?string
+    {
+        return $this->actors;
+    }
+
+    public function setActors(?string $actors): self
+    {
+        $this->actors = $actors;
 
         return $this;
     }

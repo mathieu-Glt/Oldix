@@ -42,8 +42,8 @@ class ThematicController extends AbstractController
      */
     public function delete($slug, ThematicRepository $thematicRepository, EntityManagerInterface $entityManager): Response
     {   
-        $this->denyAccessUnlessGranted('thematic-delete', null, 'access denied');
         $thematicToDelete = $thematicRepository->findOneBySlug($slug);
+        $this->denyAccessUnlessGranted('thematic-delete', $thematicToDelete, 'access denied');
         $entityManager->remove($thematicToDelete);
         $entityManager->flush();
         $this->addFlash("success", "Thematic deleted");
@@ -61,8 +61,8 @@ class ThematicController extends AbstractController
      */
     public function edit($slug, EntityManagerInterface $entityManager,ThematicRepository $thematicRepository, Request $request): Response 
     {   
-        $this->denyAccessUnlessGranted('thematic-delete', null, 'access denied');
        $thematicToEdit = $thematicRepository->findOneBySlug($slug);
+       $this->denyAccessUnlessGranted('thematic-delete', $thematicToEdit, 'access denied');
        $thematicForm = $this->createForm(ThematicType::class, $thematicToEdit);
        $thematicForm->handleRequest($request);
        if($thematicForm->isSubmitted() && $thematicForm->isValid()){
