@@ -113,4 +113,6 @@ class MovieController extends AbstractController
         }
         return $this->render("back_office/movie/edit.html.twig", ["form" => $movieForm->createView()]);
     }
+
+
 }
