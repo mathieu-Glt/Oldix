@@ -24,7 +24,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","browse_category","movies_search","movie_read"})
+     * @Groups({"browse_movie","browse_category","movies_search","movie_read","list_movie_add","list_movie_show"})
      * @Assert\NotBlank(message="Category must have a name")
      * @Assert\Regex(
      *              pattern="/[a-z]+/"

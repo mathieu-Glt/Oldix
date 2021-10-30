@@ -61,7 +61,6 @@ class CategoryController extends AbstractController
      */
     public function preview(Request $request,string $slug, CategoryRepository $categoryRepository, MovieRepository $movieRepository): Response
     {
-        dd($request);
         $category = $categoryRepository->findOneBySlug($slug);
         if (!$category) {
             return $this->json([
