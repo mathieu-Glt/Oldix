@@ -104,20 +104,20 @@ class CommentController extends AbstractController
         }
 
         $user = $this->getUser();
-        if(!$user){
+        if (!$user) {
             $jsonResponse = [
-                'message'=>'User not connected',
-                'code'=>Response::HTTP_UNAUTHORIZED
+                'message' => 'User not connected',
+                'code' => Response::HTTP_UNAUTHORIZED
             ];
-            return $this->json($jsonResponse,Response::HTTP_UNAUTHORIZED);
+            return $this->json($jsonResponse, Response::HTTP_UNAUTHORIZED);
         }
 
-        if($commentToDelete->getUser()!==$user){
+        if ($commentToDelete->getUser() !== $user) {
             $jsonResponse = [
-                'message'=>'This is not your comment',
-                'code'=>Response::HTTP_FORBIDDEN
+                'message' => 'This is not your comment',
+                'code' => Response::HTTP_FORBIDDEN
             ];
-            return $this->json($jsonResponse,Response::HTTP_FORBIDDEN);
+            return $this->json($jsonResponse, Response::HTTP_FORBIDDEN);
         }
 
         $em->remove($commentToDelete);

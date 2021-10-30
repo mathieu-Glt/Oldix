@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
@@ -26,10 +27,10 @@ class SecurityController extends AbstractController
      * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function registration(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordEncoder, UserRepository $userRepository):JsonResponse
+    public function registration(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordEncoder, UserRepository $userRepository): JsonResponse
     {
         $user = $serializer->deserialize($request->getContent(), User::class, 'json');
-       
+
         //Check if request is valid
         $errors = $validator->validate($user);
         $errorMessages = [];
@@ -39,9 +40,9 @@ class SecurityController extends AbstractController
             }
             $jsonResponse = [
                 'messages' => $errorMessages,
-                'error' => 400
+                'error' => Response::HTTP_BAD_REQUEST
             ];
-            return $this->json($jsonResponse, 400);
+            return $this->json($jsonResponse, Response::HTTP_BAD_REQUEST);
         }
 
         //Check if email is already used
@@ -49,9 +50,9 @@ class SecurityController extends AbstractController
         if ($alreadyExists) {
             $jsonResponse = [
                 'message' => 'This email is already used in this website',
-                'error' => '400'
+                'error' => Response::HTTP_BAD_REQUEST
             ];
-            return $this->json($jsonResponse, 400);
+            return $this->json($jsonResponse, Response::HTTP_BAD_REQUEST);
         }
 
         //Insert in database
@@ -62,8 +63,8 @@ class SecurityController extends AbstractController
         $em->flush();
         $jsonResponse = [
             'message' => 'User created',
+            'code' => Response::HTTP_CREATED
         ];
-        return $this->json($jsonResponse, 201);
+        return $this->json($jsonResponse, Response::HTTP_CREATED);
     }
-
 }

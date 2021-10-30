@@ -25,7 +25,7 @@ class LanguageController extends AbstractController
     {
 
         $languages = $languageRepository->findAll();
-        return $this->json($languages, 200, [], ['groups' => 'browse_language']);
+        return $this->json($languages, Response::HTTP_OK, [], ['groups' => 'browse_language']);
     }
 
     /**
@@ -43,11 +43,11 @@ class LanguageController extends AbstractController
         if (!$language) {
             return $this->json([
                 'message' => 'This language does not exist',
-                'errorCode' => '404'
-            ], 404);
+                'errorCode' => Response::HTTP_NOT_FOUND
+            ], Response::HTTP_NOT_FOUND);
         } else {
             $movies = $movieRepository->findByLanguage($language);
         }
-        return $this->json($movies, 200, [], ['groups' => 'movie_read']);
+        return $this->json($movies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
 }

@@ -27,18 +27,18 @@ class MovieController extends AbstractController
         if (!$query) {
             return $this->json([
                 'message' => 'You must add a query content',
-                'errorCode' => '400'
-            ], 400);
+                'errorCode' => Response::HTTP_BAD_REQUEST
+            ], Response::HTTP_BAD_REQUEST);
         }
         $queryResult = $movieRepository->findByQuery($query);
         if (empty($queryResult)) {
             return $this->json([
                 'message' => 'This query has no results.',
-                'errorCode' => '404'
-            ], 404);
+                'errorCode' => Response::HTTP_NOT_FOUND
+            ], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($queryResult, 200, [], ['groups' => 'movies_search']);
+        return $this->json($queryResult, Response::HTTP_OK, [], ['groups' => 'movies_search']);
     }
 
     /**
@@ -53,8 +53,7 @@ class MovieController extends AbstractController
         $randomKey = array_rand($allMovies, 1);
         $randomMovie = $allMovies[$randomKey];
 
-        return $this->json($randomMovie, 200, [], ['groups' => 'movie_read']);
-
+        return $this->json($randomMovie, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
     /**
      * 
@@ -70,9 +69,9 @@ class MovieController extends AbstractController
         if (!$movie) {
             return $this->json([
                 'message' => 'This movie does not exist',
-                'errorCode' => '404'
-            ], 404);
+                'errorCode' => Response::HTTP_NOT_FOUND
+            ], Response::HTTP_NOT_FOUND);
         }
-        return $this->json($movie, 200, [], ['groups' => 'movie_read']);
+        return $this->json($movie, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
 }
