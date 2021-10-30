@@ -35,7 +35,6 @@ class SecurityController extends AbstractController
         $errorMessages = [];
         if (count($errors) !== 0) {
             foreach ($errors as $error) {
-                dump($error->getMessage());
                 $errorMessages[] = $error->getMessage();
             }
             $jsonResponse = [

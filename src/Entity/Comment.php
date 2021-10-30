@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommentRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -19,11 +20,13 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"comments_add_response"})
      */
     private $comment;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"comments_add_response"})
      */
     private $createdAt;
 
