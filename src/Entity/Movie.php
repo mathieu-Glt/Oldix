@@ -73,14 +73,14 @@ class Movie
      * @Assert\NotBlank(message="The movie must be related to at least one category")
      * @Assert\Valid
      */
-    private $category;
+    private $categories;
 
     /**
      * @ORM\ManyToMany(targetEntity=Thematic::class, inversedBy="movies")
      * @Groups({"browse_movie","read_category","movies_search","movie_read","list_movie_add","list_movie_show"})
      * @Assert\Valid
      */
-    private $thematic;
+    private $thematics;
 
     /**
      * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="movies")
@@ -94,7 +94,7 @@ class Movie
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="movies")
      */
-    private $user;
+    private $owner;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteMovies")
@@ -123,8 +123,8 @@ class Movie
 
     public function __construct()
     {
-        $this->category = new ArrayCollection();
-        $this->thematic = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->thematics = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->rates = new ArrayCollection();
@@ -222,15 +222,15 @@ class Movie
     /**
      * @return Collection|Category[]
      */
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
 
     public function addCategory(Category $category): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
         }
 
         return $this;
@@ -238,7 +238,7 @@ class Movie
 
     public function removeCategory(Category $category): self
     {
-        $this->category->removeElement($category);
+        $this->categories->removeElement($category);
 
         return $this;
     }
@@ -246,15 +246,15 @@ class Movie
     /**
      * @return Collection|Thematic[]
      */
-    public function getThematic(): Collection
+    public function getThematics(): Collection
     {
-        return $this->thematic;
+        return $this->thematics;
     }
 
     public function addThematic(Thematic $thematic): self
     {
-        if (!$this->thematic->contains($thematic)) {
-            $this->thematic[] = $thematic;
+        if (!$this->thematics->contains($thematic)) {
+            $this->thematics[] = $thematic;
         }
 
         return $this;
@@ -262,7 +262,7 @@ class Movie
 
     public function removeThematic(Thematic $thematic): self
     {
-        $this->thematic->removeElement($thematic);
+        $this->thematics->removeElement($thematic);
 
         return $this;
     }
@@ -279,14 +279,14 @@ class Movie
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getOwner(): ?User
     {
-        return $this->user;
+        return $this->owner;
     }
 
-    public function setUser(?User $user): self
+    public function setOwner(?User $owner): self
     {
-        $this->user = $user;
+        $this->owner = $owner;
 
         return $this;
     }

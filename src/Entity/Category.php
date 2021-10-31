@@ -39,7 +39,7 @@ class Category
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="categories")
      * @Groups({"read_category"})
      * @Assert\Valid
      */
@@ -51,7 +51,7 @@ class Category
     private $owner;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteCategory")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteCategories")
      */
     private $users;
 
