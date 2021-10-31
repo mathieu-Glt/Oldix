@@ -40,7 +40,7 @@ class SecurityController extends AbstractController
             }
             $jsonResponse = [
                 'messages' => $errorMessages,
-                'error' => Response::HTTP_BAD_REQUEST
+                'code' => Response::HTTP_BAD_REQUEST
             ];
             return $this->json($jsonResponse, Response::HTTP_BAD_REQUEST);
         }
@@ -50,7 +50,7 @@ class SecurityController extends AbstractController
         if ($alreadyExists) {
             $jsonResponse = [
                 'message' => 'This email is already used in this website',
-                'error' => Response::HTTP_BAD_REQUEST
+                'code' => Response::HTTP_BAD_REQUEST
             ];
             return $this->json($jsonResponse, Response::HTTP_BAD_REQUEST);
         }

@@ -27,14 +27,14 @@ class MovieController extends AbstractController
         if (!$query) {
             return $this->json([
                 'message' => 'You must add a query content',
-                'errorCode' => Response::HTTP_BAD_REQUEST
+                'code' => Response::HTTP_BAD_REQUEST
             ], Response::HTTP_BAD_REQUEST);
         }
         $queryResult = $movieRepository->findByQuery($query);
         if (empty($queryResult)) {
             return $this->json([
                 'message' => 'This query has no results.',
-                'errorCode' => Response::HTTP_NOT_FOUND
+                'code' => Response::HTTP_NOT_FOUND
             ], Response::HTTP_NOT_FOUND);
         }
 
@@ -69,7 +69,7 @@ class MovieController extends AbstractController
         if (!$movie) {
             return $this->json([
                 'message' => 'This movie does not exist',
-                'errorCode' => Response::HTTP_NOT_FOUND
+                'code' => Response::HTTP_NOT_FOUND
             ], Response::HTTP_NOT_FOUND);
         }
         return $this->json($movie, Response::HTTP_OK, [], ['groups' => 'movie_read']);

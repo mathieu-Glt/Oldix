@@ -41,7 +41,7 @@ class CategoryController extends AbstractController
         if (!$category) {
             return $this->json([
                 'message' => 'This category does not exist',
-                'errorCode' => Response::HTTP_NOT_FOUND
+                'code' => Response::HTTP_NOT_FOUND
             ], response::HTTP_NOT_FOUND);
         }
 

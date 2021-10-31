@@ -43,7 +43,7 @@ class LanguageController extends AbstractController
         if (!$language) {
             return $this->json([
                 'message' => 'This language does not exist',
-                'errorCode' => Response::HTTP_NOT_FOUND
+                'code' => Response::HTTP_NOT_FOUND
             ], Response::HTTP_NOT_FOUND);
         } else {
             $movies = $movieRepository->findByLanguage($language);

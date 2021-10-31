@@ -39,7 +39,7 @@ class ThematicController extends AbstractController
         if (!$thematic) {
             return $this->json([
                 'message' => 'This thematic does not exist',
-                'errorCode' => Response::HTTP_NOT_FOUND
+                'code' => Response::HTTP_NOT_FOUND
             ], Response::HTTP_NOT_FOUND);
         }
 
