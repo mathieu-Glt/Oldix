@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
 
-        return $this->json($categories, 200, [], ['groups' => 'browse_category']);
+        return $this->json($categories, Response::HTTP_OK, [], ['groups' => 'browse_category']);
     }
 
     /**
@@ -41,13 +41,13 @@ class CategoryController extends AbstractController
         if (!$category) {
             return $this->json([
                 'message' => 'This category does not exist',
-                'errorCode' => '404'
-            ], 404);
+                'code' => Response::HTTP_NOT_FOUND
+            ], response::HTTP_NOT_FOUND);
         }
 
         $movies = $movieRepository->findByCategory($category);
 
-        return $this->json($movies, 200, [], ['groups' => 'read_category']);
+        return $this->json($movies, Response::HTTP_OK, [], ['groups' => 'read_category']);
     }
 
     /**
@@ -59,18 +59,17 @@ class CategoryController extends AbstractController
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function preview(Request $request,string $slug, CategoryRepository $categoryRepository, MovieRepository $movieRepository): Response
+    public function preview(string $slug, CategoryRepository $categoryRepository, MovieRepository $movieRepository): Response
     {
-        dd($request);
         $category = $categoryRepository->findOneBySlug($slug);
         if (!$category) {
             return $this->json([
                 'message' => 'This category does not exist',
-                'errorCode' => '404'
-            ], 404);
+                'errorCode' => Response::HTTP_NOT_FOUND
+            ], Response::HTTP_NOT_FOUND);
         }
         $previewMovies = $movieRepository->findByCategory($category, 10);
 
-        return $this->json($previewMovies, 200, [], ['groups' => 'read_category']);
+        return $this->json($previewMovies, Response::HTTP_OK, [], ['groups' => 'read_category']);
     }
 }
