@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=Movie::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Movie::class, mappedBy="owner")
      */
     private $movies;
 
@@ -60,12 +60,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /** 
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users")
      */
-    private $favoriteCategory;
+    private $favoriteCategories;
 
     /**
      * @ORM\ManyToMany(targetEntity=Thematic::class, inversedBy="users")
      */
-    private $favoriteThematic;
+    private $favoriteThematics;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -88,8 +88,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->favoriteMovies = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->thematics = new ArrayCollection();
-        $this->favoriteCategory = new ArrayCollection();
-        $this->favoriteThematic = new ArrayCollection();
+        $this->favoriteCategories = new ArrayCollection();
+        $this->favoriteThematics = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->thematic = new ArrayCollection();
     }
@@ -195,7 +195,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->movies->contains($movie)) {
             $this->movies[] = $movie;
-            $movie->setUser($this);
+            $movie->setOwner($this);
         }
 
         return $this;
@@ -205,8 +205,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->movies->removeElement($movie)) {
             // set the owning side to null (unless already changed)
-            if ($movie->getUser() === $this) {
-                $movie->setUser(null);
+            if ($movie->getOwner() === $this) {
+                $movie->setOwner(null);
             }
         }
 
@@ -271,15 +271,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /** 
      * @return Collection|Category[]
      */
-    public function getFavoriteCategory(): Collection
+    public function getFavoriteCategories(): Collection
     {
-        return $this->favoriteCategory;
+        return $this->favoriteCategories;
     }
 
     public function addFavoriteCategory(Category $favoriteCategory): self
     {
-        if (!$this->favoriteCategory->contains($favoriteCategory)) {
-            $this->favoriteCategory[] = $favoriteCategory;
+        if (!$this->favoriteCategories->contains($favoriteCategory)) {
+            $this->favoriteCategories[] = $favoriteCategory;
         }
 
         return $this;
@@ -287,7 +287,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeFavoriteCategory(Category $favoriteCategory): self
     {
-        $this->favoriteCategory->removeElement($favoriteCategory);
+        $this->favoriteCategories->removeElement($favoriteCategory);
 
         return $this;
     }
@@ -295,15 +295,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection|Thematic[]
      */
-    public function getFavoriteThematic(): Collection
+    public function getFavoriteThematics(): Collection
     {
-        return $this->favoriteThematic;
+        return $this->favoriteThematics;
     }
 
     public function addFavoriteThematic(Thematic $favoriteThematic): self
     {
-        if (!$this->favoriteThematic->contains($favoriteThematic)) {
-            $this->favoriteThematic[] = $favoriteThematic;
+        if (!$this->favoriteThematics->contains($favoriteThematic)) {
+            $this->favoriteThematics[] = $favoriteThematic;
         }
 
         return $this;
@@ -312,7 +312,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     public function removeFavoriteThematic(Thematic $favoriteThematic): self
     {
-        $this->favoriteThematic->removeElement($favoriteThematic);
+        $this->favoriteThematics->removeElement($favoriteThematic);
 
         return $this;
     }
@@ -362,15 +362,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection|Thematic[]
      */
-    public function getThematic(): Collection
+    public function getThematics(): Collection
     {
-        return $this->thematic;
+        return $this->thematics;
     }
 
     public function addThematic(Thematic $thematic): self
     {
-        if (!$this->thematic->contains($thematic)) {
-            $this->thematic[] = $thematic;
+        if (!$this->thematics->contains($thematic)) {
+            $this->thematics[] = $thematic;
             $thematic->setOwner($this);
         }
 
@@ -379,7 +379,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeThematic(Thematic $thematic): self
     {
-        if ($this->thematic->removeElement($thematic)) {
+        if ($this->thematics->removeElement($thematic)) {
             // set the owning side to null (unless already changed)
             if ($thematic->getOwner() === $this) {
                 $thematic->setOwner(null);

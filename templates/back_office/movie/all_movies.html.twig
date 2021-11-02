@@ -2,7 +2,7 @@
 
 
 {% block body %}
-	{#{ dump(movies) }#}
+
 
 	<div class="container mt-3">
 		<div
@@ -24,7 +24,9 @@
 							<h5 class="card-title">{{movie.name}}</h5>
 							<h8 class="card-title">{{movie.realisator}}</h8>
 							<h8 class="card-title">{{movie.releasedDate}}</h8>
-							<h8 class="card-title">{#{movie.runTime}#}</h8>
+
+							<h8 class="card-title">{{movie.runTime}}</h8>
+
 							<p class="card-text font-italic">{{movie.synopsis}}</p>
 
 						</div>

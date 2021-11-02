@@ -22,7 +22,7 @@ class ThematicController extends AbstractController
     {
         $thematics = $thematicRepository->findAll();
 
-        return $this->json($thematics, 200, [], ['groups' => 'browse_thematic']);
+        return $this->json($thematics, Response::HTTP_OK, [], ['groups' => 'browse_thematic']);
     }
 
     /**
@@ -39,12 +39,12 @@ class ThematicController extends AbstractController
         if (!$thematic) {
             return $this->json([
                 'message' => 'This thematic does not exist',
-                'errorCode' => '404'
-            ], 404);
+                'code' => Response::HTTP_NOT_FOUND
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $movies = $movieRepository->findByThematic($thematic);
 
-        return $this->json($movies, 200, [], ['groups' => 'read_thematic']);
+        return $this->json($movies, Response::HTTP_OK, [], ['groups' => 'read_thematic']);
     }
 }
