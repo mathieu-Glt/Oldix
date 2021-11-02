@@ -129,7 +129,7 @@ class Movie
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $averageNote;
+    private $averageRate;
 
     public function __construct()
     {
@@ -424,14 +424,14 @@ class Movie
         return $this;
     }
 
-    public function getAverageNote(): ?int
+    public function getAverageRate(): ?int
     {
-        return $this->averageNote;
+        return $this->averageRate;
     }
 
-    public function setAverageNote(?int $averageNote): self
+    public function setAverageRate(?int $averageRate): self
     {
-        $this->averageNote = $averageNote;
+        $this->averageRate = $averageRate;
 
         return $this;
     }
