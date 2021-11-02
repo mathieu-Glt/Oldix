@@ -113,23 +113,27 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
     private $runTime;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
     private $actors;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
     private $illustration;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
-    private $averageNote;
+    private $averageRate;
 
     public function __construct()
     {
@@ -424,14 +428,14 @@ class Movie
         return $this;
     }
 
-    public function getAverageNote(): ?int
+    public function getAverageRate(): ?int
     {
-        return $this->averageNote;
+        return $this->averageRate;
     }
 
-    public function setAverageNote(?int $averageNote): self
+    public function setAverageRate(?int $averageRate): self
     {
-        $this->averageNote = $averageNote;
+        $this->averageRate = $averageRate;
 
         return $this;
     }
