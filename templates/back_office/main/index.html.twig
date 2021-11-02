@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Route Page
+{% block title %}Oldix Backoffice
 {% endblock %}
 
 {% block body %}
@@ -35,61 +35,61 @@
 							<td>GET</td>
 							<td>/api/movies/research</td>
 							<td>GET movies with a research query</td>
-                            <td><a target="blank" href="{{path('api_movies_research')}}?q=maniac">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_movies_research')}}?q=maniac">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/movies/random</td>
 							<td>GET a random movie</td>
-                            <td><a target="blank" href="{{path('api_movies_random')}}">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_movies_random')}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/movies/{slug}</td>
 							<td>GET details about a movie</td>
-                            <td><a target="blank" href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/categories</td>
 							<td>GET all categories</td>
-                            <td><a target="blank" href="{{path('api_category_read',{'slug':'horror'})}}">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_category_browse')}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/categories/{slug}</td>
 							<td>GET all movies related to a category</td>
-                            <td><a target="blank" href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_category_read',{'slug':'horror'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
-							<td>/api/categories/{slug}/movies/preview</td>
+							<td>/api/categories/{slug}/preview</td>
 							<td>GET 10 movies related to a category</td>
-                            <td><a target="blank" href="{{path('api_category_preview',{'slug':'horror'})}}">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_category_preview',{'slug':'horror'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/thematics</td>
 							<td>GET all thematics</td>
-                            <td><a target="blank" href="/api/thematics">Example link</a></td>
+                            <td><a target="_blank" href="/api/thematics">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/thematics/{slug}</td>
 							<td>GET all movies related to a thematic</td>
-                            <td><a target="blank" href="{{path('api_thematic_read',{'slug':'charlie-chaplin'})}}">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_thematic_read',{'slug':'charlie-chaplin'})}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/languages</td>
 							<td>GET languages</td>
-                            <td><a target="blank" href="{{path('api_languages_browse')}}">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_languages_browse')}}">Example link</a></td>
 						</tr>
 						<tr>
 							<td>GET</td>
 							<td>/api/languages/{slug}</td>
 							<td>GET all movies related to a language</td>
-                            <td><a target="blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
+                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
 						</tr>
 					</tbody>
 				</table>
