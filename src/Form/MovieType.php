@@ -23,13 +23,13 @@ class MovieType extends AbstractType
                 'class' => Language::class,
                 'choice_label' => "name"
             ])
-            ->add('thematic', EntityType::class, [
+            ->add('thematics', EntityType::class, [
                 'class' => Thematic::class,
                 'choice_label' => "name",
                 'multiple' => true,
                 'expanded' => true,
             ])
-            ->add('category', EntityType::class, [
+            ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => "name",
                 'multiple' => true,
