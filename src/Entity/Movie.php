@@ -112,6 +112,7 @@ class Movie
     private $rates;
 
     /**
+
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $runTime;
@@ -130,6 +131,7 @@ class Movie
      * @ORM\Column(type="integer", nullable=true)
      */
     private $averageRate;
+
 
     public function __construct()
     {
@@ -390,15 +392,24 @@ class Movie
 
     public function getRunTime(): ?string
     {
+
+        return $this->$runTime;
+    }
+
+    public function setRunTime(string $runTime): self
+
         return $this->runTime;
     }
 
     public function setRunTime(?string $runTime): self
+
     {
         $this->runTime = $runTime;
 
         return $this;
     }
+
+
 
     public function getActors(): ?string
     {
@@ -435,4 +446,5 @@ class Movie
 
         return $this;
     }
+
 }
