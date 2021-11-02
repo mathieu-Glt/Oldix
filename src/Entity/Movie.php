@@ -121,6 +121,16 @@ class Movie
      */
     private $actors;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $illustration;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $averageNote;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -398,6 +408,30 @@ class Movie
     public function setActors(?string $actors): self
     {
         $this->actors = $actors;
+
+        return $this;
+    }
+
+    public function getIllustration(): ?string
+    {
+        return $this->illustration;
+    }
+
+    public function setIllustration(?string $illustration): self
+    {
+        $this->illustration = $illustration;
+
+        return $this;
+    }
+
+    public function getAverageNote(): ?int
+    {
+        return $this->averageNote;
+    }
+
+    public function setAverageNote(?int $averageNote): self
+    {
+        $this->averageNote = $averageNote;
 
         return $this;
     }
