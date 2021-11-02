@@ -112,6 +112,7 @@ class Movie
     private $rates;
 
     /**
+
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
@@ -134,6 +135,7 @@ class Movie
      * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
     private $averageRate;
+
 
     public function __construct()
     {
@@ -394,15 +396,24 @@ class Movie
 
     public function getRunTime(): ?string
     {
+
+        return $this->$runTime;
+    }
+
+    public function setRunTime(string $runTime): self
+
         return $this->runTime;
     }
 
     public function setRunTime(?string $runTime): self
+
     {
         $this->runTime = $runTime;
 
         return $this;
     }
+
+
 
     public function getActors(): ?string
     {
@@ -439,4 +450,5 @@ class Movie
 
         return $this;
     }
+
 }
