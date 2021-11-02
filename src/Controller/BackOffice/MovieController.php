@@ -39,22 +39,22 @@ class MovieController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $infosFromApi = $omdbApi->getInfosFromApi($movie->getName());
             $array = (array) $infosFromApi;
-            dd($array);
             $movieTitle = $array['Title'];
             $movieYear = $array['Year'];
             $movieSynopsis = $array["Plot"];
             $movieRealisator = $array["Director"];
             $moviePoster = $array["Poster"];
-            $movieDuration = $array["Duration"];
+            $movieDuration = $array["Runtime"];
             $movieNameLowed = strtolower($movieTitle);
             $movieNameSlugged = $slug->slugger($movieNameLowed);
             $movie->setName($movieTitle);
             $movie->setReleasedDate($movieYear);
             $movie->setRealisator($movieRealisator);
-            $movie->setDurationMovie($movieDuration);
+            $movie->setRunTime($movieDuration);
             $movie->setSynopsis($movieSynopsis);
             $movie->setPictureUrl($moviePoster);
             $movie->setSlug($movieNameSlugged);
+            //dd($array);
             $entityManager->persist($movie);
             $entityManager->flush();
             $this->addFlash('success', "New movie added");
@@ -74,6 +74,7 @@ class MovieController extends AbstractController
     public function browse(MovieRepository $movieRepository): Response
     {
         $allMovies = $movieRepository->findAll();
+        //dd(($allMovies);
         return $this->render('back_office/movie/all_movies.html.twig', ['movies' => $allMovies]);
     }
 
@@ -113,5 +114,58 @@ class MovieController extends AbstractController
             return $this->redirectToRoute('backoffice_movies_all');
         }
         return $this->render("back_office/movie/edit.html.twig", ["form" => $movieForm->createView()]);
+    }
+    /**
+     * Display information for a film
+     * 
+     * @Route("test", methods={"GET"})
+     * @param int $id
+     * @param MovieRepository $movieRepository
+     * @return Response
+    */
+    public function addToData(MovieRepository $movieRepository, OmdbApi $omdbApi, Request $request): Response
+    {       
+        
+            for ($id=1; $id < 67 ; $id++) { 
+                
+                $entityManager = $this->getDoctrine()->getManager();
+                // TODO récupérer la liste d'information d'un film dans le repository par id
+                //dd($id);
+                $movie =  $movieRepository->find($id);
+                if ($movie !== null) {
+                
+                //dd($movie);
+                // TODO récupérer le nom d'un film
+                $movieName = $movie->getName();
+                //var_dump($id);
+                //dd($movieName);
+                // TODO avec l'info du nom du film je récupère le film dans le servie Api
+                $infosFromApi = $omdbApi->getInfosFromApi($movieName);
+                //dd($infosFromApi);
+                // TODO je converti l'information de l'api en tableau
+                $array = (array) $infosFromApi;
+                //dd($array);
+                // TODO récupèration de la donnée runtime
+                $movieRunTime = $array['Runtime']; 
+                //dd($movieRunTime);
+                // TODO définition de cette donnée dans la base adminer
+                $movie->setRunTime($movieRunTime);
+                //dd($movie);
+                // TODO Je valde en base de donnée
+                $entityManager->persist($movie);
+                $entityManager->flush();
+
+                }
+
+            }
+                
+                return new Response('data runtime added', 200);
+
+    
+    
+                
+
+
+
     }
 }

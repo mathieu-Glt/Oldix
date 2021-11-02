@@ -111,6 +111,11 @@ class Movie
      */
     private $rates;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $runTime;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -364,6 +369,18 @@ class Movie
                 $rate->setMovie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRunTime(): ?string
+    {
+        return $this->$runTime;
+    }
+
+    public function setRunTime(string $runTime): self
+    {
+        $this->runTime = $runTime;
 
         return $this;
     }
