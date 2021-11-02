@@ -24,7 +24,7 @@ class Thematic
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","browse_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","browse_thematic","movie_read","list_movie_add","list_movie_show"})
      * @Assert\NotBlank(message="Thematic must have a name")
      * @Assert\Regex(
      *              pattern="/[a-z]+/"
@@ -34,13 +34,13 @@ class Thematic
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","browse_thematic","movie_read"})
+     * @Groups({"movie_browse","category_read","movies_search","browse_thematic","movie_read"})
      */
     private $slug;
 
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="thematics")
-     * @Groups({"read_thematic"})
+     * @Groups({"thematic_read"})
      * @Assert\Valid
      */
     private $movies;

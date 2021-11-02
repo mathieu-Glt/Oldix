@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
 
-        return $this->json($categories, Response::HTTP_OK, [], ['groups' => 'browse_category']);
+        return $this->json($categories, Response::HTTP_OK, [], ['groups' => 'category_browse']);
     }
 
     /**
@@ -47,7 +47,7 @@ class CategoryController extends AbstractController
 
         $movies = $movieRepository->findByCategory($category);
 
-        return $this->json($movies, Response::HTTP_OK, [], ['groups' => 'read_category']);
+        return $this->json($movies, Response::HTTP_OK, [], ['groups' => 'category_read']);
     }
 
     /**
@@ -70,6 +70,6 @@ class CategoryController extends AbstractController
         }
         $previewMovies = $movieRepository->findByCategory($category, 10);
 
-        return $this->json($previewMovies, Response::HTTP_OK, [], ['groups' => 'read_category']);
+        return $this->json($previewMovies, Response::HTTP_OK, [], ['groups' => 'category_read']);
     }
 }
