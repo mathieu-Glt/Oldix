@@ -75,4 +75,39 @@ class MovieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    /**
+     * Get movies or a movie by a query
+     *
+     * @param string $query
+     * @return array
+     */
+    public function findHitchcock():array
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->andWhere('m.realisator LIKE :realisator')
+            ->setParameter("realisator", "Alfred Hitchcock")
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get movies or a movie by a query
+     *
+     * @param string $query
+     * @return array
+     */
+    public function findFritzLang():array
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->andWhere('m.realisator LIKE :realisator')
+            ->setParameter("realisator", "Fritz Lang")
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
 }

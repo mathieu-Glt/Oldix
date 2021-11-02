@@ -74,4 +74,28 @@ class MovieController extends AbstractController
         }
         return $this->json($movie, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
+
+    /**
+     * Return a collection of 3 movies from Hitchcock
+     * 
+     * @Route("/collection/hitchcock")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function hitchcockCollection(MovieRepository $movieRepository){
+        $hitchcockMovies = $movieRepository->findHitchcock();
+        return $this->json($hitchcockMovies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+    /**
+     * Return a collection of 3 movies from Fritz Lang
+     * 
+     * @Route("/collection/fritz-lang")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function fritzLangCollection(MovieRepository $movieRepository){
+        $fritzLangMovies = $movieRepository->findFritzLang();
+        return $this->json($fritzLangMovies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
 }

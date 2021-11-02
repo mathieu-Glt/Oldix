@@ -114,21 +114,25 @@ class Movie
     /**
 
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
     private $runTime;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
     private $actors;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
     private $illustration;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
      */
     private $averageRate;
 
