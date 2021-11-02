@@ -72,6 +72,10 @@ CREATE TABLE `language` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `language` (`id`, `name`, `slug`) VALUES
+(1,	'english',	'english'),
+(2,	'french',	'french'),
+(3,	'silent',	'silent');
 
 DROP TABLE IF EXISTS `movie`;
 CREATE TABLE `movie` (
