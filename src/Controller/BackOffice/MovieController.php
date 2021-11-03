@@ -138,7 +138,7 @@ class MovieController extends AbstractController
                 //dd($movie);
                 // TODO récupérer le nom d'un film
                 $movieName = $movie->getName();
-                //var_dump($id);
+                var_dump($id);
                 //dd($movieName);
                 // TODO avec l'info du nom du film je récupère le film dans le servie Api
                 $infosFromApi = $omdbApi->getInfosFromApi($movieName);

@@ -396,12 +396,6 @@ class Movie
 
     public function getRunTime(): ?string
     {
-
-        return $this->$runTime;
-    }
-
-    public function setRunTime(string $runTime): self
-
         return $this->runTime;
     }
 
@@ -450,5 +444,4 @@ class Movie
 
         return $this;
     }
-
 }

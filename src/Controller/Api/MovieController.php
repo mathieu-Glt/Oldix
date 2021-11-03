@@ -98,4 +98,18 @@ class MovieController extends AbstractController
         $fritzLangMovies = $movieRepository->findFritzLang();
         return $this->json($fritzLangMovies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
+
+    /**
+     * Return all movies of 1930 to 1939
+     * 
+     * @Route("/collection/date")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollection(MovieRepository $movieRepository){
+        $findByDate = $movieRepository->findMoviesByDecade();
+        //dd($findByDate);
+        return $this->json($findByDate, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
 }

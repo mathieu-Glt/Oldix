@@ -108,6 +108,29 @@ class MovieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Find all movies by decade
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesByDecade():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+        //dd($qb);
+        //->select('released_date')
+            //->from('m')
+            ->where('m.releasedDate BETWEEN :debut AND :fin')
+            //dd($qb);
+            ->setParameter('debut', 1930)
+            ->setParameter('fin', 1939)
+            ->orderBy('m.releasedDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+
 
 
 }
