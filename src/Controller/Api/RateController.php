@@ -28,7 +28,7 @@ class RateController extends AbstractController
                 'message' => 'Movie not found',
                 'code' => Response::HTTP_NOT_FOUND
             ];
-            return $this->json($responseJson, Response::HTTP_NOT_FOUND);
+            return $this->json($responseJson, Response::HTTP_NOT_FOUND,[],['groups'=>'rate_add_response']);
         }
 
         $user = $this->getUser();

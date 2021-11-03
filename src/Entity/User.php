@@ -80,7 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Thematic::class, mappedBy="owner")
      */
-    private $thematic;
+    private $thematics;
 
     public function __construct()
     {

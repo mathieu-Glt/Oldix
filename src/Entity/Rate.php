@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\RateRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\RateRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=RateRepository::class)
@@ -19,6 +20,7 @@ class Rate
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"rate_add_response"})
      */
     private $score;
 

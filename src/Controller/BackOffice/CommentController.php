@@ -12,9 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/backoffice/comments", name="backoffice_comments_list")
+     * @Route("/backoffice/comments", name="backoffice_comments_browse")
      */
-    public function list(CommentRepository $commentRepository): Response
+    public function browse(CommentRepository $commentRepository): Response
     {
         $allComments = $commentRepository->findAll();
         return $this->render('back_office/comment/index.html.twig', [
@@ -30,6 +30,6 @@ class CommentController extends AbstractController
         $em->remove($comment);
         $em->flush();
         $this->addFlash('success', 'Comment deleted');
-        return $this->redirectToRoute('backoffice_comments_list');
+        return $this->redirectToRoute('backoffice_comments_browse');
     }
 }
