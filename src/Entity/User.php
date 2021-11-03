@@ -82,6 +82,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $thematics;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Language::class, mappedBy="owner")
+     */
+    private $languages;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
@@ -92,6 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->favoriteThematics = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->thematic = new ArrayCollection();
+        $this->languages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -383,6 +389,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($thematic->getOwner() === $this) {
                 $thematic->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Language[]
+     */
+    public function getLanguages(): Collection
+    {
+        return $this->languages;
+    }
+
+    public function addLanguage(Language $language): self
+    {
+        if (!$this->languages->contains($language)) {
+            $this->languages[] = $language;
+            $language->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLanguage(Language $language): self
+    {
+        if ($this->languages->removeElement($language)) {
+            // set the owning side to null (unless already changed)
+            if ($language->getOwner() === $this) {
+                $language->setOwner(null);
             }
         }
 

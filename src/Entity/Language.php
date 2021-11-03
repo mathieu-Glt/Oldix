@@ -40,6 +40,11 @@ class Language
      */
     private $movies;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="languages")
+     */
+    private $owner;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
@@ -100,6 +105,18 @@ class Language
                 $movie->setLanguage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }
