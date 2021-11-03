@@ -39,6 +39,7 @@ class LanguageController extends AbstractController
      */
     public function edit(Request $request, Language $language): Response
     {
+        $this->denyAccessUnlessGranted("language_edit", $language, "access denied");
         $form = $this->createForm(LanguageType::class, $language);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,6 +64,7 @@ class LanguageController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $language->setSlug($this->slug->slugger($language->getName()));
+            $language->setOwner($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($language);
             $em->flush();
@@ -79,9 +81,10 @@ class LanguageController extends AbstractController
      */
     public function delete(Language $language, EntityManagerInterface $em)
     {
+        $this->denyAccessUnlessGranted("language_delete", $language, "access denied");
         $em->remove($language);
         $em->flush();
-        $this->addFlash('success', 'Language "' . $language->getName() . '" created');
+        $this->addFlash('success', 'Language "' . $language->getName() . '" deleted');
         return $this->redirectToRoute('backoffice_languages_browse');
     }
 }
