@@ -24,7 +24,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","browse_category","movies_search","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_browse","movies_search","movie_read","list_movie_add","list_movie_show"})
      * @Assert\NotBlank(message="Category must have a name")
      * @Assert\Regex(
      *              pattern="/[a-z]+/"
@@ -34,13 +34,13 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","browse_category","movies_search","movie_read"})
+     * @Groups({"movie_browse","category_browse","movies_search","movie_read"})
      */
     private $slug;
 
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="categories")
-     * @Groups({"read_category"})
+     * @Groups({"category_read"})
      * @Assert\Valid
      */
     private $movies;

@@ -23,13 +23,13 @@ class Language
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","movie_read","browse_language","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","movie_read","language_browse","list_movie_add","list_movie_show"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","movie_read","browse_language"})
+     * @Groups({"movie_browse","category_read","movies_search","movie_read","language_browse"})
      */
     private $slug;
 
