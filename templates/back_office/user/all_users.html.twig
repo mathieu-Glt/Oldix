@@ -1,0 +1,28 @@
+{% extends 'back_office/backoffice_base.html.twig' %}
+
+{% block body %}
+	<div class="container mt-3">
+		<h1 class="text-center">List of Users
+		</h1>
+		<div class="d-flex justify-content-end">
+			<a class="d-block btn btn-secondary " href="{{path("backoffice_users_add")}}">Add a User</a>
+		</div>
+
+		<table class="table mt-2">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center" scope="col">#</th>
+					<th class="text-center" scope="col">Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in users %}
+					<tr>
+						<th class="text-center" scope="row">{{user.id}}</th>
+						<td class="text-center">{{user.email}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
