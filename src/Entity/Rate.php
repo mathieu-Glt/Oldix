@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\RateRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\RateRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=RateRepository::class)
@@ -19,6 +20,7 @@ class Rate
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"rate_add_response"})
      */
     private $score;
 
@@ -27,6 +29,12 @@ class Rate
      * @ORM\JoinColumn(nullable=false)
      */
     private $movie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="rates")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -53,6 +61,18 @@ class Rate
     public function setMovie(?Movie $movie): self
     {
         $this->movie = $movie;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

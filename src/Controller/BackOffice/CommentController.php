@@ -7,14 +7,19 @@ use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/backoffice/comments",name="backoffice_comments_")
+ * @IsGranted("ROLE_ADMIN")
+ */
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/backoffice/comments", name="backoffice_comments_list")
+     * @Route("/", name="browse")
      */
-    public function list(CommentRepository $commentRepository): Response
+    public function browse(CommentRepository $commentRepository): Response
     {
         $allComments = $commentRepository->findAll();
         return $this->render('back_office/comment/index.html.twig', [
@@ -23,13 +28,13 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/backoffice/comments/{id}/delete", name="backoffice_comments_delete")
+     * @Route("/{id}/delete", name="delete")
      */
     public function delete(Comment $comment, EntityManagerInterface $em)
     {   
         $em->remove($comment);
         $em->flush();
         $this->addFlash('success', 'Comment deleted');
-        return $this->redirectToRoute('backoffice_comments_list');
+        return $this->redirectToRoute('backoffice_comments_browse');
     }
 }
