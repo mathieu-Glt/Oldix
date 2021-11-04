@@ -75,6 +75,7 @@ class MovieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
     /**
      * Get movies or a movie by a query
      *
@@ -106,6 +107,7 @@ class MovieRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
 
 }
