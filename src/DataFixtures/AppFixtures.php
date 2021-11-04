@@ -48,7 +48,6 @@ class AppFixtures extends Fixture
                             ->addFavoriteCategory($allCategories[array_rand($allCategories)])
                             ->addFavoriteThematic($allThematics[array_rand($allThematics)]);
         }
-
         $manager->flush();
     }
 }

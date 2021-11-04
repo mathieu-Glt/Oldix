@@ -18,16 +18,41 @@ CREATE TABLE `category` (
   CONSTRAINT `FK_64C19C17E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `category` (`id`, `name`, `slug`, `owner_id`) VALUES
-(1,	'action',	'action',	1),
-(2,	'horror',	'horror',	1),
-(3,	'science-fiction',	'science-fiction',	1),
-(4,	'polar',	'polar',	1),
-(5,	'romance',	'romance',	1),
-(6,	'western',	'western',	1),
-(7,	'drama',	'drama',	1),
-(8,	'thriller',	'thriller',	1),
-(9,	'comedy',	'comedy',	1);
+DROP TABLE IF EXISTS `rate`;
+CREATE TABLE `rate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `movie_id` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DFEC3F398F93B6FC` (`movie_id`),
+  KEY `IDX_DFEC3F39A76ED395` (`user_id`),
+  CONSTRAINT `FK_DFEC3F398F93B6FC` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
+  CONSTRAINT `FK_DFEC3F39A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `thematic`;
+CREATE TABLE `thematic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_7C1CDF727E3C61F9` (`owner_id`),
+  CONSTRAINT `FK_7C1CDF727E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pseudo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
@@ -43,7 +68,6 @@ CREATE TABLE `comment` (
   CONSTRAINT `FK_9474526CA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
 DROP TABLE IF EXISTS `doctrine_migration_versions`;
 CREATE TABLE `doctrine_migration_versions` (
   `version` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
@@ -52,20 +76,6 @@ CREATE TABLE `doctrine_migration_versions` (
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20211022123001',	'2021-11-02 11:20:11',	110),
-('DoctrineMigrations\\Version20211025124549',	'2021-11-02 11:20:11',	24),
-('DoctrineMigrations\\Version20211027084903',	'2021-11-02 11:20:12',	14),
-('DoctrineMigrations\\Version20211027122019',	'2021-11-02 11:20:12',	49),
-('DoctrineMigrations\\Version20211027122827',	'2021-11-02 11:20:12',	24),
-('DoctrineMigrations\\Version20211027123539',	'2021-11-02 11:20:12',	13),
-('DoctrineMigrations\\Version20211028165159',	'2021-11-03 17:50:36',	19),
-('DoctrineMigrations\\Version20211028165659',	'2021-11-02 11:20:12',	2),
-('DoctrineMigrations\\Version20211029072358',	'2021-11-02 11:20:12',	13),
-('DoctrineMigrations\\Version20211102100907',	'2021-11-02 11:20:12',	23),
-('DoctrineMigrations\\Version20211102102802',	'2021-11-02 11:42:08',	19),
-('DoctrineMigrations\\Version20211103164213',	'2021-11-03 17:50:36',	28),
-('DoctrineMigrations\\Version20211103164736',	'2021-11-03 17:50:36',	41);
 
 DROP TABLE IF EXISTS `language`;
 CREATE TABLE `language` (
@@ -77,11 +87,6 @@ CREATE TABLE `language` (
   KEY `IDX_D4DB71B57E3C61F9` (`owner_id`),
   CONSTRAINT `FK_D4DB71B57E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `language` (`id`, `name`, `slug`, `owner_id`) VALUES
-(1,	'english',	'english',	NULL),
-(2,	'french',	'french',	NULL),
-(3,	'silent',	'silent',	NULL);
 
 DROP TABLE IF EXISTS `movie`;
 CREATE TABLE `movie` (
@@ -105,6 +110,45 @@ CREATE TABLE `movie` (
   CONSTRAINT `FK_1D5EF26F7E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_1D5EF26F82F1BAF4` FOREIGN KEY (`language_id`) REFERENCES `language` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `category` (`id`, `name`, `slug`, `owner_id`) VALUES
+(1,	'action',	'action',	1),
+(2,	'horror',	'horror',	1),
+(3,	'science-fiction',	'science-fiction',	1),
+(4,	'polar',	'polar',	1),
+(5,	'romance',	'romance',	1),
+(6,	'western',	'western',	1),
+(7,	'drama',	'drama',	1),
+(8,	'thriller',	'thriller',	1),
+(9,	'comedy',	'comedy',	1);
+
+
+
+
+
+
+INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
+('DoctrineMigrations\\Version20211022123001',	'2021-11-02 11:20:11',	110),
+('DoctrineMigrations\\Version20211025124549',	'2021-11-02 11:20:11',	24),
+('DoctrineMigrations\\Version20211027084903',	'2021-11-02 11:20:12',	14),
+('DoctrineMigrations\\Version20211027122019',	'2021-11-02 11:20:12',	49),
+('DoctrineMigrations\\Version20211027122827',	'2021-11-02 11:20:12',	24),
+('DoctrineMigrations\\Version20211027123539',	'2021-11-02 11:20:12',	13),
+('DoctrineMigrations\\Version20211028165159',	'2021-11-03 17:50:36',	19),
+('DoctrineMigrations\\Version20211028165659',	'2021-11-02 11:20:12',	2),
+('DoctrineMigrations\\Version20211029072358',	'2021-11-02 11:20:12',	13),
+('DoctrineMigrations\\Version20211102100907',	'2021-11-02 11:20:12',	23),
+('DoctrineMigrations\\Version20211102102802',	'2021-11-02 11:42:08',	19),
+('DoctrineMigrations\\Version20211103164213',	'2021-11-03 17:50:36',	28),
+('DoctrineMigrations\\Version20211103164736',	'2021-11-03 17:50:36',	41);
+
+
+INSERT INTO `language` (`id`, `name`, `slug`, `owner_id`) VALUES
+(1,	'english',	'english',	NULL),
+(2,	'french',	'french',	NULL),
+(3,	'silent',	'silent',	NULL);
+
+
 
 INSERT INTO `movie` (`id`, `language_id`, `owner_id`, `name`, `slug`, `link`, `picture_url`, `released_date`, `realisator`, `synopsis`, `run_time`, `actors`, `illustration`, `average_rate`) VALUES
 (1,	1,	NULL,	'The Driller Killer',	'the-driller-killer',	'https://www.youtube.com/watch?v=c0wr-PFTN2k&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BYmE3Yzc1ZTktMDAwNC00OTg0LWI1ZmYtMzg2NDNiOWRlZjkwXkEyXkFqcGdeQXVyMjI4MjA5MzA@._V1_SX300.jpg',	1979,	'Abel Ferrara',	'An artist slowly goes insane while struggling to pay his bills, work on his paintings, and care for his two female roommates, which leads him taking to the streets of New York after dark and randomly killing derelicts with a power drill.',	NULL,	'Abel Ferrara, Carolyn Marz, Baybi Day',	NULL,	NULL),
@@ -415,31 +459,6 @@ INSERT INTO `movie_thematic` (`movie_id`, `thematic_id`) VALUES
 (135,	2),
 (139,	2);
 
-DROP TABLE IF EXISTS `rate`;
-CREATE TABLE `rate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `movie_id` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_DFEC3F398F93B6FC` (`movie_id`),
-  KEY `IDX_DFEC3F39A76ED395` (`user_id`),
-  CONSTRAINT `FK_DFEC3F398F93B6FC` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
-  CONSTRAINT `FK_DFEC3F39A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-DROP TABLE IF EXISTS `thematic`;
-CREATE TABLE `thematic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_7C1CDF727E3C61F9` (`owner_id`),
-  CONSTRAINT `FK_7C1CDF727E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `thematic` (`id`, `name`, `slug`, `owner_id`) VALUES
 (1,	'Charlie Chaplin',	'charlie-chaplin',	1),
 (2,	'Fritz Lang',	'fritz-lang',	1),
@@ -453,16 +472,7 @@ INSERT INTO `thematic` (`id`, `name`, `slug`, `owner_id`) VALUES
 (10,	'War',	'war',	1),
 (11,	'Kung-Fu',	'kung-fu',	1);
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pseudo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `pseudo`) VALUES
 (1,	'admin@admin.com',	'[\"ROLE_ADMIN\"]',	'$2y$13$G2ixgCVTvepExCAut0JMV.5QN7g01Yh1iOx1KOEMB0MtRNt6Q96Ei',	NULL);
