@@ -51,7 +51,7 @@ class DatasGenerateCommand extends Command
                 try {
                     $command->run($fixtureInput, $output);
                 } catch (\Throwable $th) {
-                    $io->error('There is a issue on your fixtures');
+                    $io->error('There is a issue on your fixtures : ' . $th->getMessage());
                     return Command::FAILURE;
                 }
 
