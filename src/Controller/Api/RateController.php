@@ -16,6 +16,15 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class RateController extends AbstractController
 {
     /**
+     * @Route("/api/movies/top", methods={"GET"})
+     * @return Response
+     */
+    public function top()
+    {
+      return "hello";
+    }
+
+    /**
      * 
      * @Route("/api/movies/{slug}/rates/add",methods={"POST"})
      * @return Response

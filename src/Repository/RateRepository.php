@@ -19,6 +19,8 @@ class RateRepository extends ServiceEntityRepository
         parent::__construct($registry, Rate::class);
     }
 
+
+
     // /**
     //  * @return Rate[] Returns an array of Rate objects
     //  */

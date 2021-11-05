@@ -18,41 +18,16 @@ CREATE TABLE `category` (
   CONSTRAINT `FK_64C19C17E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `rate`;
-CREATE TABLE `rate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `movie_id` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_DFEC3F398F93B6FC` (`movie_id`),
-  KEY `IDX_DFEC3F39A76ED395` (`user_id`),
-  CONSTRAINT `FK_DFEC3F398F93B6FC` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
-  CONSTRAINT `FK_DFEC3F39A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-DROP TABLE IF EXISTS `thematic`;
-CREATE TABLE `thematic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_7C1CDF727E3C61F9` (`owner_id`),
-  CONSTRAINT `FK_7C1CDF727E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pseudo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `category` (`id`, `name`, `slug`, `owner_id`) VALUES
+(1,	'action',	'action',	1),
+(2,	'horror',	'horror',	1),
+(3,	'science-fiction',	'science-fiction',	1),
+(4,	'polar',	'polar',	1),
+(5,	'romance',	'romance',	1),
+(6,	'western',	'western',	1),
+(7,	'drama',	'drama',	1),
+(8,	'thriller',	'thriller',	1),
+(9,	'comedy',	'comedy',	1);
 
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
@@ -68,6 +43,7 @@ CREATE TABLE `comment` (
   CONSTRAINT `FK_9474526CA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 DROP TABLE IF EXISTS `doctrine_migration_versions`;
 CREATE TABLE `doctrine_migration_versions` (
   `version` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
@@ -76,6 +52,20 @@ CREATE TABLE `doctrine_migration_versions` (
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
+('DoctrineMigrations\\Version20211022123001',	'2021-11-02 11:20:11',	110),
+('DoctrineMigrations\\Version20211025124549',	'2021-11-02 11:20:11',	24),
+('DoctrineMigrations\\Version20211027084903',	'2021-11-02 11:20:12',	14),
+('DoctrineMigrations\\Version20211027122019',	'2021-11-02 11:20:12',	49),
+('DoctrineMigrations\\Version20211027122827',	'2021-11-02 11:20:12',	24),
+('DoctrineMigrations\\Version20211027123539',	'2021-11-02 11:20:12',	13),
+('DoctrineMigrations\\Version20211028165159',	'2021-11-03 17:50:36',	19),
+('DoctrineMigrations\\Version20211028165659',	'2021-11-02 11:20:12',	2),
+('DoctrineMigrations\\Version20211029072358',	'2021-11-02 11:20:12',	13),
+('DoctrineMigrations\\Version20211102100907',	'2021-11-02 11:20:12',	23),
+('DoctrineMigrations\\Version20211102102802',	'2021-11-02 11:42:08',	19),
+('DoctrineMigrations\\Version20211103164213',	'2021-11-03 17:50:36',	28),
+('DoctrineMigrations\\Version20211103164736',	'2021-11-03 17:50:36',	41);
 
 DROP TABLE IF EXISTS `language`;
 CREATE TABLE `language` (
@@ -87,6 +77,11 @@ CREATE TABLE `language` (
   KEY `IDX_D4DB71B57E3C61F9` (`owner_id`),
   CONSTRAINT `FK_D4DB71B57E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `language` (`id`, `name`, `slug`, `owner_id`) VALUES
+(1,	'english',	'english',	NULL),
+(2,	'french',	'french',	NULL),
+(3,	'silent',	'silent',	NULL);
 
 DROP TABLE IF EXISTS `movie`;
 CREATE TABLE `movie` (
@@ -111,97 +106,57 @@ CREATE TABLE `movie` (
   CONSTRAINT `FK_1D5EF26F82F1BAF4` FOREIGN KEY (`language_id`) REFERENCES `language` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `category` (`id`, `name`, `slug`, `owner_id`) VALUES
-(1,	'action',	'action',	1),
-(2,	'horror',	'horror',	1),
-(3,	'science-fiction',	'science-fiction',	1),
-(4,	'polar',	'polar',	1),
-(5,	'romance',	'romance',	1),
-(6,	'western',	'western',	1),
-(7,	'drama',	'drama',	1),
-(8,	'thriller',	'thriller',	1),
-(9,	'comedy',	'comedy',	1);
-
-
-
-
-
-
-INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20211022123001',	'2021-11-02 11:20:11',	110),
-('DoctrineMigrations\\Version20211025124549',	'2021-11-02 11:20:11',	24),
-('DoctrineMigrations\\Version20211027084903',	'2021-11-02 11:20:12',	14),
-('DoctrineMigrations\\Version20211027122019',	'2021-11-02 11:20:12',	49),
-('DoctrineMigrations\\Version20211027122827',	'2021-11-02 11:20:12',	24),
-('DoctrineMigrations\\Version20211027123539',	'2021-11-02 11:20:12',	13),
-('DoctrineMigrations\\Version20211028165159',	'2021-11-03 17:50:36',	19),
-('DoctrineMigrations\\Version20211028165659',	'2021-11-02 11:20:12',	2),
-('DoctrineMigrations\\Version20211029072358',	'2021-11-02 11:20:12',	13),
-('DoctrineMigrations\\Version20211102100907',	'2021-11-02 11:20:12',	23),
-('DoctrineMigrations\\Version20211102102802',	'2021-11-02 11:42:08',	19),
-('DoctrineMigrations\\Version20211103164213',	'2021-11-03 17:50:36',	28),
-('DoctrineMigrations\\Version20211103164736',	'2021-11-03 17:50:36',	41);
-
-
-INSERT INTO `language` (`id`, `name`, `slug`, `owner_id`) VALUES
-(1,	'english',	'english',	NULL),
-(2,	'french',	'french',	NULL),
-(3,	'silent',	'silent',	NULL);
-
-
-
 INSERT INTO `movie` (`id`, `language_id`, `owner_id`, `name`, `slug`, `link`, `picture_url`, `released_date`, `realisator`, `synopsis`, `run_time`, `actors`, `illustration`, `average_rate`) VALUES
-(1,	1,	NULL,	'The Driller Killer',	'the-driller-killer',	'https://www.youtube.com/watch?v=c0wr-PFTN2k&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BYmE3Yzc1ZTktMDAwNC00OTg0LWI1ZmYtMzg2NDNiOWRlZjkwXkEyXkFqcGdeQXVyMjI4MjA5MzA@._V1_SX300.jpg',	1979,	'Abel Ferrara',	'An artist slowly goes insane while struggling to pay his bills, work on his paintings, and care for his two female roommates, which leads him taking to the streets of New York after dark and randomly killing derelicts with a power drill.',	NULL,	'Abel Ferrara, Carolyn Marz, Baybi Day',	NULL,	NULL),
-(2,	2,	NULL,	'Plan 9 from Outer Space',	'plan-9-from-outer-space',	'https://www.youtube.com/watch?v=DXTC2Ob8spY&ab_channel=PublicDomainDatabase',	'https://m.media-amazon.com/images/M/MV5BMjExMzJhYTYtZDlhNC00NDIyLWIyMGUtMDBhOGE3MzAzMjA1XkEyXkFqcGdeQXVyNjMwMjk0MTQ@._V1_SX300.jpg',	1957,	'Ed Wood',	'Evil aliens attack Earth and set their terrible \"Plan 9\" into action. As the aliens resurrect the dead of the Earth, the lives of the living are in danger.',	NULL,	'Gregory Walcott, Tom Keene, Mona McKinnon',	NULL,	NULL),
-(3,	1,	NULL,	'Scarlet Street',	'scarlet-street',	'https://www.youtube.com/watch?v=MNRSxu22NxU&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BMzY1ODRkN2MtNWM5My00ZDNiLTk0YzUtMzBkMGQ0NmUxODRkXkEyXkFqcGdeQXVyNDY2MTk1ODk@._V1_SX300.jpg',	1945,	'Fritz Lang',	'A man in mid-life crisis befriends a young woman, though her fiancé persuades her to con him out of the fortune they mistakenly assume he possesses.',	NULL,	'Edward G. Robinson, Joan Bennett, Dan Duryea',	NULL,	NULL),
-(4,	1,	NULL,	'Black Dragons',	'black-dragons',	'https://www.youtube.com/watch?v=gXJamhA22S4&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BY2U0NjJmYjMtZDUzZi00YzVkLTkwNWEtOGFkYTg3ZDQ0YjYwXkEyXkFqcGdeQXVyMTQ2MjQyNDc@._V1_SX300.jpg',	1942,	'William Nigh',	'A cabal of American industrialists, all fifth-columnists intent on sabotaging the war effort.,',	NULL,	'Bela Lugosi, Joan Barclay, George Pembroke',	NULL,	NULL),
-(5,	1,	NULL,	'Maniac',	'maniac',	'https://www.youtube.com/watch?v=5gYnHa4izjo&ab_channel=BloodyCinemaUSA',	'https://m.media-amazon.com/images/M/MV5BMDFiNmJhYTQtYWQ0MS00OTEwLWJkNjQtMDIzNWQ3NjExMTg4XkEyXkFqcGdeQXVyOTI2MjI5MQ@@._V1_SX300.jpg',	1934,	'Dwain Esper',	'A former vaudevillian gifted at impersonation assists a mad scientist in reanimating corpses and soon goes mad himself.',	NULL,	'Jonah Hill, Emma Stone, Sonoya Mizuno',	NULL,	NULL),
-(6,	2,	NULL,	'And then there were none',	'and-then-there-were-none',	'https://www.youtube.com/watch?v=pS7-Ccl9ayQ&ab_channel=Cin%C3%A9clap',	'https://m.media-amazon.com/images/M/MV5BYThiMzJiNzMtMzI4My00MmFmLThjODctNWE2MjMwZTM1NGFkXkEyXkFqcGdeQXVyNjUwMzI2NzU@._V1_SX300.jpg',	1945,	'René Clair',	'\"Seven guests, a newly hired secretary and two staff are gathered at a manor house on an isolated island by an unknown absentee host and are killed off one-by-one. They work together to determine who the killer is before it\'s too late',	NULL,	'Maeve Dermody, Charles Dance, Toby Stephens',	NULL,	NULL),
-(7,	3,	NULL,	'The Birth of a Nation',	'the-birth-of-a-nation',	'https://www.youtube.com/watch?v=nGQaAddwjxg&ab_channel=JamesBuck',	'https://m.media-amazon.com/images/M/MV5BNWZlNjg5ZTYtM2JiMi00MDZkLTlmOWQtYmMzMGY2NDc0NjdjXkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',	1915,	'D.W Griffith',	'The Stoneman family finds its friendship with the Camerons affected by the Civil War, both fighting in opposite armies. The development of the war in their lives plays through to Lincoln\'s assassination and the birth of the Ku Klux K',	NULL,	'Lillian Gish, Mae Marsh, Henry B. Walthall',	NULL,	NULL),
-(8,	2,	NULL,	'L\'Egyptien',	'egyptien',	'https://www.youtube.com/watch?v=TcmpoRJISIM&ab_channel=lepeplum',	'https://m.media-amazon.com/images/M/MV5BNzE3N2Y4NzAtNzY1Yi00MTliLTkxNzEtNGZhM2EyYWQ0MTdmXkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_SX300.jpg',	1954,	'Michael Curtiz',	'In ancient Egypt, a poor orphan becomes a genial physician and is eventually appointed at the Pharaoh\'s court where he witnesses palace intrigues and learns dangerous royal secrets.',	NULL,	'Jean Simmons, Victor Mature, Gene Tierney',	NULL,	NULL),
-(15,	1,	NULL,	'Modern Times',	'modern-times',	'https://www.youtube.com/watch?v=2gLa4wAia9g&t=1s&ab_channel=Timepass',	'https://m.media-amazon.com/images/M/MV5BYjJiZjMzYzktNjU0NS00OTkxLWEwYzItYzdhYWJjN2QzMTRlL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg',	1936,	'Charles Chaplin',	'The Tramp struggles to live in modern industrial society with the help of a young homeless woman.',	NULL,	'Charles Chaplin, Paulette Goddard, Henry Bergman',	NULL,	NULL),
-(16,	3,	NULL,	'The Kid',	'the-kid',	'https://www.youtube.com/watch?v=LQE0c1Zugx8&ab_channel=PaulMinaStorm',	'https://m.media-amazon.com/images/M/MV5BZjhhMThhNDItNTY2MC00MmU1LTliNDEtNDdhZjdlNTY5ZDQ1XkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg',	1921,	'Charles Chaplin',	'The Tramp cares for an abandoned child, but events put that relationship in jeopardy.',	NULL,	'Charles Chaplin, Edna Purviance, Jackie Coogan',	NULL,	NULL),
-(17,	1,	NULL,	'His Girl Friday',	'his-girl-friday',	'https://www.youtube.com/watch?v=kmYcT5gT6a4&ab_channel=Retrospective',	'https://m.media-amazon.com/images/M/MV5BZDVmZTZkYjMtNmViZC00ODEzLTgwNDAtNmQ3OGQwOWY5YjFmXkEyXkFqcGdeQXVyNDY2MTk1ODk@._V1_SX300.jpg',	1940,	'Howard Hawks',	'A newspaper editor uses every trick in the book to keep his ace reporter ex-wife from remarrying.',	NULL,	'Cary Grant, Rosalind Russell, Ralph Bellamy',	NULL,	NULL),
-(21,	2,	NULL,	'M - Eine Stadt sucht einen Mörder',	'm-eine-stadt-sucht-einen-mörder',	'https://www.youtube.com/watch?v=ssdtn60srNc&ab_channel=LesClassiques',	'https://m.media-amazon.com/images/M/MV5BODA4ODk3OTEzMF5BMl5BanBnXkFtZTgwMTQ2ODMwMzE@._V1_SX300.jpg',	1931,	'Fritz Lang',	'When the police in a German city are unable to catch a child-murderer, other criminals join in the manhunt.',	NULL,	'Peter Lorre, Ellen Widmann, Inge Landgut',	NULL,	NULL),
-(22,	1,	NULL,	'Meet John Doe',	'meet-john-doe',	'https://www.youtube.com/watch?v=U-0b4U5d8Ag&ab_channel=FilmClassiqueComplet',	'https://m.media-amazon.com/images/M/MV5BMjJmOGYwNmItMjI5MS00ZGE2LWJlNDUtODZjYTBjNGQ1MTg5XkEyXkFqcGdeQXVyNDE5MTU2MDE@._V1_SX300.jpg',	1941,	'Frank Capra',	'A penniless drifter is recruited by an ambitious columnist to impersonate a non-existent person who said he\'d be committing suicide as a protest, and a political movement begins.',	NULL,	'Gary Cooper, Barbara Stanwyck, Edward Arnold',	NULL,	NULL),
-(23,	1,	NULL,	'His Girl Friday',	'his-girl-friday',	'https://www.youtube.com/watch?v=kmYcT5gT6a4&t=2s&ab_channel=Retrospective',	'https://m.media-amazon.com/images/M/MV5BZDVmZTZkYjMtNmViZC00ODEzLTgwNDAtNmQ3OGQwOWY5YjFmXkEyXkFqcGdeQXVyNDY2MTk1ODk@._V1_SX300.jpg',	1940,	'Howard Hawks',	'A newspaper editor uses every trick in the book to keep his ace reporter ex-wife from remarrying.',	NULL,	'Cary Grant, Rosalind Russell, Ralph Bellamy',	NULL,	NULL),
-(27,	2,	NULL,	'The 39 Steps',	'the-39-steps',	'https://www.youtube.com/watch?v=0YFcTgr2rw4&ab_channel=SlopeRiderSC',	'https://m.media-amazon.com/images/M/MV5BMTY5ODAzMTcwOF5BMl5BanBnXkFtZTcwMzYxNDYyNA@@._V1_SX300.jpg',	1935,	'Alfred Hitchcock',	'A man in London tries to help a counter-espionage Agent. But when the Agent is killed, and the man stands accused, he must go on the run to save himself and stop a spy ring which is trying to steal top secret information.',	NULL,	'Robert Donat, Madeleine Carroll, Lucie Mannheim',	NULL,	NULL),
-(28,	2,	NULL,	'Les diaboliques',	'les-diaboliques',	'https://www.youtube.com/watch?v=h66gU9prCeM&ab_channel=CINEMAWORLD',	'https://m.media-amazon.com/images/M/MV5BZDVlZDdjNDktN2M4ZC00NjdkLThiMDctM2FiZWNlYjIzNDExXkEyXkFqcGdeQXVyMTA1NTM1NDI2._V1_SX300.jpg',	1955,	'Henri-Georges Clouzot',	'The wife and mistress of a loathed school principal plan to murder him with what they believe is the perfect alibi.',	NULL,	'Simone Signoret, Véra Clouzot, Paul Meurisse',	NULL,	NULL),
-(29,	1,	NULL,	'Night of the Living Dead',	'night-of-the-living-dead',	'https://www.youtube.com/watch?v=xYq3zDfZcTg&ab_channel=gougouneprod',	'https://m.media-amazon.com/images/M/MV5BMzRmN2E1ZDUtZDc2ZC00ZmI3LTkwOTctNzE2ZDIzMGJiMTYzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',	1968,	'George A. Romero',	'A ragtag group of Pennsylvanians barricade themselves in an old farmhouse to remain safe from a horde of flesh-eating ghouls that are ravaging the East Coast of the United States.',	NULL,	'Duane Jones, Judith O\'Dea, Karl Hardman',	NULL,	NULL),
-(30,	2,	NULL,	'The Lady Vanishes',	'the-lady-vanishes',	'https://www.youtube.com/watch?v=KL0zOEd6aWo&ab_channel=lesgrandsfilmsdel%27histoire',	'https://m.media-amazon.com/images/M/MV5BNjk3YzFjYTktOGY0ZS00Y2EwLTk2NTctYTI1Nzc2OWNiN2I4XkEyXkFqcGdeQXVyNzM0MTUwNTY@._V1_SX300.jpg',	1938,	'Alfred Hitchcock',	'While travelling in continental Europe, a rich young playgirl realizes that an elderly lady seems to have disappeared from the train.',	NULL,	'Margaret Lockwood, Michael Redgrave, Paul Lukas',	NULL,	NULL),
-(31,	1,	NULL,	'My Man Godfrey',	'my-man-godfrey',	'https://www.youtube.com/watch?v=qt2ntYiLYeI&ab_channel=TCC-TimelessClassicsNowinColor',	'https://m.media-amazon.com/images/M/MV5BNmMwZTJlMTctYjM5Ni00Zjg4LWEzN2EtZmJlZjcyMmMzM2NiL2ltYWdlXkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_SX300.jpg',	1936,	'Gregory La Cava',	'A scatterbrained socialite hires a vagrant as a family butler - but there\'s more to Godfrey than meets the eye.',	NULL,	'William Powell, Carole Lombard, Alice Brady',	NULL,	NULL),
-(32,	2,	NULL,	'Charade',	'charade',	'https://www.youtube.com/watch?v=5Ojng5VLy2o&ab_channel=CultureTube',	'https://m.media-amazon.com/images/M/MV5BMTA0Y2UyMDUtZGZiOS00ZmVkLTg3NmItODQyNTY1ZjU1MWE4L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg',	1963,	'Stanley Donen',	'Romance and suspense ensue in Paris as a woman is pursued by several men who want a fortune her murdered husband had stolen. Whom can she trust?',	NULL,	'Cary Grant, Audrey Hepburn, Walter Matthau',	NULL,	NULL),
-(33,	3,	NULL,	'Steamboat Bill, Jr.',	'steamboat-bill-jr-',	'https://www.youtube.com/watch?v=n9QPfiLuQ9c&ab_channel=10000.PublicDomainMovies',	'https://m.media-amazon.com/images/M/MV5BOTg2MjUyMjYyOV5BMl5BanBnXkFtZTgwNjM0NDAwMjE@._V1_SX300.jpg',	1928,	'Charles Reisner, Buster Keaton',	'The effete son of a cantankerous riverboat captain comes to join his father\'s crew.',	NULL,	'Buster Keaton, Tom McGuire, Ernest Torrence',	NULL,	NULL),
-(34,	3,	NULL,	'The General',	'the-general',	'https://www.youtube.com/watch?v=x3HioYRd0Ck&ab_channel=LesTrainsDeFrance',	'https://m.media-amazon.com/images/M/MV5BYmRiMDFlYjYtOTMwYy00OGY2LWE0Y2QtYzQxOGNhZmUwNTIxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg',	1926,	'Clyde Bruckman, Buster Keaton',	'When Union spies steal an engineer\'s beloved locomotive, he pursues it single-handedly and straight through enemy lines.',	NULL,	'Buster Keaton, Marion Mack, Glen Cavender',	NULL,	NULL),
-(35,	1,	NULL,	'Der blaue Engel',	'der-blaue-engel',	'https://www.youtube.com/watch?v=4tRguhbp018&ab_channel=ArtHouseMedia',	'https://m.media-amazon.com/images/M/MV5BMmExOWQyYmUtMDZlZS00ZWQxLWE3YWQtMmM2ZmJhNWJhYzExXkEyXkFqcGdeQXVyNDE5MTU2MDE@._V1_SX300.jpg',	1930,	'Josef von Sternberg',	'An elderly professor\'s ordered life spins dangerously out of control when he falls for a nightclub singer.',	NULL,	'Emil Jannings, Marlene Dietrich, Kurt Gerron',	NULL,	NULL),
-(36,	1,	NULL,	'My Favorite Brunette',	'my-favorite-brunette',	'https://www.youtube.com/watch?v=XtaWk9ScjV8&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BZWViOWUxY2EtOTVmMC00NWYwLTk2ZWQtYmM5YjE5YmQzZDBmL2ltYWdlXkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_SX300.jpg',	1947,	'Elliott Nugent',	'Shortly before his execution on the death row in San Quentin, amateur sleuth and baby photographer Ronnie Jackson, tells reporters how he got there.',	NULL,	'Bob Hope, Dorothy Lamour, Peter Lorre',	NULL,	NULL),
-(37,	1,	NULL,	'Little Shop of Horrors',	'little-shop-of-horrors',	'https://www.youtube.com/watch?v=Mc6UufvOkDg&ab_channel=CultureTube',	'https://m.media-amazon.com/images/M/MV5BOGE3OTgxMTUtZWUyNC00OTlhLWE5MzMtOWU2ZjMwZDAxNzA0XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg',	1960,	'Roger Corman',	'A clumsy young man nurtures a plant and discovers that it\'s carnivorous, forcing him to kill to feed it.',	NULL,	'Rick Moranis, Ellen Greene, Vincent Gardenia',	NULL,	NULL),
-(38,	1,	NULL,	'Carnival of Souls',	'carnival-of-souls',	'https://www.youtube.com/watch?v=vNYg4YWkp0k&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BYjgxYjI1ODktNWYyNy00N2EyLWFhOWEtMmI1ZmU3ZmU5ZWFjXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg',	1962,	'Herk Harvey',	'After a traumatic accident, a woman becomes drawn to a mysterious abandoned carnival.',	NULL,	'Candace Hilligoss, Frances Feist, Sidney Berger',	NULL,	NULL),
-(39,	1,	NULL,	'The Last Man on Earth',	'the-last-man-on-earth',	'https://www.youtube.com/watch?v=feQIhzNpBLQ&ab_channel=ARF',	'https://m.media-amazon.com/images/M/MV5BODA0MzRhYWMtMGUxYi00NmQyLWEyOWYtMGI4NjM3ZDE5NTEyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',	1964,	'Ubaldo Ragona',	'When a disease turns all of humanity into the living dead, the last man on earth becomes a reluctant vampire hunter.',	NULL,	'Will Forte, January Jones, Cleopatra Coleman',	NULL,	NULL),
-(40,	1,	NULL,	'Dementia 13',	'dementia-13',	'https://www.youtube.com/watch?v=MtFQCuuNDLU&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BM2ViNWNhNjYtYzY3Ni00YzMxLTkzZGItZGI5MzdkZjc0OTk3XkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_SX300.jpg',	1963,	'Francis Ford Coppola',	'Shocked by the death of her spouse, a scheming widow hatches a bold plan to get her hands on the inheritance, unaware that she is targeted by an axe-wielding murderer who lurks in the family\'s estate. What mystery shrouds the noble h',	NULL,	'William Campbell, Luana Anders, Bart Patton',	NULL,	NULL),
-(41,	1,	NULL,	'The Gorilla',	'the-gorilla',	'https://www.youtube.com/watch?v=IP1xlXj76Mw&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BNmFlMmJhNWQtNmUxNS00YTgzLTk1ZTYtNDNkNDMyNDU0MDU4XkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',	1939,	'Allan Dwan',	'When a wealthy man is threatened by a killer known as The Gorilla, he hires the Ritz Brothers to investigate. A real escaped gorilla shows up at the mansion just as the investigators arrive.',	NULL,	'The Ritz Brothers, Jimmy Ritz, Harry Ritz',	NULL,	NULL),
-(42,	1,	NULL,	'Santa Claus Conquers the Martians',	'santa-claus-conquers-the-martians',	'https://www.youtube.com/watch?v=0d8beSTsMjU&ab_channel=CLASSICTV',	'https://m.media-amazon.com/images/M/MV5BZDllYzM0YjktYWNjOC00MjZjLWE2Y2EtOGRkMTY1N2I3MjUxXkEyXkFqcGdeQXVyMTQ2MjQyNDc@._V1_SX300.jpg',	1964,	'Nicholas Webster',	'The Martians kidnap Santa Claus because there is nobody on Mars to give their children presents.',	NULL,	'John Call, Leonard Hicks, Vincent Beck',	NULL,	NULL),
-(43,	1,	NULL,	'La figlia di Frankenstein',	'la-figlia-di-frankenstein',	'https://www.youtube.com/watch?v=kKHbY-dYQyg&ab_channel=TheCurator',	'https://m.media-amazon.com/images/M/MV5BN2UxYTE3MDctNWNhNC00ZmMwLTk0NzUtZTczOTgxMjJjNDFjXkEyXkFqcGdeQXVyMTQ2MjQyNDc@._V1_SX300.jpg',	1971,	'Mel Welles, Aureliano Luppi',	'After Baron Frankenstein is killed by his own monster, his daughter transplants his assistant\'s brain into a handsome young body, all while the original monster seeks revenge against those who participated in its creation.',	NULL,	'Joseph Cotten, Rosalba Neri, Paul Muller',	NULL,	NULL),
-(44,	1,	NULL,	'Captain Kidd',	'captain-kidd',	'https://www.youtube.com/watch?v=6BVn4GQDFUo&ab_channel=TCC-TimelessClassicsNowinColor',	'https://m.media-amazon.com/images/M/MV5BMGM5YzUwZmItMDYwOC00ZTY0LTk5ZTMtNzRiNzVlNGFkYTg4L2ltYWdlXkEyXkFqcGdeQXVyNjQzNDI3NzY@._V1_SX300.jpg',	1945,	'Rowland V. Lee',	'The unhistorical adventures of pirate Captain Kidd revolve around treasure and treachery.',	NULL,	'Charles Laughton, Randolph Scott, Barbara Britton',	NULL,	NULL),
-(45,	1,	NULL,	'A Farewell to Arms',	'a-farewell-to-arms',	'https://www.youtube.com/watch?v=N-gnY_yr3aY&ab_channel=ClassicMovies',	'https://m.media-amazon.com/images/M/MV5BMzM2ODc0NTY3OF5BMl5BanBnXkFtZTgwMjQwNzkzMjE@._V1_SX300.jpg',	1932,	'Frank Borzage',	'An American ambulance driver and an English nurse fall in love in Italy during World War I.',	NULL,	'Gary Cooper, Helen Hayes, Adolphe Menjou',	NULL,	NULL),
-(46,	1,	NULL,	'A Matter of Life and Death',	'a-matter-of-life-and-death',	'https://www.youtube.com/watch?v=-t3Xv70vkY8&ab_channel=OrphanedEntertainment',	'https://m.media-amazon.com/images/M/MV5BZmQzZjIyN2EtOWI5Ni00ZDgyLTk4NGQtZmQ3ZWRhODIyZTVlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg',	1946,	'Michael Powell, Emeric Pressburger',	'A British wartime aviator who cheats death must argue for his life before a celestial court, hoping to prolong his fledgling romance with an American girl.',	NULL,	'David Niven, Kim Hunter, Robert Coote',	NULL,	NULL),
-(48,	1,	NULL,	'Robinson Crusoe',	'robinson-crusoe',	'https://www.youtube.com/watch?v=q9XiaDmgB78&ab_channel=VintageMovieChannel',	'https://m.media-amazon.com/images/M/MV5BNjk2N2Y5YmUtYzMxYy00ZTRkLTlhN2ItOGI1M2Q0ODI4NGNjXkEyXkFqcGdeQXVyMDUyOTUyNQ@@._V1_SX300.jpg',	1954,	'Luis Bunuel',	'The classic story of Robinson Crusoe, a man who is dragged to a desert island after a shipwreck.',	NULL,	'Pierce Brosnan, William Takaku, Polly Walker',	NULL,	NULL),
-(49,	1,	NULL,	'Angel on My Shoulder',	'angel-on-my-shoulder',	'https://www.youtube.com/watch?v=08QKp0nH-sY&ab_channel=PizzaFlix',	'https://m.media-amazon.com/images/M/MV5BZDYwZTQzNTgtNTk1NS00YjdkLWFiODUtZjQwN2Q2NGFkNDZmXkEyXkFqcGdeQXVyMTMxMTY0OTQ@._V1_SX300.jpg',	1946,	'Archie Mayo',	'The Devil arranges for a deceased gangster to return to Earth as a well-respected judge to make up for his previous life.',	NULL,	'Paul Muni, Anne Baxter, Claude Rains',	NULL,	NULL),
-(50,	1,	NULL,	'Becky Sharp',	'becky-sharp',	'https://www.youtube.com/watch?v=AYLDF9MK-9k&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BZjMxMjE0YTYtNjhiMi00ZDU4LTgwODctZWI4MjljYWE3YWM4XkEyXkFqcGdeQXVyNjc0MzMzNjA@._V1_SX300.jpg',	1935,	'Rouben Mamoulian',	'Set against the background of the Battle of Waterloo, Becky Sharp is the story of Vanity Fair by Thackeray. Becky and Amelia are girls at school together, but Becky is from a \"show biz\" family, or in other words, very low class. Beck',	NULL,	'Miriam Hopkins, Frances Dee, Cedric Hardwicke',	NULL,	NULL),
-(52,	1,	NULL,	'Cyrano de Bergerac',	'cyrano-de-bergerac',	'https://www.youtube.com/watch?v=0J0RFoHGFtY&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BMmRkMTVlNTEtOWQxNC00OGY4LWIzMzQtMjY2MTZjNDU2N2ViXkEyXkFqcGdeQXVyNjMwMjk0MTQ@._V1_SX300.jpg',	1951,	'Michael Gordon',	'The charismatic swordsman-poet helps another woo the woman he loves in this straightforward version of the play',	NULL,	'Gérard Depardieu, Anne Brochet, Vincent Perez',	NULL,	NULL),
-(53,	1,	NULL,	'The Ghost Train',	'the-ghost-train',	'https://www.youtube.com/watch?v=mcaGaAv8v8I&ab_channel=ChristopherMeeker',	'https://m.media-amazon.com/images/M/MV5BNTNjNjUwZGEtNGIyYy00M2E0LTg3MWYtZWUwMmY5N2VkZDdjXkEyXkFqcGdeQXVyNjE5MjUyOTM@._V1_SX300.jpg',	1941,	'Walter Forde',	'High jinks and chills ensue when a group of people become stranded at an isolated station and a legendary phantom train approaches.',	NULL,	'Arthur Askey, Richard Murdoch, Kathleen Harrison',	NULL,	NULL),
-(54,	1,	NULL,	'Great Expectations',	'great-expectations',	'https://www.youtube.com/watch?v=DJABptpYaJE&ab_channel=LiteratureisMyUtopia',	'https://m.media-amazon.com/images/M/MV5BZjA1YTQ1NGItZDI0OS00MTFiLTg1NTUtOWViMTg0ZDA4MWMyL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg',	1998,	'David Lean',	'A humble orphan suddenly becomes a gentleman with the help of an unknown benefactor',	NULL,	'Ethan Hawke, Gwyneth Paltrow, Hank Azaria',	NULL,	NULL),
-(55,	1,	NULL,	'Hell\'s Angels',	'hell-s-angels',	'https://www.youtube.com/watch?v=GhyNpM5FKNE&ab_channel=GlenFinnan',	'https://m.media-amazon.com/images/M/MV5BMzMwODM4MzE2MF5BMl5BanBnXkFtZTgwNTc0NTgyMjE@._V1_SX300.jpg',	1930,	'Howard Hughes, Edmund Goulding, James Whale',	'Brothers Monte and Ray leave Oxford to join the Royal Flying Corps. Ray loves Helen; Helen enjoys an affair with Monte; before they leave on their mission over Germany they find her in still another man\'s arms.',	NULL,	'Ben Lyon, James Hall, Jean Harlow',	NULL,	NULL),
+(1,	1,	NULL,	'The Driller Killer',	'the-driller-killer',	'https://www.youtube.com/embed/c0wr-PFTN2k',	'https://m.media-amazon.com/images/M/MV5BYmE3Yzc1ZTktMDAwNC00OTg0LWI1ZmYtMzg2NDNiOWRlZjkwXkEyXkFqcGdeQXVyMjI4MjA5MzA@._V1_SX300.jpg',	1979,	'Abel Ferrara',	'An artist slowly goes insane while struggling to pay his bills, work on his paintings, and care for his two female roommates, which leads him taking to the streets of New York after dark and randomly killing derelicts with a power drill.',	NULL,	'Abel Ferrara, Carolyn Marz, Baybi Day',	NULL,	NULL),
+(2,	2,	NULL,	'Plan 9 from Outer Space',	'plan-9-from-outer-space',	'https://www.youtube.com/embed/DXTC2Ob8spY',	'https://m.media-amazon.com/images/M/MV5BMjExMzJhYTYtZDlhNC00NDIyLWIyMGUtMDBhOGE3MzAzMjA1XkEyXkFqcGdeQXVyNjMwMjk0MTQ@._V1_SX300.jpg',	1957,	'Ed Wood',	'Evil aliens attack Earth and set their terrible \"Plan 9\" into action. As the aliens resurrect the dead of the Earth, the lives of the living are in danger.',	NULL,	'Gregory Walcott, Tom Keene, Mona McKinnon',	NULL,	NULL),
+(3,	1,	NULL,	'Scarlet Street',	'scarlet-street',	'https://www.youtube.com/embed/MNRSxu22NxU',	'https://m.media-amazon.com/images/M/MV5BMzY1ODRkN2MtNWM5My00ZDNiLTk0YzUtMzBkMGQ0NmUxODRkXkEyXkFqcGdeQXVyNDY2MTk1ODk@._V1_SX300.jpg',	1945,	'Fritz Lang',	'A man in mid-life crisis befriends a young woman, though her fiancé persuades her to con him out of the fortune they mistakenly assume he possesses.',	NULL,	'Edward G. Robinson, Joan Bennett, Dan Duryea',	NULL,	NULL),
+(4,	1,	NULL,	'Black Dragons',	'black-dragons',	'https://www.youtube.com/embed/gXJamhA22S4',	'https://m.media-amazon.com/images/M/MV5BY2U0NjJmYjMtZDUzZi00YzVkLTkwNWEtOGFkYTg3ZDQ0YjYwXkEyXkFqcGdeQXVyMTQ2MjQyNDc@._V1_SX300.jpg',	1942,	'William Nigh',	'A cabal of American industrialists, all fifth-columnists intent on sabotaging the war effort.,',	NULL,	'Bela Lugosi, Joan Barclay, George Pembroke',	NULL,	NULL),
+(5,	1,	NULL,	'Maniac',	'maniac',	'https://www.youtube.com/embed/5gYnHa4izjo',	'https://m.media-amazon.com/images/M/MV5BMDFiNmJhYTQtYWQ0MS00OTEwLWJkNjQtMDIzNWQ3NjExMTg4XkEyXkFqcGdeQXVyOTI2MjI5MQ@@._V1_SX300.jpg',	1934,	'Dwain Esper',	'A former vaudevillian gifted at impersonation assists a mad scientist in reanimating corpses and soon goes mad himself.',	NULL,	'Jonah Hill, Emma Stone, Sonoya Mizuno',	NULL,	NULL),
+(6,	2,	NULL,	'And then there were none',	'and-then-there-were-none',	'https://www.youtube.com/embed/pS7-Ccl9ayQ',	'https://m.media-amazon.com/images/M/MV5BYThiMzJiNzMtMzI4My00MmFmLThjODctNWE2MjMwZTM1NGFkXkEyXkFqcGdeQXVyNjUwMzI2NzU@._V1_SX300.jpg',	1945,	'René Clair',	'\"Seven guests, a newly hired secretary and two staff are gathered at a manor house on an isolated island by an unknown absentee host and are killed off one-by-one. They work together to determine who the killer is before it\'s too late',	NULL,	'Maeve Dermody, Charles Dance, Toby Stephens',	NULL,	NULL),
+(7,	3,	NULL,	'The Birth of a Nation',	'the-birth-of-a-nation',	'https://www.youtube.com/embed/nGQaAddwjxg',	'https://m.media-amazon.com/images/M/MV5BNWZlNjg5ZTYtM2JiMi00MDZkLTlmOWQtYmMzMGY2NDc0NjdjXkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',	1915,	'D.W Griffith',	'The Stoneman family finds its friendship with the Camerons affected by the Civil War, both fighting in opposite armies. The development of the war in their lives plays through to Lincoln\'s assassination and the birth of the Ku Klux K',	NULL,	'Lillian Gish, Mae Marsh, Henry B. Walthall',	NULL,	NULL),
+(8,	2,	NULL,	'L\'Egyptien',	'egyptien',	'https://www.youtube.com/embed/TcmpoRJISIM',	'https://m.media-amazon.com/images/M/MV5BNzE3N2Y4NzAtNzY1Yi00MTliLTkxNzEtNGZhM2EyYWQ0MTdmXkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_SX300.jpg',	1954,	'Michael Curtiz',	'In ancient Egypt, a poor orphan becomes a genial physician and is eventually appointed at the Pharaoh\'s court where he witnesses palace intrigues and learns dangerous royal secrets.',	NULL,	'Jean Simmons, Victor Mature, Gene Tierney',	NULL,	NULL),
+(15,	1,	NULL,	'Modern Times',	'modern-times',	'https://www.youtube.com/embed/2gLa4wAia9g',	'https://m.media-amazon.com/images/M/MV5BYjJiZjMzYzktNjU0NS00OTkxLWEwYzItYzdhYWJjN2QzMTRlL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg',	1936,	'Charles Chaplin',	'The Tramp struggles to live in modern industrial society with the help of a young homeless woman.',	NULL,	'Charles Chaplin, Paulette Goddard, Henry Bergman',	NULL,	NULL),
+(16,	3,	NULL,	'The Kid',	'the-kid',	'https://www.youtube.com/embed/LQE0c1Zugx8',	'https://m.media-amazon.com/images/M/MV5BZjhhMThhNDItNTY2MC00MmU1LTliNDEtNDdhZjdlNTY5ZDQ1XkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg',	1921,	'Charles Chaplin',	'The Tramp cares for an abandoned child, but events put that relationship in jeopardy.',	NULL,	'Charles Chaplin, Edna Purviance, Jackie Coogan',	NULL,	NULL),
+(17,	1,	NULL,	'His Girl Friday',	'his-girl-friday',	'https://www.youtube.com/embed/kmYcT5gT6a4',	'https://m.media-amazon.com/images/M/MV5BZDVmZTZkYjMtNmViZC00ODEzLTgwNDAtNmQ3OGQwOWY5YjFmXkEyXkFqcGdeQXVyNDY2MTk1ODk@._V1_SX300.jpg',	1940,	'Howard Hawks',	'A newspaper editor uses every trick in the book to keep his ace reporter ex-wife from remarrying.',	NULL,	'Cary Grant, Rosalind Russell, Ralph Bellamy',	NULL,	NULL),
+(21,	2,	NULL,	'M - Eine Stadt sucht einen Mörder',	'm-eine-stadt-sucht-einen-mörder',	'https://www.youtube.com/embed/ssdtn60srNc',	'https://m.media-amazon.com/images/M/MV5BODA4ODk3OTEzMF5BMl5BanBnXkFtZTgwMTQ2ODMwMzE@._V1_SX300.jpg',	1931,	'Fritz Lang',	'When the police in a German city are unable to catch a child-murderer, other criminals join in the manhunt.',	NULL,	'Peter Lorre, Ellen Widmann, Inge Landgut',	NULL,	NULL),
+(22,	1,	NULL,	'Meet John Doe',	'meet-john-doe',	'https://www.youtube.com/embed/U-0b4U5d8Ag',	'https://m.media-amazon.com/images/M/MV5BMjJmOGYwNmItMjI5MS00ZGE2LWJlNDUtODZjYTBjNGQ1MTg5XkEyXkFqcGdeQXVyNDE5MTU2MDE@._V1_SX300.jpg',	1941,	'Frank Capra',	'A penniless drifter is recruited by an ambitious columnist to impersonate a non-existent person who said he\'d be committing suicide as a protest, and a political movement begins.',	NULL,	'Gary Cooper, Barbara Stanwyck, Edward Arnold',	NULL,	NULL),
+(27,	2,	NULL,	'The 39 Steps',	'the-39-steps',	'https://www.youtube.com/embed/0YFcTgr2rw4',	'https://m.media-amazon.com/images/M/MV5BMTY5ODAzMTcwOF5BMl5BanBnXkFtZTcwMzYxNDYyNA@@._V1_SX300.jpg',	1935,	'Alfred Hitchcock',	'A man in London tries to help a counter-espionage Agent. But when the Agent is killed, and the man stands accused, he must go on the run to save himself and stop a spy ring which is trying to steal top secret information.',	NULL,	'Robert Donat, Madeleine Carroll, Lucie Mannheim',	NULL,	NULL),
+(28,	2,	NULL,	'Les diaboliques',	'les-diaboliques',	'https://www.youtube.com/embed/h66gU9prCeM',	'https://m.media-amazon.com/images/M/MV5BZDVlZDdjNDktN2M4ZC00NjdkLThiMDctM2FiZWNlYjIzNDExXkEyXkFqcGdeQXVyMTA1NTM1NDI2._V1_SX300.jpg',	1955,	'Henri-Georges Clouzot',	'The wife and mistress of a loathed school principal plan to murder him with what they believe is the perfect alibi.',	NULL,	'Simone Signoret, Véra Clouzot, Paul Meurisse',	NULL,	NULL),
+(29,	1,	NULL,	'Night of the Living Dead',	'night-of-the-living-dead',	'https://www.youtube.com/embed/xYq3zDfZcTg',	'https://m.media-amazon.com/images/M/MV5BMzRmN2E1ZDUtZDc2ZC00ZmI3LTkwOTctNzE2ZDIzMGJiMTYzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',	1968,	'George A. Romero',	'A ragtag group of Pennsylvanians barricade themselves in an old farmhouse to remain safe from a horde of flesh-eating ghouls that are ravaging the East Coast of the United States.',	NULL,	'Duane Jones, Judith O\'Dea, Karl Hardman',	NULL,	NULL),
+(30,	2,	NULL,	'The Lady Vanishes',	'the-lady-vanishes',	'https://www.youtube.com/embed/KL0zOEd6aWo',	'https://m.media-amazon.com/images/M/MV5BNjk3YzFjYTktOGY0ZS00Y2EwLTk2NTctYTI1Nzc2OWNiN2I4XkEyXkFqcGdeQXVyNzM0MTUwNTY@._V1_SX300.jpg',	1938,	'Alfred Hitchcock',	'While travelling in continental Europe, a rich young playgirl realizes that an elderly lady seems to have disappeared from the train.',	NULL,	'Margaret Lockwood, Michael Redgrave, Paul Lukas',	NULL,	NULL),
+(31,	1,	NULL,	'My Man Godfrey',	'my-man-godfrey',	'https://www.youtube.com/embed/qt2ntYiLYeI',	'https://m.media-amazon.com/images/M/MV5BNmMwZTJlMTctYjM5Ni00Zjg4LWEzN2EtZmJlZjcyMmMzM2NiL2ltYWdlXkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_SX300.jpg',	1936,	'Gregory La Cava',	'A scatterbrained socialite hires a vagrant as a family butler - but there\'s more to Godfrey than meets the eye.',	NULL,	'William Powell, Carole Lombard, Alice Brady',	NULL,	NULL),
+(32,	2,	NULL,	'Charade',	'charade',	'https://www.youtube.com/embed/5Ojng5VLy2o',	'https://m.media-amazon.com/images/M/MV5BMTA0Y2UyMDUtZGZiOS00ZmVkLTg3NmItODQyNTY1ZjU1MWE4L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg',	1963,	'Stanley Donen',	'Romance and suspense ensue in Paris as a woman is pursued by several men who want a fortune her murdered husband had stolen. Whom can she trust?',	NULL,	'Cary Grant, Audrey Hepburn, Walter Matthau',	NULL,	NULL),
+(33,	3,	NULL,	'Steamboat Bill, Jr.',	'steamboat-bill-jr-',	'https://www.youtube.com/embed/n9QPfiLuQ9c',	'https://m.media-amazon.com/images/M/MV5BOTg2MjUyMjYyOV5BMl5BanBnXkFtZTgwNjM0NDAwMjE@._V1_SX300.jpg',	1928,	'Charles Reisner, Buster Keaton',	'The effete son of a cantankerous riverboat captain comes to join his father\'s crew.',	NULL,	'Buster Keaton, Tom McGuire, Ernest Torrence',	NULL,	NULL),
+(34,	3,	NULL,	'The General',	'the-general',	'https://www.youtube.com/embed/x3HioYRd0Ck',	'https://m.media-amazon.com/images/M/MV5BYmRiMDFlYjYtOTMwYy00OGY2LWE0Y2QtYzQxOGNhZmUwNTIxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg',	1926,	'Clyde Bruckman, Buster Keaton',	'When Union spies steal an engineer\'s beloved locomotive, he pursues it single-handedly and straight through enemy lines.',	NULL,	'Buster Keaton, Marion Mack, Glen Cavender',	NULL,	NULL),
+(35,	1,	NULL,	'Der blaue Engel',	'der-blaue-engel',	'https://www.youtube.com/embed/4tRguhbp018',	'https://m.media-amazon.com/images/M/MV5BMmExOWQyYmUtMDZlZS00ZWQxLWE3YWQtMmM2ZmJhNWJhYzExXkEyXkFqcGdeQXVyNDE5MTU2MDE@._V1_SX300.jpg',	1930,	'Josef von Sternberg',	'An elderly professor\'s ordered life spins dangerously out of control when he falls for a nightclub singer.',	NULL,	'Emil Jannings, Marlene Dietrich, Kurt Gerron',	NULL,	NULL),
+(36,	1,	NULL,	'My Favorite Brunette',	'my-favorite-brunette',	'https://www.youtube.com/embed/XtaWk9ScjV8',	'https://m.media-amazon.com/images/M/MV5BZWViOWUxY2EtOTVmMC00NWYwLTk2ZWQtYmM5YjE5YmQzZDBmL2ltYWdlXkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_SX300.jpg',	1947,	'Elliott Nugent',	'Shortly before his execution on the death row in San Quentin, amateur sleuth and baby photographer Ronnie Jackson, tells reporters how he got there.',	NULL,	'Bob Hope, Dorothy Lamour, Peter Lorre',	NULL,	NULL),
+(37,	1,	NULL,	'Little Shop of Horrors',	'little-shop-of-horrors',	'https://www.youtube.com/embed/Mc6UufvOkDg',	'https://m.media-amazon.com/images/M/MV5BOGE3OTgxMTUtZWUyNC00OTlhLWE5MzMtOWU2ZjMwZDAxNzA0XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg',	1960,	'Roger Corman',	'A clumsy young man nurtures a plant and discovers that it\'s carnivorous, forcing him to kill to feed it.',	NULL,	'Rick Moranis, Ellen Greene, Vincent Gardenia',	NULL,	NULL),
+(38,	1,	NULL,	'Carnival of Souls',	'carnival-of-souls',	'https://www.youtube.com/embed/vNYg4YWkp0k',	'https://m.media-amazon.com/images/M/MV5BYjgxYjI1ODktNWYyNy00N2EyLWFhOWEtMmI1ZmU3ZmU5ZWFjXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg',	1962,	'Herk Harvey',	'After a traumatic accident, a woman becomes drawn to a mysterious abandoned carnival.',	NULL,	'Candace Hilligoss, Frances Feist, Sidney Berger',	NULL,	NULL),
+(39,	1,	NULL,	'The Last Man on Earth',	'the-last-man-on-earth',	'https://www.youtube.com/embed/feQIhzNpBLQ',	'https://m.media-amazon.com/images/M/MV5BODA0MzRhYWMtMGUxYi00NmQyLWEyOWYtMGI4NjM3ZDE5NTEyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',	1964,	'Ubaldo Ragona',	'When a disease turns all of humanity into the living dead, the last man on earth becomes a reluctant vampire hunter.',	NULL,	'Will Forte, January Jones, Cleopatra Coleman',	NULL,	NULL),
+(40,	1,	NULL,	'Dementia 13',	'dementia-13',	'https://www.youtube.com/embed/MtFQCuuNDLU',	'https://m.media-amazon.com/images/M/MV5BM2ViNWNhNjYtYzY3Ni00YzMxLTkzZGItZGI5MzdkZjc0OTk3XkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_SX300.jpg',	1963,	'Francis Ford Coppola',	'Shocked by the death of her spouse, a scheming widow hatches a bold plan to get her hands on the inheritance, unaware that she is targeted by an axe-wielding murderer who lurks in the family\'s estate. What mystery shrouds the noble h',	NULL,	'William Campbell, Luana Anders, Bart Patton',	NULL,	NULL),
+(41,	1,	NULL,	'The Gorilla',	'the-gorilla',	'https://www.youtube.com/embed/IP1xlXj76Mw',	'https://m.media-amazon.com/images/M/MV5BNmFlMmJhNWQtNmUxNS00YTgzLTk1ZTYtNDNkNDMyNDU0MDU4XkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',	1939,	'Allan Dwan',	'When a wealthy man is threatened by a killer known as The Gorilla, he hires the Ritz Brothers to investigate. A real escaped gorilla shows up at the mansion just as the investigators arrive.',	NULL,	'The Ritz Brothers, Jimmy Ritz, Harry Ritz',	NULL,	NULL),
+(42,	1,	NULL,	'Santa Claus Conquers the Martians',	'santa-claus-conquers-the-martians',	'https://www.youtube.com/embed/0d8beSTsMjU',	'https://m.media-amazon.com/images/M/MV5BZDllYzM0YjktYWNjOC00MjZjLWE2Y2EtOGRkMTY1N2I3MjUxXkEyXkFqcGdeQXVyMTQ2MjQyNDc@._V1_SX300.jpg',	1964,	'Nicholas Webster',	'The Martians kidnap Santa Claus because there is nobody on Mars to give their children presents.',	NULL,	'John Call, Leonard Hicks, Vincent Beck',	NULL,	NULL),
+(43,	1,	NULL,	'La figlia di Frankenstein',	'la-figlia-di-frankenstein',	'https://www.youtube.com/embed/kKHbY-dYQyg',	'https://m.media-amazon.com/images/M/MV5BN2UxYTE3MDctNWNhNC00ZmMwLTk0NzUtZTczOTgxMjJjNDFjXkEyXkFqcGdeQXVyMTQ2MjQyNDc@._V1_SX300.jpg',	1971,	'Mel Welles, Aureliano Luppi',	'After Baron Frankenstein is killed by his own monster, his daughter transplants his assistant\'s brain into a handsome young body, all while the original monster seeks revenge against those who participated in its creation.',	NULL,	'Joseph Cotten, Rosalba Neri, Paul Muller',	NULL,	NULL),
+(44,	1,	NULL,	'Captain Kidd',	'captain-kidd',	'https://www.youtube.com/embed/6BVn4GQDFUo',	'https://m.media-amazon.com/images/M/MV5BMGM5YzUwZmItMDYwOC00ZTY0LTk5ZTMtNzRiNzVlNGFkYTg4L2ltYWdlXkEyXkFqcGdeQXVyNjQzNDI3NzY@._V1_SX300.jpg',	1945,	'Rowland V. Lee',	'The unhistorical adventures of pirate Captain Kidd revolve around treasure and treachery.',	NULL,	'Charles Laughton, Randolph Scott, Barbara Britton',	NULL,	NULL),
+(45,	1,	NULL,	'A Farewell to Arms',	'a-farewell-to-arms',	'https://www.youtube.com/embed/N-gnY_yr3aY',	'https://m.media-amazon.com/images/M/MV5BMzM2ODc0NTY3OF5BMl5BanBnXkFtZTgwMjQwNzkzMjE@._V1_SX300.jpg',	1932,	'Frank Borzage',	'An American ambulance driver and an English nurse fall in love in Italy during World War I.',	NULL,	'Gary Cooper, Helen Hayes, Adolphe Menjou',	NULL,	NULL),
+(46,	1,	NULL,	'A Matter of Life and Death',	'a-matter-of-life-and-death',	'https://www.youtube.com/embed/-t3Xv70vkY8',	'https://m.media-amazon.com/images/M/MV5BZmQzZjIyN2EtOWI5Ni00ZDgyLTk4NGQtZmQ3ZWRhODIyZTVlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg',	1946,	'Michael Powell, Emeric Pressburger',	'A British wartime aviator who cheats death must argue for his life before a celestial court, hoping to prolong his fledgling romance with an American girl.',	NULL,	'David Niven, Kim Hunter, Robert Coote',	NULL,	NULL),
+(48,	1,	NULL,	'Robinson Crusoe',	'robinson-crusoe',	'https://www.youtube.com/embed/q9XiaDmgB78',	'https://m.media-amazon.com/images/M/MV5BNjk2N2Y5YmUtYzMxYy00ZTRkLTlhN2ItOGI1M2Q0ODI4NGNjXkEyXkFqcGdeQXVyMDUyOTUyNQ@@._V1_SX300.jpg',	1954,	'Luis Bunuel',	'The classic story of Robinson Crusoe, a man who is dragged to a desert island after a shipwreck.',	NULL,	'Pierce Brosnan, William Takaku, Polly Walker',	NULL,	NULL),
+(49,	1,	NULL,	'Angel on My Shoulder',	'angel-on-my-shoulder',	'https://www.youtube.com/embed/08QKp0nH-sY',	'https://m.media-amazon.com/images/M/MV5BZDYwZTQzNTgtNTk1NS00YjdkLWFiODUtZjQwN2Q2NGFkNDZmXkEyXkFqcGdeQXVyMTMxMTY0OTQ@._V1_SX300.jpg',	1946,	'Archie Mayo',	'The Devil arranges for a deceased gangster to return to Earth as a well-respected judge to make up for his previous life.',	NULL,	'Paul Muni, Anne Baxter, Claude Rains',	NULL,	NULL),
+(50,	1,	NULL,	'Becky Sharp',	'becky-sharp',	'https://www.youtube.com/embed/AYLDF9MK-9k',	'https://m.media-amazon.com/images/M/MV5BZjMxMjE0YTYtNjhiMi00ZDU4LTgwODctZWI4MjljYWE3YWM4XkEyXkFqcGdeQXVyNjc0MzMzNjA@._V1_SX300.jpg',	1935,	'Rouben Mamoulian',	'Set against the background of the Battle of Waterloo, Becky Sharp is the story of Vanity Fair by Thackeray. Becky and Amelia are girls at school together, but Becky is from a \"show biz\" family, or in other words, very low class. Beck',	NULL,	'Miriam Hopkins, Frances Dee, Cedric Hardwicke',	NULL,	NULL),
+(52,	1,	NULL,	'Cyrano de Bergerac',	'cyrano-de-bergerac',	'https://www.youtube.com/embed/0J0RFoHGFtY',	'https://m.media-amazon.com/images/M/MV5BMmRkMTVlNTEtOWQxNC00OGY4LWIzMzQtMjY2MTZjNDU2N2ViXkEyXkFqcGdeQXVyNjMwMjk0MTQ@._V1_SX300.jpg',	1951,	'Michael Gordon',	'The charismatic swordsman-poet helps another woo the woman he loves in this straightforward version of the play',	NULL,	'Gérard Depardieu, Anne Brochet, Vincent Perez',	NULL,	NULL),
+(53,	1,	NULL,	'The Ghost Train',	'the-ghost-train',	'https://www.youtube.com/embed/mcaGaAv8v8I',	'https://m.media-amazon.com/images/M/MV5BNTNjNjUwZGEtNGIyYy00M2E0LTg3MWYtZWUwMmY5N2VkZDdjXkEyXkFqcGdeQXVyNjE5MjUyOTM@._V1_SX300.jpg',	1941,	'Walter Forde',	'High jinks and chills ensue when a group of people become stranded at an isolated station and a legendary phantom train approaches.',	NULL,	'Arthur Askey, Richard Murdoch, Kathleen Harrison',	NULL,	NULL),
+(54,	1,	NULL,	'Great Expectations',	'great-expectations',	'https://www.youtube.com/embed/DJABptpYaJE',	'https://m.media-amazon.com/images/M/MV5BZjA1YTQ1NGItZDI0OS00MTFiLTg1NTUtOWViMTg0ZDA4MWMyL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg',	1998,	'David Lean',	'A humble orphan suddenly becomes a gentleman with the help of an unknown benefactor',	NULL,	'Ethan Hawke, Gwyneth Paltrow, Hank Azaria',	NULL,	NULL),
+(55,	1,	NULL,	'Hell\'s Angels',	'hell-s-angels',	'https://www.youtube.com/embed/GhyNpM5FKNE',	'https://m.media-amazon.com/images/M/MV5BMzMwODM4MzE2MF5BMl5BanBnXkFtZTgwNTc0NTgyMjE@._V1_SX300.jpg',	1930,	'Howard Hughes, Edmund Goulding, James Whale',	'Brothers Monte and Ray leave Oxford to join the Royal Flying Corps. Ray loves Helen; Helen enjoys an affair with Monte; before they leave on their mission over Germany they find her in still another man\'s arms.',	NULL,	'Ben Lyon, James Hall, Jean Harlow',	NULL,	NULL),
 (56,	1,	NULL,	'Hell\'s House',	'hell-s-house',	'https://www.youtube.com/watch?v=FvRbFnPQDpI',	'https://m.media-amazon.com/images/M/MV5BNzEwZTIxMzItMTA2ZC00MDg2LWFlY2YtZmVkNjJjZjE1ZTBiXkEyXkFqcGdeQXVyMjUxODE0MDY@._V1_SX300.jpg',	1932,	'Howard Higgin',	'Jimmy idolizes bootlegger Matt, and when he refuses to implicate his friend, he is sent to reform school. He befriends Shorty, a boy with a heart condition, and escapes to let the world know about the brutal conditions.',	NULL,	'Bette Davis, Pat O\'Brien, Junior Durkin',	NULL,	NULL),
-(58,	1,	NULL,	'Hi Diddle Diddle',	'hi-diddle-diddle',	'https://www.youtube.com/watch?v=Nnr3BRjeqOY&ab_channel=TheFilmDetective',	'https://m.media-amazon.com/images/M/MV5BODRjOWY5MTQtODdmZC00NmFiLTgxZDYtZTZhMTg2ZGMzMTdhXkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',	1943,	'Andrew L. Stone, Friz Freleng',	'When the bride\'s mother is supposedly swindled out of her money by a spurned suitor, the groom\'s father orchestrates a scheme of his own to set things right. He is aided by a cabaret singer, while placating a jealous wife.',	NULL,	'Adolphe Menjou, Martha Scott, Pola Negri',	NULL,	NULL),
-(59,	1,	NULL,	'Indiscreet',	'indiscreet',	'https://www.youtube.com/watch?v=h26o52Oqbz0&ab_channel=DavidSwinson',	'https://m.media-amazon.com/images/M/MV5BMzlhMzJiODctNjdlYS00ZGIwLWExNzQtZWM2MTNjNGE2OTI5XkEyXkFqcGdeQXVyNjMwMjk0MTQ@._V1_SX300.jpg',	1958,	'Stanley Donen',	'An actress who has given up on love meets a suave banker and begins a flirtation with him...even though he\'s already married.',	NULL,	'Cary Grant, Ingrid Bergman, Cecil Parker',	NULL,	NULL),
-(60,	1,	NULL,	'Jungle Book',	'jungle-book',	'https://www.youtube.com/watch?v=-8EJ9uhsfQQ&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BZDhhNGU3ZmYtNjlkMy00Njc1LTgyZWUtYTlmOWVjODE0NGU0L2ltYWdlXkEyXkFqcGdeQXVyMjI4MjA5MzA@._V1_SX300.jpg',	1942,	'Zoltan Korda',	'A boy raised by wild animals tries to adapt to human village life.',	NULL,	'Sabu, Joseph Calleia, John Qualen',	NULL,	NULL),
-(61,	1,	NULL,	'Murder in Harlem',	'murder-in-harlem',	'https://www.youtube.com/watch?v=rSi-iWGxtLY&ab_channel=reelblack',	'https://m.media-amazon.com/images/M/MV5BODk2MTg2MzAzN15BMl5BanBnXkFtZTgwNTY1NDg2NjE@._V1_SX300.jpg',	1935,	'Oscar Micheaux, Clarence Williams',	'A black night watchman at a chemical factory finds the body of a murdered white woman. After he reports it, he finds himself accused of the murder.',	NULL,	'Clarence Brooks, Dorothy Van Engle, Andrew Bishop',	NULL,	NULL),
-(62,	1,	NULL,	'Our Town',	'our-town',	'https://www.youtube.com/watch?v=k-ImAugEJzg&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BMTgxMWIwN2QtY2FkMi00YmM1LTg4NGEtMTQ4YTQwOTA2NWNkXkEyXkFqcGdeQXVyMTYzMTY1MjQ@._V1_SX300.jpg',	1940,	'Sam Wood',	'Change comes slowly to a small New Hampshire town in the early 20th century.',	NULL,	'William Holden, Martha Scott, Fay Bainter',	NULL,	NULL),
-(63,	1,	NULL,	'Penny Serenade',	'penny-serenade',	'https://www.youtube.com/watch?v=ajutb8gwdH4&ab_channel=CinecurryHollywood',	'https://m.media-amazon.com/images/M/MV5BMGVjYzU4NjAtOWVkYi00OWQ3LWEwYzMtOTI2ZWY3YTQ1ZGM4L2ltYWdlXkEyXkFqcGdeQXVyNDQzMDg4Nzk@._V1_SX300.jpg',	1941,	'George Stevens',	'A couple\'s big dreams give way to a life full of unexpected sadness and unexpected joy.',	NULL,	'Cary Grant, Irene Dunne, Beulah Bondi',	NULL,	NULL),
-(64,	1,	NULL,	'Pygmalion',	'pygmalion',	'https://www.youtube.com/watch?v=ygBkAcyYkW0&ab_channel=AllTimeClassicMovies',	'https://m.media-amazon.com/images/M/MV5BNTgzN2NkMTAtYTc0Yy00ODc1LWI5ZTktNDIzNGFjY2M3NDhlXkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',	1938,	'Anthony Asquith, Leslie Howard',	'A phonetics and diction expert makes a bet that he can teach a cockney flower girl to speak proper English and pass as a lady in high society.',	NULL,	'Leslie Howard, Wendy Hiller, Wilfrid Lawson',	NULL,	NULL),
-(66,	1,	NULL,	'Sherlock Holmes and the Secret Weapon',	'sherlock-holmes-and-the-secret-weapon',	'https://www.youtube.com/watch?v=CsZQNdMKbNs&ab_channel=FEATUREFILM',	'https://m.media-amazon.com/images/M/MV5BYzA5MWEwNzctMWYwOC00YTViLWFjYzMtM2MyNmY5NzNmNjRhXkEyXkFqcGdeQXVyMzUwMTgwMw@@._V1_SX300.jpg',	1942,	'Roy William Neill',	'Sherlock Holmes and Doctor Watson must protect a Swiss inventor of an advanced bomb sight from falling into German hands.',	NULL,	'Basil Rathbone, Nigel Bruce, Lionel Atwill',	NULL,	NULL),
-(67,	1,	NULL,	'Terror by Night',	'terror-by-night',	'https://www.youtube.com/watch?v=WBddAy-ZU-w&ab_channel=TCC-TimelessClassicsNowinColor',	'https://m.media-amazon.com/images/M/MV5BMTI2NzAzNzYwN15BMl5BanBnXkFtZTYwMTQyNzk4._V1_SX300.jpg',	1946,	'Roy William Neill',	'When the fabled Star of Rhodesia diamond is stolen on a London to Edinburgh train and the son of its owner is murdered, Sherlock Holmes must discover which of his suspicious fellow passengers is responsible.',	NULL,	'Basil Rathbone, Nigel Bruce, Alan Mowbray',	NULL,	NULL),
+(58,	1,	NULL,	'Hi Diddle Diddle',	'hi-diddle-diddle',	'https://www.youtube.com/embed/Nnr3BRjeqOY',	'https://m.media-amazon.com/images/M/MV5BODRjOWY5MTQtODdmZC00NmFiLTgxZDYtZTZhMTg2ZGMzMTdhXkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',	1943,	'Andrew L. Stone, Friz Freleng',	'When the bride\'s mother is supposedly swindled out of her money by a spurned suitor, the groom\'s father orchestrates a scheme of his own to set things right. He is aided by a cabaret singer, while placating a jealous wife.',	NULL,	'Adolphe Menjou, Martha Scott, Pola Negri',	NULL,	NULL),
+(59,	1,	NULL,	'Indiscreet',	'indiscreet',	'https://www.youtube.com/embed/h26o52Oqbz0',	'https://m.media-amazon.com/images/M/MV5BMzlhMzJiODctNjdlYS00ZGIwLWExNzQtZWM2MTNjNGE2OTI5XkEyXkFqcGdeQXVyNjMwMjk0MTQ@._V1_SX300.jpg',	1958,	'Stanley Donen',	'An actress who has given up on love meets a suave banker and begins a flirtation with him...even though he\'s already married.',	NULL,	'Cary Grant, Ingrid Bergman, Cecil Parker',	NULL,	NULL),
+(60,	1,	NULL,	'Jungle Book',	'jungle-book',	'https://www.youtube.com/embed/-8EJ9uhsfQQ',	'https://m.media-amazon.com/images/M/MV5BZDhhNGU3ZmYtNjlkMy00Njc1LTgyZWUtYTlmOWVjODE0NGU0L2ltYWdlXkEyXkFqcGdeQXVyMjI4MjA5MzA@._V1_SX300.jpg',	1942,	'Zoltan Korda',	'A boy raised by wild animals tries to adapt to human village life.',	NULL,	'Sabu, Joseph Calleia, John Qualen',	NULL,	NULL),
+(61,	1,	NULL,	'Murder in Harlem',	'murder-in-harlem',	'https://www.youtube.com/embed/rSi-iWGxtLY',	'https://m.media-amazon.com/images/M/MV5BODk2MTg2MzAzN15BMl5BanBnXkFtZTgwNTY1NDg2NjE@._V1_SX300.jpg',	1935,	'Oscar Micheaux, Clarence Williams',	'A black night watchman at a chemical factory finds the body of a murdered white woman. After he reports it, he finds himself accused of the murder.',	NULL,	'Clarence Brooks, Dorothy Van Engle, Andrew Bishop',	NULL,	NULL),
+(62,	1,	NULL,	'Our Town',	'our-town',	'https://www.youtube.com/embed/k-ImAugEJzg',	'https://m.media-amazon.com/images/M/MV5BMTgxMWIwN2QtY2FkMi00YmM1LTg4NGEtMTQ4YTQwOTA2NWNkXkEyXkFqcGdeQXVyMTYzMTY1MjQ@._V1_SX300.jpg',	1940,	'Sam Wood',	'Change comes slowly to a small New Hampshire town in the early 20th century.',	NULL,	'William Holden, Martha Scott, Fay Bainter',	NULL,	NULL),
+(63,	1,	NULL,	'Penny Serenade',	'penny-serenade',	'https://www.youtube.com/embed/ajutb8gwdH4',	'https://m.media-amazon.com/images/M/MV5BMGVjYzU4NjAtOWVkYi00OWQ3LWEwYzMtOTI2ZWY3YTQ1ZGM4L2ltYWdlXkEyXkFqcGdeQXVyNDQzMDg4Nzk@._V1_SX300.jpg',	1941,	'George Stevens',	'A couple\'s big dreams give way to a life full of unexpected sadness and unexpected joy.',	NULL,	'Cary Grant, Irene Dunne, Beulah Bondi',	NULL,	NULL),
+(64,	1,	NULL,	'Pygmalion',	'pygmalion',	'https://www.youtube.com/embed/ygBkAcyYkW0',	'https://m.media-amazon.com/images/M/MV5BNTgzN2NkMTAtYTc0Yy00ODc1LWI5ZTktNDIzNGFjY2M3NDhlXkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',	1938,	'Anthony Asquith, Leslie Howard',	'A phonetics and diction expert makes a bet that he can teach a cockney flower girl to speak proper English and pass as a lady in high society.',	NULL,	'Leslie Howard, Wendy Hiller, Wilfrid Lawson',	NULL,	NULL),
+(66,	1,	NULL,	'Sherlock Holmes and the Secret Weapon',	'sherlock-holmes-and-the-secret-weapon',	'https://www.youtube.com/embed/CsZQNdMKbNs',	'https://m.media-amazon.com/images/M/MV5BYzA5MWEwNzctMWYwOC00YTViLWFjYzMtM2MyNmY5NzNmNjRhXkEyXkFqcGdeQXVyMzUwMTgwMw@@._V1_SX300.jpg',	1942,	'Roy William Neill',	'Sherlock Holmes and Doctor Watson must protect a Swiss inventor of an advanced bomb sight from falling into German hands.',	NULL,	'Basil Rathbone, Nigel Bruce, Lionel Atwill',	NULL,	NULL),
+(67,	1,	NULL,	'Terror by Night',	'terror-by-night',	'https://www.youtube.com/embed/WBddAy-ZU-w',	'https://m.media-amazon.com/images/M/MV5BMTI2NzAzNzYwN15BMl5BanBnXkFtZTYwMTQyNzk4._V1_SX300.jpg',	1946,	'Roy William Neill',	'When the fabled Star of Rhodesia diamond is stolen on a London to Edinburgh train and the son of its owner is murdered, Sherlock Holmes must discover which of his suspicious fellow passengers is responsible.',	NULL,	'Basil Rathbone, Nigel Bruce, Alan Mowbray',	NULL,	NULL),
 (68,	1,	NULL,	'The Bigamist',	'the-bigamist',	'https://www.youtube.com/watch?v=c9SxWhURBYA&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BNTEyODQ5YWQtYTA3MS00ZmJkLWFjMTQtMDI4NmExN2QxYTM2XkEyXkFqcGdeQXVyMjA0MzYwMDY@._V1_SX300.jpg',	1953,	'Ida Lupino',	'A man secretly married to two women feels the pressure of his deceit.',	NULL,	'Joan Fontaine, Ida Lupino, Edmund Gwenn',	NULL,	NULL),
 (69,	1,	NULL,	'The Contender',	'the-contender',	'https://www.youtube.com/watch?v=SlxPipjaat8&ab_channel=CultCinemaClassics',	'https://m.media-amazon.com/images/M/MV5BM2VjMjI2MWYtMGRlNy00OGYxLWIxZmYtYWM2NmM2YTk1YjU2XkEyXkFqcGdeQXVyMDMxMjQwMw@@._V1_SX300.jpg',	1944,	'Sam Newfield',	'Widower Gary Farrell can\'t afford, on his $45-weekly salary as a truck driver, to send his young son, Mickey, to a high-priced military school and decides to enter heavyweight-boxing tournament in an effort to win the $500 prize mone',	NULL,	'Joan Allen, Gary Oldman, Jeff Bridges',	NULL,	NULL),
 (70,	1,	NULL,	'The Divorce of Lady X',	'the-divorce-of-lady-x',	'https://www.youtube.com/watch?v=DUbMYeX47bc&ab_channel=Larrymovies',	'https://m.media-amazon.com/images/M/MV5BOTU3NWY0YjAtMzRkNC00MDUwLTlmNjYtZGU1YWUzMWM0MWE5XkEyXkFqcGdeQXVyNjc0MzMzNjA@._V1_SX300.jpg',	1938,	'Tim Whelan',	'Divorce lawyer Everard Logan thinks the woman who spent the night in his hotel room is the erring wife of his new client.',	NULL,	'Merle Oberon, Laurence Olivier, Binnie Barnes',	NULL,	NULL),
@@ -293,7 +248,6 @@ INSERT INTO `movie_category` (`movie_id`, `category_id`) VALUES
 (21,	8),
 (22,	7),
 (22,	9),
-(23,	9),
 (27,	8),
 (28,	2),
 (28,	7),
@@ -459,6 +413,31 @@ INSERT INTO `movie_thematic` (`movie_id`, `thematic_id`) VALUES
 (135,	2),
 (139,	2);
 
+DROP TABLE IF EXISTS `rate`;
+CREATE TABLE `rate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `movie_id` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DFEC3F398F93B6FC` (`movie_id`),
+  KEY `IDX_DFEC3F39A76ED395` (`user_id`),
+  CONSTRAINT `FK_DFEC3F398F93B6FC` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
+  CONSTRAINT `FK_DFEC3F39A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `thematic`;
+CREATE TABLE `thematic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_7C1CDF727E3C61F9` (`owner_id`),
+  CONSTRAINT `FK_7C1CDF727E3C61F9` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 INSERT INTO `thematic` (`id`, `name`, `slug`, `owner_id`) VALUES
 (1,	'Charlie Chaplin',	'charlie-chaplin',	1),
 (2,	'Fritz Lang',	'fritz-lang',	1),
@@ -472,10 +451,24 @@ INSERT INTO `thematic` (`id`, `name`, `slug`, `owner_id`) VALUES
 (10,	'War',	'war',	1),
 (11,	'Kung-Fu',	'kung-fu',	1);
 
-
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pseudo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `pseudo`) VALUES
-(1,	'admin@admin.com',	'[\"ROLE_ADMIN\"]',	'$2y$13$G2ixgCVTvepExCAut0JMV.5QN7g01Yh1iOx1KOEMB0MtRNt6Q96Ei',	NULL);
+(1,	'admin@admin.com',	'[\"ROLE_ADMIN\"]',	'$2y$13$G2ixgCVTvepExCAut0JMV.5QN7g01Yh1iOx1KOEMB0MtRNt6Q96Ei',	NULL),
+(2,	'AlexandreR@gmail.com',	'[\"ROLE_USER\"]',	'$2y$13$NycfDUJMuqXambngP.DrT.RX.4Z6rtTPPRdgqXXebYt.Yp1E6IjIq',	NULL),
+(3,	'MathieuD@gmail.com',	'[\"ROLE_USER\"]',	'$2y$13$iua6/R3fj3Ydu.1zK6PAReMuGgRpgjbbUTluffgx.bP5Eg86ToD8C',	NULL),
+(4,	'CorentinW@gmail.com',	'[\"ROLE_USER\"]',	'$2y$13$F9sh0809YueZUatM1tdnOe2iGmbqz5hBqkMoQbHXVPyjH9p.kjeoO',	NULL),
+(5,	'ThomasM@gmail.com',	'[\"ROLE_USER\"]',	'$2y$13$eE6ZRPPMP2vwosZymY9qhuQkBiyTTkAF4Ca5gtJ1YTsDN9Tcz4HYm',	NULL),
+(6,	'MathieuG@gmail.com',	'[\"ROLE_USER\"]',	'$2y$13$xR85bxbm0fYSe.tozfmE6e78e9rvS3OiJPWKmzlubTs2HlLFgO0hy',	NULL);
 
 DROP TABLE IF EXISTS `user_category`;
 CREATE TABLE `user_category` (
@@ -488,6 +481,24 @@ CREATE TABLE `user_category` (
   CONSTRAINT `FK_E6C1FDC1A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `user_category` (`user_id`, `category_id`) VALUES
+(2,	2),
+(2,	5),
+(2,	9),
+(3,	3),
+(3,	4),
+(3,	8),
+(3,	9),
+(4,	2),
+(4,	4),
+(4,	5),
+(4,	6),
+(4,	7),
+(4,	9),
+(5,	2),
+(5,	8),
+(5,	9),
+(6,	6);
 
 DROP TABLE IF EXISTS `user_movie`;
 CREATE TABLE `user_movie` (
@@ -500,6 +511,27 @@ CREATE TABLE `user_movie` (
   CONSTRAINT `FK_FF9C0937A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `user_movie` (`user_id`, `movie_id`) VALUES
+(2,	59),
+(2,	121),
+(2,	137),
+(3,	17),
+(3,	21),
+(3,	54),
+(3,	133),
+(4,	21),
+(4,	29),
+(4,	50),
+(4,	58),
+(4,	81),
+(4,	84),
+(4,	94),
+(4,	123),
+(4,	131),
+(5,	16),
+(5,	22),
+(5,	92),
+(6,	86);
 
 DROP TABLE IF EXISTS `user_thematic`;
 CREATE TABLE `user_thematic` (
@@ -512,5 +544,22 @@ CREATE TABLE `user_thematic` (
   CONSTRAINT `FK_9C913B72A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `user_thematic` (`user_id`, `thematic_id`) VALUES
+(2,	9),
+(2,	10),
+(2,	11),
+(3,	5),
+(3,	6),
+(3,	8),
+(4,	2),
+(4,	4),
+(4,	5),
+(4,	6),
+(4,	9),
+(4,	10),
+(5,	1),
+(5,	7),
+(5,	10),
+(6,	3);
 
--- 2021-11-03 16:51:05
+-- 2021-11-04 10:37:57
