@@ -108,6 +108,160 @@ class MovieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Find all movies by tenties
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesByTenties():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+                    ->where('m.releasedDate BETWEEN :start AND :end')
+                    ->setParameter('start', 1910)
+                    ->setParameter('end', 1919)
+                    ->orderBy('m.releasedDate', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+
+    /**
+     * Find all movies by twenties
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesByTwenties():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+                    ->where('m.releasedDate BETWEEN :start AND :end')
+                    ->setParameter('start', 1920)
+                    ->setParameter('end', 1929)
+                    ->orderBy('m.releasedDate', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+
+
+
+    /**
+     * Find all movies by thirties
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesByThirties():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+                    ->where('m.releasedDate BETWEEN :start AND :end')
+                    ->setParameter('start', 1930)
+                    ->setParameter('end', 1939)
+                    ->orderBy('m.releasedDate', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * Find all movies by forties
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesByForties():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+                    ->where('m.releasedDate BETWEEN :start AND :end')
+                    ->setParameter('start', 1940)
+                    ->setParameter('end', 1949)
+                    ->orderBy('m.releasedDate', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * Find all movies by fifties
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesByFifties():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+                    ->where('m.releasedDate BETWEEN :start AND :end')
+                    ->setParameter('start', 1950)
+                    ->setParameter('end', 1959)
+                    ->orderBy('m.releasedDate', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * Find all movies by sixties
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesBySixties():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+                    ->where('m.releasedDate BETWEEN :start AND :end')
+                    ->setParameter('start', 1960)
+                    ->setParameter('end', 1969)
+                    ->orderBy('m.releasedDate', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * Find all movies by seventies
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesBySeventies():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+                    ->where('m.releasedDate BETWEEN :start AND :end')
+                    ->setParameter('start', 1970)
+                    ->setParameter('end', 1979)
+                    ->orderBy('m.releasedDate', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * Find all movies by eighties
+     * 
+     * @param mixed $name
+     * @return array
+     */
+    public function findMoviesByEighties():array
+    {
+        return $this
+        ->createQueryBuilder('m')
+                    ->where('m.releasedDate BETWEEN :start AND :end')
+                    ->setParameter('start', 1980)
+                    ->setParameter('end', 1989)
+                    ->orderBy('m.releasedDate', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+
+
+
+
+    
+
 
 
 }
