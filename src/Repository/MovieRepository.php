@@ -108,6 +108,21 @@ class MovieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Get the top ten movies
+     *
+     * @param string $query
+     * @return array
+     */
+    public function findTopTen()
+    {
+        return $this->createQueryBuilder('m')
+        ->orderBy('m.averageRate', 'DESC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult();
+    }
+
 
 
 }
