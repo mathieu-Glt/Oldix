@@ -16,12 +16,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class RateController extends AbstractController
 {
     /**
-     * @Route("/api/movies/top", methods={"GET"})
+     * @Route("/api/movies/topTen", methods={"GET"})
      * @return Response
      */
-    public function top()
+    public function top(MovieRepository $movieRepository)
     {
-      return "hello";
+      $topTen = $movieRepository->findTopTen();
+      return $this->json($topTen, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
 
     /**
