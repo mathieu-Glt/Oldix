@@ -117,14 +117,14 @@ class MovieController extends AbstractController
     }
 
     /**
-     * Display information for a film
+     * Method for add a movie length for field released_date in adminer
      * 
      * @Route("test", methods={"GET"})
      * @param int $id
      * @param MovieRepository $movieRepository
      * @return Response
     */
-    public function addToData(MovieRepository $movieRepository, OmdbApi $omdbApi, Request $request): Response
+    public function addDataToAdminer(MovieRepository $movieRepository, OmdbApi $omdbApi, Request $request): Response
     {       
         
             for ($id=1; $id < 67 ; $id++) { 
@@ -138,7 +138,7 @@ class MovieController extends AbstractController
                 //dd($movie);
                 // TODO récupérer le nom d'un film
                 $movieName = $movie->getName();
-                var_dump($id);
+                //var_dump($id);
                 //dd($movieName);
                 // TODO avec l'info du nom du film je récupère le film dans le servie Api
                 $infosFromApi = $omdbApi->getInfosFromApi($movieName);
