@@ -100,7 +100,135 @@ class MovieController extends AbstractController
     }
 
     /**
-     * Return all movies
+
+     * Return all movies of 1910 to 1919
+     * 
+     * @Route("/collection/tenties")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollectionTenties(MovieRepository $movieRepository){
+
+        
+        $findMoviesByTenties = $movieRepository->findMoviesByTenties();
+        //dd($findByDate);
+        return $this->json($findMoviesByTenties, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+
+    /**
+     * Return all movies of 1920 to 1929
+     * 
+     * @Route("/collection/twenties")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollectionTwenties(MovieRepository $movieRepository){
+
+        
+        $findMoviesByTwenties = $movieRepository->findMoviesByTwenties();
+        //dd($findByDate);
+        return $this->json($findMoviesByTwenties, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+
+    /**
+     * Return all movies of 1930 to 1939
+     * 
+     * @Route("/collection/thirties")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollectionThirties(MovieRepository $movieRepository){
+
+        
+        $findMoviesByThirties = $movieRepository->findMoviesByThirties();
+        //dd($findByDate);
+        return $this->json($findMoviesByThirties, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+    /**
+     * Return all movies of 1940 to 1949
+     * 
+     * @Route("/collection/forties")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollectionForties(MovieRepository $movieRepository){
+
+        
+        $findMoviesByForties = $movieRepository->findMoviesByForties();
+        //dd($findByDate);
+        return $this->json($findMoviesByForties, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+    /**
+     * Return all movies of 1950 to 1959
+     * 
+     * @Route("/collection/fifties")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollectionFifties(MovieRepository $movieRepository){
+
+        
+        $findMoviesByFifties = $movieRepository->findMoviesByFifties();
+        //dd($findByDate);
+        return $this->json($findMoviesByFifties, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+    /**
+     * Return all movies of 1960 to 1969
+     * 
+     * @Route("/collection/sixties")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollectionSixties(MovieRepository $movieRepository){
+
+        
+        $findMoviesBySixties = $movieRepository->findMoviesBySixties();
+        //dd($findByDate);
+        return $this->json($findMoviesBySixties, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+    /**
+     * Return all movies of 1970 to 1979
+     * 
+     * @Route("/collection/seventies")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollectionSeventies(MovieRepository $movieRepository){
+
+        
+        $findMoviesBySeventies = $movieRepository->findMoviesBySeventies();
+        //dd($findByDate);
+        return $this->json($findMoviesBySeventies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+    /**
+     * Return all movies of 1980 to 1989
+     * 
+     * @Route("/collection/eighties")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function findMoviesCollectionEighties(MovieRepository $movieRepository){
+
+        
+        $findMoviesByEighties = $movieRepository->findMoviesByEighties();
+        //dd($findByDate);
+        return $this->json($findMoviesByEighties, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+
+
+
+
+
+
+    /** Return all movies
      * 
      * @Route("/allMovies", methods={"GET"})
      * @param MovieRepository $movieRepository
@@ -110,4 +238,5 @@ class MovieController extends AbstractController
         $allMovies = $movieRepository->findAll();
         return $this->json($allMovies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
+
 }

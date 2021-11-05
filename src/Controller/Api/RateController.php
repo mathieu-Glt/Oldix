@@ -52,6 +52,7 @@ class RateController extends AbstractController
 
         $rateToAdd = $serializer->deserialize($request->getContent(), Rate::class, 'json');
         $rateToAdd->setMovie($movie);
+        $rateToAdd->setUser($user);
         $errors = $validator->validate($rateToAdd);
         if (count($errors) !== 0) {
 
@@ -66,7 +67,7 @@ class RateController extends AbstractController
         }
         $em->persist($rateToAdd);
         $em->flush();
-        return $this->json([$rateToAdd], Response::HTTP_OK);
+        return $this->json($rateToAdd, Response::HTTP_CREATED,[],['groups'=>'rate_add_response']);
     }
 
     /**
@@ -76,7 +77,7 @@ class RateController extends AbstractController
      */
     public function remove(string $slug, int $id, MovieRepository $movieRepository, RateRepository $rateRepository, EntityManagerInterface $em)
     {
-        //TODO check if rate exists
+
         $rateToDelete = $rateRepository->find($id);
         if (!$rateToDelete) {
             $responseJson = [
@@ -85,7 +86,7 @@ class RateController extends AbstractController
             ];
             return $this->json($responseJson, Response::HTTP_NOT_FOUND);
         }
-        //TODO check if movie exists
+
         $movie = $movieRepository->findOneBySlug($slug);
         if (!$movie) {
             $responseJson = [
@@ -94,7 +95,7 @@ class RateController extends AbstractController
             ];
             return $this->json($responseJson, Response::HTTP_NOT_FOUND);
         }
-        //TODO check if rate is related to the movie
+
         if (!$movie->getRates()->contains($rateToDelete)) {
             $responseJson = [
                 'message' => 'The rate is not related to the movie',
@@ -102,7 +103,7 @@ class RateController extends AbstractController
             ];
             return $this->json($responseJson, Response::HTTP_BAD_REQUEST);
         }
-        //TODO check if user is connected
+
         $user = $this->getUser();
         if (!$user) {
             $responseJson = [
@@ -111,9 +112,7 @@ class RateController extends AbstractController
             ];
             return $this->json($responseJson, Response::HTTP_UNAUTHORIZED);
         }
-        //TODO check if user has created the rate
 
-        //TODO ok
         $movie->removeRate($rateToDelete);
         $em->flush();
         return $this->json([], Response::HTTP_OK);

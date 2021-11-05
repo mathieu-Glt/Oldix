@@ -117,14 +117,14 @@ class MovieController extends AbstractController
     }
 
     /**
-     * Display information for a film
+     * Method for add a movie length for field released_date in adminer
      * 
      * @Route("test", methods={"GET"})
      * @param int $id
      * @param MovieRepository $movieRepository
      * @return Response
     */
-    public function addToData(MovieRepository $movieRepository, OmdbApi $omdbApi, Request $request): Response
+    public function addDataToAdminer(MovieRepository $movieRepository, OmdbApi $omdbApi, Request $request): Response
     {       
         
             for ($id=9; $id < 139 ; $id++) { 

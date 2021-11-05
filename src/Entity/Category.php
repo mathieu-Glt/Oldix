@@ -57,10 +57,16 @@ class Category
      */
     private $users;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Mood::class, mappedBy="categories")
+     */
+    private $moods;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->moods = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,6 +159,33 @@ class Category
     {
         if ($this->users->removeElement($user)) {
             $user->removeFavoriteCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mood[]
+     */
+    public function getMoods(): Collection
+    {
+        return $this->moods;
+    }
+
+    public function addMood(Mood $mood): self
+    {
+        if (!$this->moods->contains($mood)) {
+            $this->moods[] = $mood;
+            $mood->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMood(Mood $mood): self
+    {
+        if ($this->moods->removeElement($mood)) {
+            $mood->removeCategory($this);
         }
 
         return $this;

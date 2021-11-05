@@ -42,18 +42,18 @@ class DatasGenerateCommand extends Command
         } catch (\Throwable $th) {
             if ($th->getMessage() === 'Notice: Undefined offset: 1') {
                 $io->success('Import successful !');
-                $io->info('Loading fixtures...');
-                $command = $this->getApplication()->find('doctrine:fixtures:load');
-                $arguments = [
-                    '--append' => true
-                ];
-                $fixtureInput = new ArrayInput($arguments);
-                try {
-                    $command->run($fixtureInput, $output);
-                } catch (\Throwable $th) {
-                    $io->error('There is a issue on your fixtures : ' . $th->getMessage());
-                    return Command::FAILURE;
-                }
+                // $io->info('Loading fixtures...');
+                // $command = $this->getApplication()->find('doctrine:fixtures:load');
+                // $arguments = [
+                //     '--append' => true
+                // ];
+                // $fixtureInput = new ArrayInput($arguments);
+                // try {
+                //     $command->run($fixtureInput, $output);
+                // } catch (\Throwable $th) {
+                //     $io->error('There is a issue on your fixtures : ' . $th->getMessage());
+                //     return Command::FAILURE;
+                // }
 
                 $io->success('Fixtures loaded, you can use the database !');
                 return Command::SUCCESS;
