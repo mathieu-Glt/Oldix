@@ -1,0 +1,36 @@
+{% extends 'back_office/backoffice_base.html.twig' %}
+
+{% block body %}
+	<div class="container mt-3">
+		<h1 class="text-center">List of comments
+		</h1>
+		<table class="table mt-2">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center" scope="col">#</th>
+					<th class="text-center" scope="col">Date</th>
+					<th class="text-center" scope="col">Username</th>
+					<th class="text-center" scope="col">Movie</th>
+					<th class="text-center" scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for comment in comments %}
+					<tr>
+						<th class="text-center" scope="row">{{comment.id}}</th>
+						<td class="text-center">{{comment.createdAt|date('d/m/Y')}}</td>
+                        <td class="text-center">{{comment.user.username}}</td>
+                        <td class="text-center">{{comment.movie.name}}</td>
+						<td class="d-flex justify-content-center">
+                            <a class="d-block btn btn-danger" href="{{path("backoffice_comments_delete", {"id": comment.id})}}">
+                                Delete
+                            </a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+
+{% endblock %}

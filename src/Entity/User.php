@@ -80,7 +80,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Thematic::class, mappedBy="owner")
      */
-    private $thematic;
+    private $thematics;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Language::class, mappedBy="owner")
+     */
+    private $languages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="user")
+     */
+    private $rates;
 
     public function __construct()
     {
@@ -92,6 +102,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->favoriteThematics = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->thematic = new ArrayCollection();
+        $this->languages = new ArrayCollection();
+        $this->rates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -383,6 +395,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($thematic->getOwner() === $this) {
                 $thematic->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Language[]
+     */
+    public function getLanguages(): Collection
+    {
+        return $this->languages;
+    }
+
+    public function addLanguage(Language $language): self
+    {
+        if (!$this->languages->contains($language)) {
+            $this->languages[] = $language;
+            $language->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLanguage(Language $language): self
+    {
+        if ($this->languages->removeElement($language)) {
+            // set the owning side to null (unless already changed)
+            if ($language->getOwner() === $this) {
+                $language->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rate[]
+     */
+    public function getRates(): Collection
+    {
+        return $this->rates;
+    }
+
+    public function addRate(Rate $rate): self
+    {
+        if (!$this->rates->contains($rate)) {
+            $this->rates[] = $rate;
+            $rate->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRate(Rate $rate): self
+    {
+        if ($this->rates->removeElement($rate)) {
+            // set the owning side to null (unless already changed)
+            if ($rate->getUser() === $this) {
+                $rate->setUser(null);
             }
         }
 

@@ -8,10 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
  * @ORM\Entity(repositoryClass=ThematicRepository::class)
+ * @UniqueEntity("name")
  */
 class Thematic
 {
@@ -24,7 +26,7 @@ class Thematic
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","browse_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","browse_thematic","movie_read","list_movie_add","list_movie_show"})
      * @Assert\NotBlank(message="Thematic must have a name")
      * @Assert\Regex(
      *              pattern="/[a-z]+/"
@@ -34,13 +36,13 @@ class Thematic
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","browse_thematic","movie_read"})
+     * @Groups({"movie_browse","category_read","movies_search","browse_thematic","movie_read"})
      */
     private $slug;
 
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="thematics")
-     * @Groups({"read_thematic"})
+     * @Groups({"thematic_read"})
      * @Assert\Valid
      */
     private $movies;

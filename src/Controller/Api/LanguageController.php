@@ -25,7 +25,7 @@ class LanguageController extends AbstractController
     {
 
         $languages = $languageRepository->findAll();
-        return $this->json($languages, Response::HTTP_OK, [], ['groups' => 'browse_language']);
+        return $this->json($languages, Response::HTTP_OK, [], ['groups' => 'language_browse']);
     }
 
     /**

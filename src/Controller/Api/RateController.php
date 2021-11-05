@@ -16,6 +16,15 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class RateController extends AbstractController
 {
     /**
+     * @Route("/api/movies/top", methods={"GET"})
+     * @return Response
+     */
+    public function top()
+    {
+      return "hello";
+    }
+
+    /**
      * 
      * @Route("/api/movies/{slug}/rates/add",methods={"POST"})
      * @return Response
@@ -28,7 +37,7 @@ class RateController extends AbstractController
                 'message' => 'Movie not found',
                 'code' => Response::HTTP_NOT_FOUND
             ];
-            return $this->json($responseJson, Response::HTTP_NOT_FOUND);
+            return $this->json($responseJson, Response::HTTP_NOT_FOUND,[],['groups'=>'rate_add_response']);
         }
 
         $user = $this->getUser();

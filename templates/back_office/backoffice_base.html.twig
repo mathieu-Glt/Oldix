@@ -13,51 +13,72 @@
 		{% endblock %}
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="{{path('backoffice')}}">Oldix Back-Office</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="{{path("backoffice")}}">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{path("backoffice_movies_add")}}">Add a Movie</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Movies
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li>
-									<a class="dropdown-item" href="{{path("backoffice_movies_browse")}}">All</a>
-								</li>
-								<li><hr class="dropdown-divider"></li>
-								<li>
-									<a class="dropdown-item" href="{{path("backoffice_categories_browse")}}">Categories</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="{{path("backoffice_thematics_browse")}}">Thematics</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Users</a>
 
-						</li>
-					</ul>
-					<ul class="navbar-nav ml-auto">
-						{% if  app.user.roles is defined %}
-							<li class="nav-item">
-								<a class="nav-link text-white rounded btn btn-danger" href="{{path("app_logout")}}">Logout</a>
-							</li>
-						{% endif %}
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-4">
+			<a class="navbar-brand" href="{{path('backoffice')}}">Oldix Back-Office</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-					</ul>
-				</div>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							Movie
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path("backoffice_movies_add")}}">New</a>
+							<a class="dropdown-item" href="{{path("backoffice_movies_browse")}}">Show all</a>
+						</div>
+					</li>
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							Category
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path("backoffice_categories_add")}}">New</a>
+							<a class="dropdown-item" href="{{path("backoffice_categories_browse")}}">Show all</a>
+						</div>
+					</li>
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							Thematic
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path("backoffice_thematics_add")}}">New</a>
+							<a class="dropdown-item" href="{{path("backoffice_thematics_browse")}}">Show all</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							Language
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path("backoffice_languages_add")}}">New</a>
+							<a class="dropdown-item" href="{{path("backoffice_languages_browse")}}">Show all</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							User
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path("backoffice_users_add")}}">New</a>
+							<a class="dropdown-item" href="{{path("backoffice_users_browse")}}">Show all</a>
+							<a class="dropdown-item" href="">Show comments</a>
+						</div>
+					</li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					{% if  app.user.roles is defined %}
+						<li class="nav-item">
+							<a class="nav-link text-white rounded btn btn-danger" href="{{path("app_logout")}}">Logout</a>
+						</li>
+					{% endif %}
+
+				</ul>
 			</div>
 		</nav>
 
@@ -69,11 +90,10 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 		<script src="/js/app.js"></script>
 		<script>
-			document.addEventListener('DOMContentLoaded',function(){
-			{% for label,message in app.flashes %}
-				app.displayMessage("{{message[0]}}", "{{label}}");
-			{% endfor %}
-			})
+			document.addEventListener('DOMContentLoaded', function () {
+{% for label,message in app.flashes %}
+app.displayMessage("{{ message[0] }}", "{{ label }}");{% endfor %}
+})
 		</script>
 	</body>
 </html>

@@ -45,6 +45,6 @@ class ThematicController extends AbstractController
 
         $movies = $movieRepository->findByThematic($thematic);
 
-        return $this->json($movies, Response::HTTP_OK, [], ['groups' => 'read_thematic']);
+        return $this->json($movies, Response::HTTP_OK, [], ['groups' => 'thematic_read']);
     }
 }

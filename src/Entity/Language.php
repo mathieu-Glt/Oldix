@@ -7,9 +7,11 @@ use App\Repository\LanguageRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=LanguageRepository::class)
+ * @UniqueEntity("name")
  */
 class Language
 {
@@ -23,13 +25,13 @@ class Language
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","movie_read","browse_language","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","movie_read","language_browse","list_movie_add","list_movie_show"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","movie_read","browse_language"})
+     * @Groups({"movie_browse","category_read","movies_search","movie_read","language_browse"})
      */
     private $slug;
 
@@ -37,6 +39,11 @@ class Language
      * @ORM\OneToMany(targetEntity=Movie::class, mappedBy="language")
      */
     private $movies;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="languages")
+     */
+    private $owner;
 
     public function __construct()
     {
@@ -98,6 +105,18 @@ class Language
                 $movie->setLanguage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }

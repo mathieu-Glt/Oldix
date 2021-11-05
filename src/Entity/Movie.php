@@ -8,10 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
+ * @UniqueEntity("name")
  */
 class Movie
 {
@@ -24,20 +26,20 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      * @Assert\NotBlank(message="The movie must have a name")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      * @Assert\NotBlank(message="The movie must have a link")
      * @Assert\Url(message="This link is not correct")
      */
@@ -45,31 +47,31 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})     
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})     
      */
     private $pictureUrl;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $releasedDate;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $realisator;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $synopsis;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="movies")
-     * @Groups({"browse_movie","movies_search","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","movies_search","movie_read","list_movie_add","list_movie_show"})
      * @Assert\NotBlank(message="The movie must be related to at least one category")
      * @Assert\Valid
      */
@@ -77,7 +79,7 @@ class Movie
 
     /**
      * @ORM\ManyToMany(targetEntity=Thematic::class, inversedBy="movies")
-     * @Groups({"browse_movie","read_category","movies_search","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","movie_read","list_movie_add","list_movie_show"})
      * @Assert\Valid
      */
     private $thematics;
@@ -85,7 +87,7 @@ class Movie
     /**
      * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="movies")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"browse_movie","read_category","movies_search","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","movie_read","list_movie_add","list_movie_show"})
      * @Assert\NotBlank(message="The movie must be related to one language")
      * @Assert\Valid
      */
@@ -114,25 +116,25 @@ class Movie
     /**
 
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $runTime;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $actors;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $illustration;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"browse_movie","read_category","movies_search","read_thematic","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $averageRate;
 
@@ -396,6 +398,7 @@ class Movie
 
     public function getRunTime(): ?string
     {
+
         return $this->runTime;
     }
 

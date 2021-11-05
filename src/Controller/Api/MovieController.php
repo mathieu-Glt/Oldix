@@ -88,7 +88,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * Return a collection of 3 movies from Fritz Lang
+     * Return a collection of 4 movies from Fritz Lang
      * 
      * @Route("/collection/fritz-lang")
      * @param MovieRepository $movieRepository
@@ -100,6 +100,7 @@ class MovieController extends AbstractController
     }
 
     /**
+
      * Return all movies of 1910 to 1919
      * 
      * @Route("/collection/tenties")
@@ -225,5 +226,17 @@ class MovieController extends AbstractController
 
 
 
+
+
+     * Return all movies
+     * 
+     * @Route("/allMovies", methods={"GET"})
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function all(MovieRepository $movieRepository){
+        $allMovies = $movieRepository->findAll();
+        return $this->json($allMovies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
 
 }
