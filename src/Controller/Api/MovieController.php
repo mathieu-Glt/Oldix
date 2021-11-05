@@ -218,15 +218,8 @@ class MovieController extends AbstractController
 
         
         $findMoviesByEighties = $movieRepository->findMoviesByEighties();
-        //dd($findByDate);
         return $this->json($findMoviesByEighties, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
-
-
-
-
-
-
 
     /** Return all movies
      * 
