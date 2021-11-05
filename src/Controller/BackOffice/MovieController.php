@@ -127,7 +127,7 @@ class MovieController extends AbstractController
     public function addToData(MovieRepository $movieRepository, OmdbApi $omdbApi, Request $request): Response
     {       
         
-            for ($id=1; $id < 67 ; $id++) { 
+            for ($id=1; $id < 139 ; $id++) { 
                 
                 $entityManager = $this->getDoctrine()->getManager();
                 // TODO récupérer la liste d'information d'un film dans le repository par id

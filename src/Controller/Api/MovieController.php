@@ -88,7 +88,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * Return a collection of 3 movies from Fritz Lang
+     * Return a collection of 4 movies from Fritz Lang
      * 
      * @Route("/collection/fritz-lang")
      * @param MovieRepository $movieRepository
