@@ -98,4 +98,16 @@ class MovieController extends AbstractController
         $fritzLangMovies = $movieRepository->findFritzLang();
         return $this->json($fritzLangMovies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
+
+    /**
+     * Return all movies
+     * 
+     * @Route("/allMovies", methods={"GET"})
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function all(MovieRepository $movieRepository){
+        $allMovies = $movieRepository->findAll();
+        return $this->json($allMovies, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
 }
