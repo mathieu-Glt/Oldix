@@ -1,0 +1,44 @@
+{% extends 'back_office/backoffice_base.html.twig' %}
+
+{% block body %}
+	<div class="container mt-3">
+		<h1 class="text-center">List of moods
+		</h1>
+		<div class="d-flex justify-content-end">
+			<a class="d-block btn btn-secondary " href="{{path("backoffice_moods_add")}}">Add a mood</a>
+		</div>
+
+		<table class="table mt-2">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center" scope="col">#</th>
+					<th class="text-center" scope="col">Name</th>
+					<th class="text-center" scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for mood in moods %}
+					<tr>
+						<th class="text-center" scope="row">{{mood.id}}</th>
+						<td class="text-center">{{mood.name}}</td>
+						<td class="d-flex justify-content-center">
+							{# {% if is_granted("thematic-delete", mood) %} #}
+
+								<a class="d-block btn btn-warning mr-3" href="{{path("backoffice_moods_edit", {"slug": mood.slug})}}">
+									Edit
+								</a>
+							{# {% endif %} #}
+
+							{# {% if is_granted("thematic-delete", thematic) %} #}
+								<a class="d-block btn btn-danger" href="{{path("backoffice_moods_delete", {"slug": mood.slug})}}">
+									Delete
+								</a>
+							{# {% endif %} #}
+
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

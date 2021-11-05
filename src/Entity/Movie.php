@@ -13,7 +13,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
- * @UniqueEntity("name")
  */
 class Movie
 {
@@ -26,20 +25,20 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show","mood_read"})
      * @Assert\NotBlank(message="The movie must have a name")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show","mood_read"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show","mood_read"})
      * @Assert\NotBlank(message="The movie must have a link")
      * @Assert\Url(message="This link is not correct")
      */
@@ -47,19 +46,19 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})     
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show","mood_read"})     
      */
     private $pictureUrl;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show","mood_read"})
      */
     private $releasedDate;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show","mood_read"})
      */
     private $realisator;
 

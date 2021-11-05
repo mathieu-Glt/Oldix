@@ -65,7 +65,7 @@ class MovieRepository extends ServiceEntityRepository
      * @param string $query
      * @return array
      */
-    public function findByQuery(string $query):array
+    public function findByQuery(string $query): array
     {
         return $this
             ->createQueryBuilder('m')
@@ -82,7 +82,7 @@ class MovieRepository extends ServiceEntityRepository
      * @param string $query
      * @return array
      */
-    public function findHitchcock():array
+    public function findHitchcock(): array
     {
         return $this
             ->createQueryBuilder('m')
@@ -98,7 +98,7 @@ class MovieRepository extends ServiceEntityRepository
      * @param string $query
      * @return array
      */
-    public function findFritzLang():array
+    public function findFritzLang(): array
     {
         return $this
             ->createQueryBuilder('m')
@@ -256,12 +256,13 @@ class MovieRepository extends ServiceEntityRepository
                     ->getResult();
     }
 
-
-
-
-
-    
-
-
-
+    public function findByCategories(array $categoryId): array
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->join('m.categories', 'c')
+            ->andWhere('c.id IN (' . implode(',', $categoryId) . ')')
+            ->getQuery()
+            ->getResult();
+    }
 }

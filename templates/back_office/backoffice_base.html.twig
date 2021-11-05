@@ -62,12 +62,21 @@
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							Mood
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path("backoffice_moods_add")}}">New</a>
+							<a class="dropdown-item" href="{{path("backoffice_moods_browse")}}">Show all</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
 							User
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="{{path("backoffice_users_add")}}">New</a>
 							<a class="dropdown-item" href="{{path("backoffice_users_browse")}}">Show all</a>
-							<a class="dropdown-item" href="">Show comments</a>
+							<a class="dropdown-item" href="{{path("backoffice_comments_browse")}}">Show comments</a>
 						</div>
 					</li>
 				</ul>

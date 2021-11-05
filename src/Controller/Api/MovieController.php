@@ -228,7 +228,7 @@ class MovieController extends AbstractController
 
 
 
-     * Return all movies
+    /** Return all movies
      * 
      * @Route("/allMovies", methods={"GET"})
      * @param MovieRepository $movieRepository

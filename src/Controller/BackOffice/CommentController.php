@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/", name="browse")
+     * @Route("/all", name="browse")
      */
     public function browse(CommentRepository $commentRepository): Response
     {
