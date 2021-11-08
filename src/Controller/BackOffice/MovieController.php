@@ -9,6 +9,7 @@ use App\Utils\OmdbApi;
 use App\Utils\Slug;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,9 +72,9 @@ class MovieController extends AbstractController
      * @param MovieRepository $movieRepository
      * @return Response
      */
-    public function browse(MovieRepository $movieRepository): Response
+    public function browse(MovieRepository $movieRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $allMovies = $movieRepository->findAll();
+        $allMovies = $paginator->paginate($movieRepository->findAll(), $request->query->getInt('page', 1), 6);
         //dd(($allMovies);
         return $this->render('back_office/movie/all_movies.html.twig', ['movies' => $allMovies]);
     }
@@ -123,18 +124,18 @@ class MovieController extends AbstractController
      * @param int $id
      * @param MovieRepository $movieRepository
      * @return Response
-    */
+     */
     public function addDataToAdminer(MovieRepository $movieRepository, OmdbApi $omdbApi, Request $request): Response
-    {       
-        
-            for ($id=9; $id < 139 ; $id++) { 
-                
-                $entityManager = $this->getDoctrine()->getManager();
-                // TODO récupérer la liste d'information d'un film dans le repository par id
-                //dd($id);
-                $movie =  $movieRepository->find($id);
-                if ($movie !== null) {
-                
+    {
+
+        for ($id = 9; $id < 139; $id++) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            // TODO récupérer la liste d'information d'un film dans le repository par id
+            //dd($id);
+            $movie =  $movieRepository->find($id);
+            if ($movie !== null) {
+
                 //dd($movie);
                 // TODO récupérer le nom d'un film
                 $movieName = $movie->getName();
@@ -147,7 +148,7 @@ class MovieController extends AbstractController
                 $array = (array) $infosFromApi;
                 //dd($array);
                 // TODO récupèration de la donnée runtime
-                $movieRunTime = $array['Runtime']; 
+                $movieRunTime = $array['Runtime'];
                 //dd($movieRunTime);
                 // TODO définition de cette donnée dans la base adminer
                 $movie->setRunTime($movieRunTime);
@@ -155,22 +156,9 @@ class MovieController extends AbstractController
                 // TODO Je valde en base de donnée
                 $entityManager->persist($movie);
                 $entityManager->flush();
-
-                }
-
             }
-                
-                return new Response('data runtime added', 200);
+        }
 
-    
-    
-                
-
-
-
+        return new Response('data runtime added', 200);
     }
-
-
-
-
 }
