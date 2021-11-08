@@ -26,15 +26,18 @@
 								Edit
 							</a>
 							{# {% if is_granted("category_delete", category) %} #}
-								<a class="d-block btn btn-danger" href="{{path("backoffice_languages_delete", {"slug": language.slug})}}">
-									Delete
-								</a>
+							<a class="d-block btn btn-danger" href="{{path("backoffice_languages_delete", {"slug": language.slug})}}">
+								Delete
+							</a>
 							{# {% endif %} #}
 						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+			<div class="row navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(languages) }}
+			</div>
 	</div>
 
 
