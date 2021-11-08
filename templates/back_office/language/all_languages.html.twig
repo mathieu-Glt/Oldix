@@ -26,7 +26,7 @@
 								Edit
 							</a>
 							{# {% if is_granted("category_delete", category) %} #}
-							<a class="d-block btn btn-danger" href="{{path("backoffice_languages_delete", {"slug": language.slug})}}">
+							<a class="d-block btn btn-danger" href="{{path("backoffice_languages_delete", {"slug": language.slug})}}" onclick="return confirm('Are you sure you want to delete this item?');">
 								Delete
 							</a>
 							{# {% endif %} #}
