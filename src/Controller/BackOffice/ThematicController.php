@@ -7,6 +7,7 @@ use App\Form\ThematicType;
 use App\Repository\ThematicRepository;
 use App\Utils\Slug;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,10 +27,11 @@ class ThematicController extends AbstractController
      * @param ThematicRepository $thematicRepository
      * @return Response
      */
-    public function browse(ThematicRepository $thematicRepository): Response
+    public function browse(ThematicRepository $thematicRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $allThematics = $thematicRepository->findAll();
-        return $this->render('back_office/thematic/all_thematics.html.twig', ['thematics' => $allThematics]);
+        $pagination = $paginator->paginate($allThematics, $request->query->getInt('page',1),10);
+        return $this->render('back_office/thematic/all_thematics.html.twig', ['pagination' => $pagination]);
     }
 
     /**
