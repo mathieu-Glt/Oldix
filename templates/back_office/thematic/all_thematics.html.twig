@@ -17,28 +17,37 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for thematic in thematics %}
+				{% for article in pagination %}
 					<tr>
-						<th class="text-center" scope="row">{{thematic.id}}</th>
-						<td class="text-center">{{thematic.name}}</td>
+						<th class="text-center" scope="row">{{article.id}}</th>
+						<td class="text-center">{{article.name}}</td>
 						<td class="d-flex justify-content-center">
-							{% if is_granted("thematic-delete", thematic) %}
+							{% if is_granted("thematic-delete", article) %}
 
-								<a class="d-block btn btn-warning mr-3" href="{{path("backoffice_thematics_edit", {"slug": thematic.slug})}}">
+								<a class="d-block btn btn-warning mr-3" href="{{path("backoffice_thematics_edit", {"slug": article.slug})}}">
 									Edit
 								</a>
 							{% endif %}
 
-							{% if is_granted("thematic-delete", thematic) %}
-								<a class="d-block btn btn-danger" href="{{path("backoffice_thematics_delete", {"slug": thematic.slug})}}">
+							{% if is_granted("thematic-delete", article) %}
+								<a class="d-block btn btn-danger" href="{{path("backoffice_thematics_delete", {"slug": article.slug})}}">
 									Delete
 								</a>
 							{% endif %}
-
+					
 						</td>
+						
 					</tr>
 				{% endfor %}
 			</tbody>
+			<tfoot>
+			<tr>
+				<th class="navigation">
+					{{ knp_pagination_render(pagination) }}
+				</th>
+			</tr>
+			</tfoot>
+
 		</table>
 	</div>
 {% endblock %}

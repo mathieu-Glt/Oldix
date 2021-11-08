@@ -9,6 +9,7 @@ use App\Repository\CategoryRepository;
 use App\Utils\Slug;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
+use Knp\Component\Pager\PaginatorInterface;
 use Prophecy\Argument\Token\TokenInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,10 +30,11 @@ class CategoryController extends AbstractController
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function browse(CategoryRepository $categoryRepository): Response
+    public function browse(CategoryRepository $categoryRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $allCategories = $categoryRepository->findAll();
-        return $this->render('back_office/category/all_categories.html.twig', ['categories' => $allCategories]);
+        $pagination = $paginator->paginate($allCategories, $request->query->getInt('page', 1), 10);
+        return $this->render('back_office/category/all_categories.html.twig', ['pagination' => $pagination]);
     }
 
     /**
