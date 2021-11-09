@@ -3,11 +3,11 @@ L'idee est de concevoir un site de divertissement qui regroupe des films d'ancie
 
 # technologie utilisé pour la construction du site 
 ## partie back :
-![symfony](images/symfony.png)
-![php](images/php.png)
+![symfony](symfony.png)
+![php](php.png)
 
 ## partie front :
-![JS](images/JS.png)
-![react](images/react.png)
+![JS](JS.png)
+![react](react.png)
 
 
