@@ -7,6 +7,7 @@ use App\Entity\Language;
 use App\Form\LanguageType;
 use App\Repository\LanguageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,9 +29,9 @@ class LanguageController extends AbstractController
     /**
      * @Route("/all", name="browse", methods={"GET"})
      */
-    public function browse(LanguageRepository $languageRepository): Response
+    public function browse(LanguageRepository $languageRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $allLanguages = $languageRepository->findAll();
+        $allLanguages = $paginator->paginate($languageRepository->findAll(), $request->query->getInt('page', 1), 10);
         return $this->render('back_office/language/all_languages.html.twig', [
             'languages' => $allLanguages
         ]);

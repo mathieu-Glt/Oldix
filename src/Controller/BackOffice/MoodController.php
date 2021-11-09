@@ -8,6 +8,7 @@ use App\Entity\Mood;
 use App\Form\MoodType;
 use App\Repository\MoodRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,11 +27,12 @@ class MoodController extends AbstractController
      * @param MoodRepository $moodRepository
      * @return Response
      */
-    public function browse(MoodRepository $moodRepository): Response
+    public function browse(MoodRepository $moodRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $allmoods = $moodRepository->findAll();
+        $pagination = $paginator->paginate($allmoods, $request->query->getInt('page', 1),10);
         return $this->render('back_office/mood/all_moods.html.twig', [
-            'moods' => $allmoods
+            'pagination' => $pagination
         ]);
     }
 

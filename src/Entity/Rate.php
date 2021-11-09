@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RateRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=RateRepository::class)
@@ -15,12 +16,16 @@ class Rate
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"rate_add_response"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"rate_add_response"})
+     * @Groups({"rate_add_response", "movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
+     * 
+     * @Assert\Type(type = "integer", message = "Movie's rate must be a number")
+     * @Assert\Range(min = 0, max = 5,minMessage = "Movie's rate must be between 0 and 5",maxMessage = "Movie's rate must be between 0 and 5")
      */
     private $score;
 

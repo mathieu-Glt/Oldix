@@ -15,98 +15,295 @@
 			</p>
 		</div>
 	</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-9">
-				<h2 class="text-center">Oldix API</h2>
-				<p class="text-center">
-					You can use the API with the following endpoints</p>
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Method</th>
-							<th scope="col">Route</th>
-							<th scope="col">Description</th>
-							<th scope="col">Example links</th>                        
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>GET</td>
-							<td>/api/movies/research</td>
-							<td>GET movies with a research query</td>
-                            <td><a target="_blank" href="{{path('api_movies_research')}}?q=maniac">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/movies/random</td>
-							<td>GET a random movie</td>
-                            <td><a target="_blank" href="{{path('api_movies_random')}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/movies/{slug}</td>
-							<td>GET details about a movie</td>
-                            <td><a target="_blank" href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/categories</td>
-							<td>GET all categories</td>
-                            <td><a target="_blank" href="{{path('api_category_browse')}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/categories/{slug}</td>
-							<td>GET all movies related to a category</td>
-                            <td><a target="_blank" href="{{path('api_category_read',{'slug':'horror'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/categories/{slug}/preview</td>
-							<td>GET 10 movies related to a category</td>
-                            <td><a target="_blank" href="{{path('api_category_preview',{'slug':'horror'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/thematics</td>
-							<td>GET all thematics</td>
-                            <td><a target="_blank" href="/api/thematics">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/thematics/{slug}</td>
-							<td>GET all movies related to a thematic</td>
-                            <td><a target="_blank" href="{{path('api_thematic_read',{'slug':'charlie-chaplin'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/languages</td>
-							<td>GET languages</td>
-                            <td><a target="_blank" href="{{path('api_languages_browse')}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>/api/languages/{slug}</td>
-							<td>GET all movies related to a language</td>
-                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="col-3 d-flex flex-column justify-content-center">
-				<div class="row mb-5 d-flex flex-column align-items-center">
+	<div class="container-fluid">
+		<h2 class="text-center">Redirection</h2>
+		<div class="row d-flex justify-content-around">
+			<div class="col-3">
+				<div class="row d-flex flex-column align-items-center">
 					<h2>Oldix Backoffice</h2>
 					<p class="text-center">You can access to the oldix backoffice</p>
 					<a href="{{path('backoffice')}}" class="d-block btn btn-dark rounded">Access to the Backoffice</a>
 				</div>
-				<div class="row mt-5 d-flex flex-column align-items-center">
+			</div>
+			<div class="col-3">
+				<div class="row d-flex flex-column align-items-center">
 					<h2>Oldix Website</h2>
 					<p class="text-center">
 						You can access to the official website of Oldix
 					</p>
 					<a href="#" class="d-block btn btn-dark rounded">Access to the Website</a>
 				</div>
+			</div>
+		</div>
+		<h2 class="mt-5 text-center">API Documentation</h2>
+		<div class="row">
+			<div class="col-12">
+				<p class="text-center">
+					You can use the API with the following endpoints</p>
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+						<th class="text-center" scope="col">t</th>
+							<th class="text-center" scope="col">Method</th>
+							<th class="text-center" scope="col">Auth</th>
+							<th class="text-center" scope="col">Route</th>
+							<th class="text-center" scope="col">Body</th>
+							<th class="text-center" scope="col">Description</th>
+							<th class="text-center" scope="col">Example links</th>                        
+						</tr>
+					</thead>
+					<tbody class="text-center">
+						<tr class="text-center">
+							<td rowspan="2">User</td>
+							<td>POST</td>
+							<td>None</td>
+							<td>/api/register</td>
+							<td>
+							<pre class="mb-0">
+{
+	"username":"string",
+	"password": "string",
+	"pseudo": "string"
+}
+							</pre>
+							</td>
+							<td>POST User egistration</td>
+						</tr>		
+						<tr>
+							<td>POST</td>
+							<td>None</td>
+							<td>/api/login_check</td>
+							<td>
+							<pre class="mb-0">
+{
+	"username":"string",
+	"password": "string"
+}
+							</pre>
+							</td>
+							<td>POST login</td>
+						</tr>	
+						<tr class="text-center">
+							<td rowspan="7">
+								Movie
+							</td>
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/movies/research</td>
+							<td>None</td>
+							<td>GET movies with a research query</td>
+                            <td><a target="_blank" href="{{path('api_movies_research')}}?q=maniac">Example link</a></td>
+						</tr>
+						<tr class="text-center">
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/movies/random</td>
+							<td>None</td>
+							<td>GET a random movie</td>
+                            <td><a target="_blank" href="{{path('api_movies_random')}}">Example link</a></td>
+						</tr>
+						<tr class="text-center">
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/movies/randoms</td>
+							<td>None</td>
+							<td>GET 15 random movies</td>
+                            <td><a target="_blank" href="{{path('api_movies_randoms')}}">Example link</a></td>
+						</tr>
+						<tr class="text-center">
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/movies/{slug}</td>
+							<td>None</td>
+							<td>GET details about a movie</td>
+                            <td><a target="_blank" href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a></td>
+						</tr>
+						<tr class="text-center">
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/movies/collection/{year}/{year}</td>
+							<td>None</td>
+							<td>GET movie from a year to another year</td>
+                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
+						</tr>
+						<tr class="text-center">
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/movies/allMovies</td>
+							<td>None</td>
+							<td>GET all movies</td>
+                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
+						</tr>	
+						<tr class="text-center">
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/movies/topTen</td>
+							<td>None</td>
+							<td>GET top rated movie</td>
+                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
+						</tr>
+						<tr class="text-center">
+							<td rowspan="3">
+								Category
+							</td>
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/categories</td>
+							<td>None</td>
+							<td>GET all categories</td>
+                            <td><a target="_blank" href="{{path('api_category_browse')}}">Example link</a></td>
+						</tr>
+						<tr class="text-center">
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/categories/{slug}</td>
+							<td>None</td>
+							<td>GET all movies related to a category</td>
+                            <td><a target="_blank" href="{{path('api_category_read',{'slug':'horror'})}}">Example link</a></td>
+						</tr>
+						<tr class="text-center">
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/categories/{slug}/preview</td>
+							<td>None</td>
+							<td>GET 10 movies related to a category</td>
+                            <td><a target="_blank" href="{{path('api_category_preview',{'slug':'horror'})}}">Example link</a></td>
+						</tr>
+						<tr>
+							<td rowspan="2">
+								Thematic
+							</td>
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/thematics</td>
+							<td>None</td>
+							<td>GET all thematics</td>
+                            <td><a target="_blank" href="/api/thematics">Example link</a></td>
+						</tr>
+						<tr>
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/thematics/{slug}</td>
+							<td>None</td>
+							<td>GET all movies related to a thematic</td>
+                            <td><a target="_blank" href="{{path('api_thematic_read',{'slug':'charlie-chaplin'})}}">Example link</a></td>
+						</tr>
+						<tr>
+							<td rowspan="2">
+								Language
+							</td>
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/languages</td>
+							<td>None</td>
+							<td>GET languages</td>
+                            <td><a target="_blank" href="{{path('api_languages_browse')}}">Example link</a></td>
+						</tr>
+						<tr>
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/languages/{slug}</td>
+							<td>None</td>
+							<td>GET all movies related to a language</td>
+                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
+						</tr>
+						<tr>
+							<td rowspan="2">
+								Mood
+							</td>
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/moods</td>
+							<td>None</td>
+							<td>GET all moods</td>
+                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
+						</tr>
+						<tr>
+							<td>GET</td>
+							<td>None</td>
+							<td>/api/moods/{slug}</td>
+							<td>None</td>
+							<td>GET movie from a mood</td>
+                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
+						</tr>
+						<tr>
+							<td class="align-self-center" rowspan="2">
+								Comment
+							</td>
+							<td>POST</td>
+							<td>Bearer token</td>
+							<td>/api/movies/{slug}/comments/add</td>
+							<td>
+							<pre class="mb-0">
+{
+	"comment":"string"
+}
+							</pre>
+							</td>
+							<td>POST a comment</td>
+						</tr>
+						<tr>
+							<td>DELETE</td>
+							<td>Bearer token</td>
+							<td>/api/movies/{slug}/comments/{id}/delete</td>
+							<td>None</td>
+							<td>DELETE a comment</td>
+						</tr>
+						<tr>
+							<td rowspan="3">
+								List
+							</td>
+							<td>POST</td>
+							<td>Bearer token</td>
+							<td>/api/list/add</td>
+							<td>
+							<pre class="mb-0">
+{
+	"movie":"string"
+}
+							</pre>
+							</td>
+							<td>POST a movie on the user's favorite list</td>
+						</tr>	
+						<tr>
+							<td>DELETE</td>
+							<td>Bearer token</td>
+							<td>/api/list/delete/{slug}</td>
+							<td>None</td>
+							<td>DELETE a movie on the user's favorite list</td>
+						</tr>	
+						<tr>
+							<td>GET</td>
+							<td>Bearer token</td>
+							<td>/api/list</td>
+							<td>None</td>
+							<td>GET the user's favorite list</td>
+						</tr>
+						<tr>
+							<td rowspan="2">
+								Rate
+							</td>
+							<td>POST</td>
+							<td>Bearer token</td>
+							<td>/api/movies/{slug}/rates/add</td>
+							<td>
+							<pre class="mb-0">
+{
+	"rate":int
+}
+							</pre>
+							</td>
+							<td>POST a rate</td>
+						</tr>
+						<tr>
+							<td>DELETE</td>
+							<td>Bearer token</td>
+							<td>/api/movies/{slug}/rates/{id}/delete</td>
+							<td>None</td>
+							<td>DELETE a rate</td>
+						</tr>								
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

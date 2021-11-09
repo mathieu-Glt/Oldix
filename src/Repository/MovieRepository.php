@@ -35,6 +35,7 @@ class MovieRepository extends ServiceEntityRepository
             ->join('m.categories', 'c')
             ->andWhere('c.id = :id')
             ->setParameter('id', $category->getId())
+            ->orderBy('m.name', 'ASC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
@@ -54,6 +55,7 @@ class MovieRepository extends ServiceEntityRepository
             ->join('m.thematics', 't')
             ->andWhere('t.id = :id')
             ->setParameter('id', $thematic->getId())
+            ->orderBy('m.name', 'ASC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
@@ -124,7 +126,7 @@ class MovieRepository extends ServiceEntityRepository
         ->getResult();
     }
 
-    /*
+
      * Find all movies by tenties
      * 
      * @param mixed $name
