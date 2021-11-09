@@ -54,8 +54,7 @@ class ListController extends AbstractController
         $user->addFavoriteMovie($movieToAdd);
         $em->persist($user);
         $em->flush();
-        $serializedMovie = $serializer->serialize($movieToAdd, 'json', ['groups' => 'list_movie_add']);
-        return $this->json($serializedMovie, Response::HTTP_OK);
+        return $this->json($movieToAdd, Response::HTTP_OK,[],['groups' => 'list_movie_add']);
     }
     /**
      * 
@@ -91,9 +90,9 @@ class ListController extends AbstractController
         $user->removeFavoriteMovie($movieToDelete);
         $em->flush();
         $jsonResponse = [
-            'code' => Response::HTTP_OK
+            'code' => Response::HTTP_NO_CONTENT
         ];
-        return $this->json($jsonResponse, Response::HTTP_OK);
+        return $this->json($jsonResponse, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -110,7 +109,7 @@ class ListController extends AbstractController
                 'code' => Response::HTTP_UNAUTHORIZED
             ];
 
-            return $this->json($jsonResponse, RESPONSe::HTTP_UNAUTHORIZED);
+            return $this->json($jsonResponse, Response::HTTP_UNAUTHORIZED);
         }
 
         $userFavoriteMovies = $user->getFavoriteMovies();

@@ -47,6 +47,12 @@ class MoodController extends AbstractController
         foreach($relatedCategories as $category){
             $categoryIds[] = $category->getId();
         }
+        if(empty($categoryIds)){
+            return $this->json([
+                'message' => 'There is currently no movie for this mood.',
+                'code' => Response::HTTP_NOT_FOUND
+            ], Response::HTTP_NOT_FOUND);
+        }
         $relatedMovies = $movieRepository->findByCategories($categoryIds);
         return $this->json($relatedMovies, Response::HTTP_OK, [], ['groups' => 'mood_read']);
     }

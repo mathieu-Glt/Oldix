@@ -104,6 +104,7 @@ class Movie
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="movie")
+     * @Groups({"movie_read"})
      */
     private $comments;
 
