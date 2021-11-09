@@ -110,6 +110,7 @@ class Movie
 
     /**
      * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="movie")
+     * @Groups({"movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
      */
     private $rates;
 

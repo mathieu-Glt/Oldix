@@ -22,7 +22,8 @@ class Rate
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"rate_add_response"})
+     * @Groups({"rate_add_response", "movie_browse","category_read","movies_search","thematic_read","movie_read","list_movie_add","list_movie_show"})
+     * 
      * @Assert\Type(type = "integer", message = "Movie's rate must be a number")
      * @Assert\Range(min = 0, max = 5,minMessage = "Movie's rate must be between 0 and 5",maxMessage = "Movie's rate must be between 0 and 5")
      */
