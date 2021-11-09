@@ -16,17 +16,17 @@ class MailerController extends AbstractController
      */
     public function sendEmail(MailerInterface $mailer, Request $request): Response
     {
-        $userEmail = $request->getContent();
-        $userSubject = $request->getContent();
-        $userBody = $request->getContent();
+        $datas = json_decode($request->getContent());
+        $userEmail = $datas->email;
+        $userSubject = $datas->subject;
+        $userBody = $datas->content;
         $email = (new Email())
         ->from($userEmail)
         ->to('oldix.contact@gmail.com')
         ->subject($userSubject);
         $render = $this->renderView('mail.html.twig', ["email" => $userEmail, "subject" => $userSubject, "content" => $userBody]);
-        $email->html($render);
-
-    $mailer->send($email);
+        $email->html($render);  
+        $mailer->send($email);
         return $this->json("Email sent", Response::HTTP_OK);
     }
 }
