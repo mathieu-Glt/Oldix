@@ -55,7 +55,6 @@ class MovieController extends AbstractController
             $movie->setSynopsis($movieSynopsis);
             $movie->setPictureUrl($moviePoster);
             $movie->setSlug($movieNameSlugged);
-            //dd($array);
             $entityManager->persist($movie);
             $entityManager->flush();
             $this->addFlash('success', "New movie added");
@@ -136,24 +135,12 @@ class MovieController extends AbstractController
             $movie =  $movieRepository->find($id);
             if ($movie !== null) {
 
-                //dd($movie);
                 // TODO récupérer le nom d'un film
                 $movieName = $movie->getName();
-                //var_dump($id);
-                //dd($movieName);
-                // TODO avec l'info du nom du film je récupère le film dans le servie Api
                 $infosFromApi = $omdbApi->getInfosFromApi($movieName);
-                //dd($infosFromApi);
-                // TODO je converti l'information de l'api en tableau
                 $array = (array) $infosFromApi;
-                //dd($array);
-                // TODO récupèration de la donnée runtime
                 $movieRunTime = $array['Runtime'];
-                //dd($movieRunTime);
-                // TODO définition de cette donnée dans la base adminer
                 $movie->setRunTime($movieRunTime);
-                //dd($movie);
-                // TODO Je valde en base de donnée
                 $entityManager->persist($movie);
                 $entityManager->flush();
             }

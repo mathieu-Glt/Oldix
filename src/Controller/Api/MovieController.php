@@ -55,6 +55,24 @@ class MovieController extends AbstractController
 
         return $this->json($randomMovie, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
+
+    /**
+     * 
+     * @Route("/randoms", name="randoms")
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function manyRandom(MovieRepository $movieRepository):Response
+    {
+        $allMovies = $movieRepository->findAll();
+        $randomMovies = [];
+        $randomKey = array_rand($allMovies, 15);
+        foreach($randomKey as $key){
+            $randomMovies[] = $allMovies[$key];
+        }
+
+        return $this->json($randomMovies, Response::HTTP_OK, [], ['groups' => 'movie_browse']);
+    }
     /**
      * 
      * @Route("/{slug}", name="read", methods={"GET"}, requirements={"slug":"^[a-z0-9]+(?:-[a-z0-9]+)*$"})
