@@ -127,7 +127,6 @@ class MovieRepository extends ServiceEntityRepository
     }
 
 
-    /**
      * Find all movies by tenties
      * 
      * @param mixed $name
