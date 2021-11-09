@@ -66,7 +66,7 @@ class CommentController extends AbstractController
         $em->persist($commentToAdd);
         $em->flush();
 
-        return $this->json($commentToAdd, Response::HTTP_OK, [], ['groups' => 'comments_add_response']);
+        return $this->json($commentToAdd, Response::HTTP_CREATED, [], ['groups' => 'comments_add_response']);
     }
 
     /**
@@ -122,6 +122,6 @@ class CommentController extends AbstractController
 
         $em->remove($commentToDelete);
         $em->flush();
-        return $this->json([], Response::HTTP_OK);
+        return $this->json(["code"=>Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
     }
 }

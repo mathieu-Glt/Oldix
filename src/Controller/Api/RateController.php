@@ -49,11 +49,11 @@ class RateController extends AbstractController
             ];
             return $this->json($responseJson, Response::HTTP_UNAUTHORIZED);
         }
-
         $rateToAdd = $serializer->deserialize($request->getContent(), Rate::class, 'json');
         $rateToAdd->setMovie($movie);
         $rateToAdd->setUser($user);
         $errors = $validator->validate($rateToAdd);
+        
         if (count($errors) !== 0) {
 
             foreach ($errors as $error) {
@@ -113,8 +113,8 @@ class RateController extends AbstractController
             return $this->json($responseJson, Response::HTTP_UNAUTHORIZED);
         }
 
-        $movie->removeRate($rateToDelete);
+        $em->remove($rateToDelete);
         $em->flush();
-        return $this->json([], Response::HTTP_OK);
+        return $this->json(["code"=>Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
     }
 }

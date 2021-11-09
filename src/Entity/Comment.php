@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CommentRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -15,24 +16,27 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"comments_add_response","movie_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comments_add_response"})
+     * @Groups({"comments_add_response","movie_read"})
+     * @Assert\NotBlank(message="You must add a message")
      */
     private $comment;
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @Groups({"comments_add_response"})
+     * @Groups({"comments_add_response","movie_read"})
      */
     private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"movie_read"})
      */
     private $user;
 
