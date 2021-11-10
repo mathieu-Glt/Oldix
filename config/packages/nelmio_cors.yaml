@@ -12,7 +12,13 @@ nelmio_cors:
             allow_headers: ['Content-Type']
             expose_headers: ['Link']
             max_age: 3600
-
+        
+        '^\/api\/register':
+            allow_methods: ['OPTIONS', 'POST']
+            allow_headers: ['Content-Type']
+            expose_headers: ['Link']
+            max_age: 3600
+            
         '^\/api\/list':
             allow_methods: ['GET', 'POST','OPTIONS', 'DELETE']
             allow_headers: ['Authorization','Content-Type']
