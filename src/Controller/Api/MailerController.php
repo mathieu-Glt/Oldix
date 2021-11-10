@@ -18,7 +18,7 @@ class MailerController extends AbstractController
     {
         $datas = json_decode($request->getContent());
         $userEmail = $datas->email;
-        $userSubject = $datas->subject;
+        $userSubject = $datas->object;
         $userBody = $datas->content;
         $email = (new Email())
         ->from($userEmail)
