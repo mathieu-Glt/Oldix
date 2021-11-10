@@ -5,6 +5,8 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Entity\Language;
 use App\Repository\UserRepository;
+use ContainerCcMi9aj\getLexikJwtAuthentication_GenerateTokenCommandService;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,7 +29,7 @@ class SecurityController extends AbstractController
      * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function registration(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordEncoder, UserRepository $userRepository): JsonResponse
+    public function registration(JWTTokenManagerInterface $jwt, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordEncoder, UserRepository $userRepository): JsonResponse
     {
         $user = $serializer->deserialize($request->getContent(), User::class, 'json');
 
@@ -60,9 +62,11 @@ class SecurityController extends AbstractController
         $user->setPassword($passwordEncoder->hashPassword($user, $user->getPassword()));
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
-        $em->flush();
+        $em->flush();        
+        $jwtManager = $jwt->create($user);
         $jsonResponse = [
             'message' => 'User created',
+            'token'=>$jwtManager,
             'code' => Response::HTTP_CREATED
         ];
         return $this->json($jsonResponse, Response::HTTP_CREATED);
