@@ -55,6 +55,7 @@ class MovieController extends AbstractController
             $movie->setSynopsis($movieSynopsis);
             $movie->setPictureUrl($moviePoster);
             $movie->setSlug($movieNameSlugged);
+            $movie->setOwner($this->getUser());
             $entityManager->persist($movie);
             $entityManager->flush();
             $this->addFlash('success', "New movie added");
