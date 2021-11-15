@@ -40,15 +40,9 @@
 					</tr>
 				{% endfor %}
 			</tbody>
-			<tfoot>
-				<tr>
-					<th class="navigation">
-						{{ knp_pagination_render(pagination) }}
-					</th>
-				</tr>
-			</tfoot>
-
 		</table>
-
+		<div class="row navigation d-flex justify-content-center mt-4">
+    {{ knp_pagination_render(pagination) }}
+		</div>
 	</div>
 {% endblock %}

@@ -3,11 +3,12 @@
 
 {% block body %}
 	<div class="container">
+	<h1 class="text-center mt-2"> Edit language </h1>
 		<div class="example-wrapper">
-			{{form_start(form)}}
-			{{form_row(form.name)}}
-			<div class="row">
-				<div class="col">
+			<div class="row mt-5 d-flex justify-content-center">
+				<div class="col-4">
+					{{form_start(form)}}
+					{{form_row(form.name)}}
 					<button class="btn btn-primary">Submit</button>
 				</div>
 			</div>

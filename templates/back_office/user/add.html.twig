@@ -3,9 +3,16 @@
 
 {% block body %}
 
-<div class="container">
-<div class="example-wrapper">
-    {{form(form)}}
-</div>
-</div>
-{% endblock %}
+	<div class="container">
+		<div class="example-wrapper">
+			<h1 class="mt-2 text-center">
+				Add a new user
+			</h1>
+			<div class="row d-flex justify-content-center">
+				<div class="col-4">
+					{{form(form)}}
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endblock %}

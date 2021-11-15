@@ -27,7 +27,7 @@ class UserType extends AbstractType
             ])
             ->add('password')
             ->add('pseudo')
-            ->add("Validate", SubmitType::class)
+            ->add("Submit", SubmitType::class)
         ;
     }
 

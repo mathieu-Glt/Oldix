@@ -9,13 +9,13 @@
 			<h1 class="text-center display-4">Are you lost ?</h1>
 			<p class="lead text-center">Welcome to the back office of the oldflix app. You can use this back-office :
 				<ul class="lead">
-					<li>Either to make api request,</li>
+					<li>Either to make api requests,</li>
 					<li>or access to the back-office of the app.</li>
 				</ul>
 			</p>
 		</div>
 	</div>
-	<div class="container-fluid">
+	<div class="container">
 		<h2 class="text-center">Redirection</h2>
 		<div class="row d-flex justify-content-around">
 			<div class="col-3">
@@ -35,276 +35,358 @@
 				</div>
 			</div>
 		</div>
+	</div>
 		<h2 class="mt-5 text-center">API Documentation</h2>
-		<div class="row">
-			<div class="col-12">
-				<p class="text-center">
-					You can use the API with the following endpoints</p>
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-						<th class="text-center" scope="col">t</th>
-							<th class="text-center" scope="col">Method</th>
-							<th class="text-center" scope="col">Auth</th>
-							<th class="text-center" scope="col">Route</th>
-							<th class="text-center" scope="col">Body</th>
-							<th class="text-center" scope="col">Description</th>
-							<th class="text-center" scope="col">Example links</th>                        
-						</tr>
-					</thead>
-					<tbody class="text-center">
-						<tr class="text-center">
-							<td rowspan="2">User</td>
-							<td>POST</td>
-							<td>None</td>
-							<td>/api/register</td>
-							<td>
-							<pre class="mb-0">
+		<p class="text-center">
+			You can use the API with the following endpoints</p>
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center" scope="col">Entity</th>
+					<th class="text-center" scope="col">Method</th>
+					<th class="text-center" scope="col">Auth</th>
+					<th class="text-center" scope="col">Route</th>
+					<th style="width:20px" class="text-center" scope="col">Body</th>
+					<th class="text-center" scope="col">Description</th>
+					<th class="text-center" scope="col">Example links</th>
+				</tr>
+			</thead>
+			<tbody class="text-center align-middle">
+				<tr class="text-center">
+					<td class="align-middle" rowspan="2">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">User</div>
+					</td>
+					<td>
+						<div class="method post mb-0">POST</div>
+					</td>
+					<td>None</td>
+					<td>/api/register</td>
+					<td>
+						<pre class="mb-0">
 {
 	"username":"string",
 	"password": "string",
 	"pseudo": "string"
 }
 							</pre>
-							</td>
-							<td>POST User egistration</td>
-						</tr>		
-						<tr>
-							<td>POST</td>
-							<td>None</td>
-							<td>/api/login_check</td>
-							<td>
-							<pre class="mb-0">
+					</td>
+					<td>POST User registration</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="method post mb-0">POST</div>
+					</td>
+					<td>None</td>
+					<td>/api/login_check</td>
+					<td>
+						<pre class="mb-0">
 {
 	"username":"string",
 	"password": "string"
 }
 							</pre>
-							</td>
-							<td>POST login</td>
-						</tr>	
-						<tr class="text-center">
-							<td rowspan="7">
-								Movie
-							</td>
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/movies/research</td>
-							<td>None</td>
-							<td>GET movies with a research query</td>
-                            <td><a target="_blank" href="{{path('api_movies_research')}}?q=maniac">Example link</a></td>
-						</tr>
-						<tr class="text-center">
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/movies/random</td>
-							<td>None</td>
-							<td>GET a random movie</td>
-                            <td><a target="_blank" href="{{path('api_movies_random')}}">Example link</a></td>
-						</tr>
-						<tr class="text-center">
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/movies/randoms</td>
-							<td>None</td>
-							<td>GET 15 random movies</td>
-                            <td><a target="_blank" href="{{path('api_movies_randoms')}}">Example link</a></td>
-						</tr>
-						<tr class="text-center">
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/movies/{slug}</td>
-							<td>None</td>
-							<td>GET details about a movie</td>
-                            <td><a target="_blank" href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a></td>
-						</tr>
-						<tr class="text-center">
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/movies/collection/{year}/{year}</td>
-							<td>None</td>
-							<td>GET movie from a year to another year</td>
-                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
-						</tr>
-						<tr class="text-center">
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/movies/allMovies</td>
-							<td>None</td>
-							<td>GET all movies</td>
-                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
-						</tr>	
-						<tr class="text-center">
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/movies/topTen</td>
-							<td>None</td>
-							<td>GET top rated movie</td>
-                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
-						</tr>
-						<tr class="text-center">
-							<td rowspan="3">
-								Category
-							</td>
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/categories</td>
-							<td>None</td>
-							<td>GET all categories</td>
-                            <td><a target="_blank" href="{{path('api_category_browse')}}">Example link</a></td>
-						</tr>
-						<tr class="text-center">
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/categories/{slug}</td>
-							<td>None</td>
-							<td>GET all movies related to a category</td>
-                            <td><a target="_blank" href="{{path('api_category_read',{'slug':'horror'})}}">Example link</a></td>
-						</tr>
-						<tr class="text-center">
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/categories/{slug}/preview</td>
-							<td>None</td>
-							<td>GET 10 movies related to a category</td>
-                            <td><a target="_blank" href="{{path('api_category_preview',{'slug':'horror'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td rowspan="2">
-								Thematic
-							</td>
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/thematics</td>
-							<td>None</td>
-							<td>GET all thematics</td>
-                            <td><a target="_blank" href="/api/thematics">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/thematics/{slug}</td>
-							<td>None</td>
-							<td>GET all movies related to a thematic</td>
-                            <td><a target="_blank" href="{{path('api_thematic_read',{'slug':'charlie-chaplin'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td rowspan="2">
-								Language
-							</td>
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/languages</td>
-							<td>None</td>
-							<td>GET languages</td>
-                            <td><a target="_blank" href="{{path('api_languages_browse')}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/languages/{slug}</td>
-							<td>None</td>
-							<td>GET all movies related to a language</td>
-                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td rowspan="2">
-								Mood
-							</td>
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/moods</td>
-							<td>None</td>
-							<td>GET all moods</td>
-                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td>GET</td>
-							<td>None</td>
-							<td>/api/moods/{slug}</td>
-							<td>None</td>
-							<td>GET movie from a mood</td>
-                            <td><a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a></td>
-						</tr>
-						<tr>
-							<td class="align-self-center" rowspan="2">
-								Comment
-							</td>
-							<td>POST</td>
-							<td>Bearer token</td>
-							<td>/api/movies/{slug}/comments/add</td>
-							<td>
-							<pre class="mb-0">
+					</td>
+					<td>POST login</td>
+				</tr>
+				<tr class="text-center">
+					<td class="align-middle" rowspan="7">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">Movie</div>
+					</td>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/movies/research</td>
+					<td>None</td>
+					<td>GET movies with a research query</td>
+					<td>
+						<a target="_blank" href="{{path('api_movies_research')}}?q=maniac">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/movies/random</td>
+					<td>None</td>
+					<td>GET a random movie</td>
+					<td>
+						<a target="_blank" href="{{path('api_movies_random')}}">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/movies/randoms</td>
+					<td>None</td>
+					<td>GET 15 random movies</td>
+					<td>
+						<a target="_blank" href="{{path('api_movies_randoms')}}">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/movies/{slug}</td>
+					<td>None</td>
+					<td>GET details about a movie</td>
+					<td>
+						<a target="_blank" href="{{path('api_movies_read',{'slug':'maniac'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/movies/collection/{year}/{year}</td>
+					<td>None</td>
+					<td>GET movie from a year to another year</td>
+					<td>
+						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/movies/allMovies</td>
+					<td>None</td>
+					<td>GET all movies</td>
+					<td>
+						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/movies/topTen</td>
+					<td>None</td>
+					<td>GET top rated movie</td>
+					<td>
+						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td class="align-middle" rowspan="3">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">Category</div>
+					</td>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/categories</td>
+					<td>None</td>
+					<td>GET all categories</td>
+					<td>
+						<a target="_blank" href="{{path('api_category_browse')}}">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/categories/{slug}</td>
+					<td>None</td>
+					<td>GET all movies related to a category</td>
+					<td>
+						<a target="_blank" href="{{path('api_category_read',{'slug':'horror'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr class="text-center">
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/categories/{slug}/preview</td>
+					<td>None</td>
+					<td>GET 10 movies related to a category</td>
+					<td>
+						<a target="_blank" href="{{path('api_category_preview',{'slug':'horror'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle" rowspan="2">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">Thematic</div>
+					</td>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/thematics</td>
+					<td>None</td>
+					<td>GET all thematics</td>
+					<td>
+						<a target="_blank" href="/api/thematics">Example link</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/thematics/{slug}</td>
+					<td>None</td>
+					<td>GET all movies related to a thematic</td>
+					<td>
+						<a target="_blank" href="{{path('api_thematic_read',{'slug':'charlie-chaplin'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle" rowspan="2">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">Language</div>
+					</td>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/languages</td>
+					<td>None</td>
+					<td>GET languages</td>
+					<td>
+						<a target="_blank" href="{{path('api_languages_browse')}}">Example link</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/languages/{slug}</td>
+					<td>None</td>
+					<td>GET all movies related to a language</td>
+					<td>
+						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle" rowspan="2">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">Mood</div>
+					</td>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/moods</td>
+					<td>None</td>
+					<td>GET all moods</td>
+					<td>
+						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>None</td>
+					<td>/api/moods/{slug}</td>
+					<td>None</td>
+					<td>GET movie from a mood</td>
+					<td>
+						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle" rowspan="2">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">Comment</div>
+					</td>
+					<td>
+						<div class="method post mb-0">POST</div>
+					</td>
+					<td>Bearer token</td>
+					<td>/api/movies/{slug}/comments/add</td>
+					<td>
+						<pre class="mb-0">
 {
 	"comment":"string"
 }
 							</pre>
-							</td>
-							<td>POST a comment</td>
-						</tr>
-						<tr>
-							<td>DELETE</td>
-							<td>Bearer token</td>
-							<td>/api/movies/{slug}/comments/{id}/delete</td>
-							<td>None</td>
-							<td>DELETE a comment</td>
-						</tr>
-						<tr>
-							<td rowspan="3">
-								List
-							</td>
-							<td>POST</td>
-							<td>Bearer token</td>
-							<td>/api/list/add</td>
-							<td>
-							<pre class="mb-0">
+					</td>
+					<td>POST a comment</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="method delete mb-0">DELETE</div>
+					</td>
+					<td>Bearer token</td>
+					<td>/api/movies/{slug}/comments/{id}/delete</td>
+					<td>None</td>
+					<td>DELETE a comment</td>
+				</tr>
+				<tr>
+					<td class="align-middle" rowspan="3">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">List</div>
+					</td>
+					<td>
+						<div class="method post mb-0">POST</div>
+					</td>
+					<td>Bearer token</td>
+					<td>/api/list/add</td>
+					<td>
+						<pre class="mb-0">
 {
 	"movie":"string"
 }
 							</pre>
-							</td>
-							<td>POST a movie on the user's favorite list</td>
-						</tr>	
-						<tr>
-							<td>DELETE</td>
-							<td>Bearer token</td>
-							<td>/api/list/delete/{slug}</td>
-							<td>None</td>
-							<td>DELETE a movie on the user's favorite list</td>
-						</tr>	
-						<tr>
-							<td>GET</td>
-							<td>Bearer token</td>
-							<td>/api/list</td>
-							<td>None</td>
-							<td>GET the user's favorite list</td>
-						</tr>
-						<tr>
-							<td rowspan="2">
-								Rate
-							</td>
-							<td>POST</td>
-							<td>Bearer token</td>
-							<td>/api/movies/{slug}/rates/add</td>
-							<td>
-							<pre class="mb-0">
+					</td>
+					<td>POST a movie on the user's favorite list</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="method delete mb-0">DELETE</div>
+					</td>
+					<td>Bearer token</td>
+					<td>/api/list/delete/{slug}</td>
+					<td>None</td>
+					<td>DELETE a movie on the user's favorite list</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="method get mb-0">GET</div>
+					</td>
+					<td>Bearer token</td>
+					<td>/api/list</td>
+					<td>None</td>
+					<td>GET the user's favorite list</td>
+				</tr>
+				<tr>
+					<td class="align-middle" rowspan="2">
+						<div style="font-weight:bold;font-size:20px" class="align-middle">Rate</div>
+					</td>
+					<td>
+						<div class="method post mb-0">POST</div>
+					</td>
+					<td>Bearer token</td>
+					<td>/api/movies/{slug}/rates/add</td>
+					<td>
+						<pre class="mb-0">
 {
 	"rate":int
 }
 							</pre>
-							</td>
-							<td>POST a rate</td>
-						</tr>
-						<tr>
-							<td>DELETE</td>
-							<td>Bearer token</td>
-							<td>/api/movies/{slug}/rates/{id}/delete</td>
-							<td>None</td>
-							<td>DELETE a rate</td>
-						</tr>								
-					</tbody>
-				</table>
-			</div>
-		</div>
+					</td>
+					<td>POST a rate</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="method delete mb-0">DELETE</div>
+					</td>
+					<td>Bearer token</td>
+					<td>/api/movies/{slug}/rates/{id}/delete</td>
+					<td>None</td>
+					<td>DELETE a rate</td>
+				</tr>
+			</tbody>
+		</table>
+
 	</div>
 {% endblock %}

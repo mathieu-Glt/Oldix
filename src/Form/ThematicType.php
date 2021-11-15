@@ -17,7 +17,7 @@ class ThematicType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Name of the thematic'
             ])
-            ->add('Valider', SubmitType::class);
+            ->add('Submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,0 +1,22 @@
+.method{
+    padding: 8px;
+    border-radius: 8px;
+    color:white;
+    font-weight: 700;
+}
+
+.get{
+    background-color: #2279E8;
+}
+
+.post{
+    background-color: #0CBE1C;
+}
+
+.patch{
+    background-color: #ECDB30;
+}
+
+.delete{
+    background-color: #DA4D23;
+}

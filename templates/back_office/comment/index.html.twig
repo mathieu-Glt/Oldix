@@ -11,6 +11,7 @@
 					<th class="text-center" scope="col">Date</th>
 					<th class="text-center" scope="col">Username</th>
 					<th class="text-center" scope="col">Movie</th>
+					<th class="text-center" scope="col">Comment</th>				
 					<th class="text-center" scope="col">Action</th>
 				</tr>
 			</thead>
@@ -19,17 +20,21 @@
 					<tr>
 						<th class="text-center" scope="row">{{comment.id}}</th>
 						<td class="text-center">{{comment.createdAt|date('d/m/Y')}}</td>
-                        <td class="text-center">{{comment.user.username}}</td>
-                        <td class="text-center">{{comment.movie.name}}</td>
+						<td class="text-center">{{comment.user.username}}</td>
+						<td class="text-center">{{comment.movie.name}}</td>
+						<td class="text-center">{{comment.comment}}</td>	
 						<td class="d-flex justify-content-center">
-                            <a class="d-block btn btn-danger" href="{{path("backoffice_comments_delete", {"id": comment.id})}}">
-                                Delete
-                            </a>
+							<a class="d-block btn btn-danger" href="{{path("backoffice_comments_delete", {"id": comment.id})}}">
+								Delete
+							</a>
 						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+		<div class="row navigation d-flex justify-content-center mt-4">
+			{{ knp_pagination_render(comments) }}
+		</div>
 	</div>
 
 

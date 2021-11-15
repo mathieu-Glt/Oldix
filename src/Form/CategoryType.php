@@ -17,7 +17,7 @@ class CategoryType extends AbstractType
             ->add('name',TextType::class,[
                 'label'=>'Name of the category'
             ])
-            ->add('Create', SubmitType::class)
+            ->add('Submit', SubmitType::class)
         ;
     }
 
