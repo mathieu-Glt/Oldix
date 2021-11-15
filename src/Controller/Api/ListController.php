@@ -116,4 +116,38 @@ class ListController extends AbstractController
 
         return $this->json($userFavoriteMovies, Response::HTTP_OK, [], ['groups' => "list_movie_show"]);
     }
+
+    /**
+     * @Route("/check/{slug}")
+     */
+    public function check(string $slug, MovieRepository $movieRepository)
+    {
+        $user = $this->getUser();
+        if (!$user){
+            $jsonResponse = [
+                'message' => 'user not connected',
+                'code' => Response::HTTP_UNAUTHORIZED
+            ];
+
+            return $this->json($jsonResponse, Response::HTTP_UNAUTHORIZED);
+        }
+        $movie = $movieRepository->findOneBySlug($slug);
+        $moviesList = $user->getFavoriteMovies();
+        $movieListArray = $moviesList->toArray();
+        if (in_array($movie, $movieListArray)) {
+            $jsonResponse = [
+                'message' => 'movie allready in the list',
+                'code' => Response::HTTP_CONFLICT
+            ];
+
+            return $this->json($jsonResponse, Response::HTTP_CONFLICT);
+        } else {
+            $jsonResponse = [
+                'message' => 'movie not in the list',
+                'code' => Response::HTTP_OK
+            ];
+
+            return $this->json($jsonResponse, Response::HTTP_OK);
+        }
+    }
 }
