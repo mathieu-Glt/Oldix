@@ -37,6 +37,7 @@ class UserController extends AbstractController
         $newPassword = json_decode($request->getContent(), true)["password"];
         $userToChange = $userRepository->findOneById($id);
         if($newEmail !== $userToChange->getEmail()){
+            // chercher dans la bdd si l'email existe deja
             $userToChange->setEmail($newEmail);
         }
         if($newPseudo !== $userToChange->getPseudo()){
