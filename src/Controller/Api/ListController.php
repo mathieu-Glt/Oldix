@@ -137,14 +137,12 @@ class ListController extends AbstractController
         if (in_array($movie, $movieListArray)) {
             $jsonResponse = [
                 'message' => 'true',
-                'code' => Response::HTTP_CONFLICT
             ];
 
             return $this->json($jsonResponse, Response::HTTP_CONFLICT);
         } else {
             $jsonResponse = [
                 'message' => 'false',
-                'code' => Response::HTTP_OK
             ];
 
             return $this->json($jsonResponse, Response::HTTP_OK);
