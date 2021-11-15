@@ -136,14 +136,14 @@ class ListController extends AbstractController
         $movieListArray = $moviesList->toArray();
         if (in_array($movie, $movieListArray)) {
             $jsonResponse = [
-                'message' => 'movie allready in the list',
+                'message' => 'true',
                 'code' => Response::HTTP_CONFLICT
             ];
 
             return $this->json($jsonResponse, Response::HTTP_CONFLICT);
         } else {
             $jsonResponse = [
-                'message' => 'movie not in the list',
+                'message' => 'false',
                 'code' => Response::HTTP_OK
             ];
 
