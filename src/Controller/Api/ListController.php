@@ -139,7 +139,7 @@ class ListController extends AbstractController
                 'message' => 'true',
             ];
 
-            return $this->json($jsonResponse, Response::HTTP_CONFLICT);
+            return $this->json($jsonResponse, Response::HTTP_OK);
         } else {
             $jsonResponse = [
                 'message' => 'false',
