@@ -38,12 +38,23 @@ class MainController extends AbstractController
         $lastCategories = $categoryRepository->findBy([], ['id' => 'DESC'], 5);
         $lastUsers = $userRepository->findBy([], ['id' => 'DESC'], 5);
         $lastComments = $commentRepository->findBy([], ['id' => 'DESC'], 5);
-        
+
         return $this->render('back_office/movie/index.html.twig', [
             'lastMovies' => $lastMovies,
             'lastCategories' => $lastCategories,
             'lastUsers' => $lastUsers,
             'lastComments' => $lastComments
         ]);
+    }
+
+    /**
+     * Display home page
+     * 
+     * @Route("/team", name="team")
+     * @return Response
+     */
+    public function team()
+    {
+        return $this->render('back_office/main/team.html.twig');
     }
 }

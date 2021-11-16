@@ -7,35 +7,5 @@ nelmio_cors:
         expose_headers: ['Link']
         max_age: 3600
     paths:
-        '^\/api\/login_check':
-            allow_methods: ['OPTIONS', 'POST']
-            allow_headers: ['Content-Type']
-            expose_headers: ['Link']
-            max_age: 3600
-        
-        '^\/api\/register':
-            allow_methods: ['OPTIONS', 'POST']
-            allow_headers: ['Content-Type']
-            expose_headers: ['Link']
-            max_age: 3600
-
-        '^\/api\/list':
-            allow_methods: ['GET', 'POST','OPTIONS', 'DELETE']
-            allow_headers: ['Authorization','Content-Type']
-            expose_headers: ['Link']
-            max_age: 3600
-
-        '^\/api\/mail':
-            allow_methods: ['OPTIONS', 'POST']
-            allow_headers: ['Content-Type']
-            expose_headers: ['Link']
-            max_age: 3600
-        
-        '^\/api':
-            allow_methods: ['GET', 'OPTIONS']
-            allow_headers: ['Content-Type']
-            expose_headers: ['Link']
-            max_age: 3600
-
-
+        '^\/api\/login_check': null
             

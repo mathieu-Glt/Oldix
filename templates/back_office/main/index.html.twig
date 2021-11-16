@@ -89,7 +89,7 @@
 					<td>POST login</td>
 				</tr>
 				<tr class="text-center">
-					<td class="align-middle" rowspan="7">
+					<td class="align-middle" rowspan="6">
 						<div style="font-weight:bold;font-size:20px" class="align-middle">Movie</div>
 					</td>
 					<td>
@@ -144,23 +144,11 @@
 						<div class="method get mb-0">GET</div>
 					</td>
 					<td>None</td>
-					<td>/api/movies/collection/{year}/{year}</td>
-					<td>None</td>
-					<td>GET movie from a year to another year</td>
-					<td>
-						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
-					</td>
-				</tr>
-				<tr class="text-center">
-					<td>
-						<div class="method get mb-0">GET</div>
-					</td>
-					<td>None</td>
 					<td>/api/movies/allMovies</td>
 					<td>None</td>
 					<td>GET all movies</td>
 					<td>
-						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+						<a target="_blank" href="/api/movies/allMovies">Example link</a>
 					</td>
 				</tr>
 				<tr class="text-center">
@@ -172,7 +160,7 @@
 					<td>None</td>
 					<td>GET top rated movie</td>
 					<td>
-						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+						<a target="_blank" href="/api/movies/topTen">Example link</a>
 					</td>
 				</tr>
 				<tr class="text-center">
@@ -280,7 +268,7 @@
 					<td>None</td>
 					<td>GET all moods</td>
 					<td>
-						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+						<a target="_blank" href="/api/moods">Example link</a>
 					</td>
 				</tr>
 				<tr>
@@ -292,7 +280,7 @@
 					<td>None</td>
 					<td>GET movie from a mood</td>
 					<td>
-						<a target="_blank" href="{{path('api_languages_read',{'slug':'french'})}}">Example link</a>
+						<a target="_blank" href="/api/moods/sad">Example link</a>
 					</td>
 				</tr>
 				<tr>

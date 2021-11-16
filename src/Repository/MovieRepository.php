@@ -72,7 +72,9 @@ class MovieRepository extends ServiceEntityRepository
         return $this
             ->createQueryBuilder('m')
             ->andWhere('m.name LIKE :query')
-            ->setParameter(':query', '%' . $query . '%')
+            ->orWhere('m.realisator LIKE :query')
+            ->orWhere('m.actors LIKE :query')
+            ->setParameter(':query',$query . '%')
             ->getQuery()
             ->getResult();
     }
