@@ -16,15 +16,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/", name="browse", methods={"GET"})
+     * @Route("/{tier}", name="browse", methods={"GET"})
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function browse(CategoryRepository $categoryRepository): Response
+    public function browse(string $tier, CategoryRepository $categoryRepository): Response
     {
         $categories = $categoryRepository->findAll();
-
-        return $this->json($categories, Response::HTTP_OK, [], ['groups' => 'category_browse']);
+        $result = [];
+        if($tier == "1"){
+            $result[] = $categories[0];
+            $result[] = $categories[1];
+            $result[] = $categories[2];
+        } elseif ($tier == "2") {
+            $result[] = $categories[3];
+            $result[] = $categories[4];
+            $result[] = $categories[5];  
+        } elseif ($tier == "3"){
+            $result[] = $categories[6];
+            $result[] = $categories[7];
+            $result[] = $categories[8];
+        }
+        return $this->json($result, Response::HTTP_OK, [], ['groups' => 'category_browse']);
     }
 
     /**
