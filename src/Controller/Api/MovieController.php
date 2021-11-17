@@ -14,6 +14,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class MovieController extends AbstractController
 {
+
+    /**
+     * 
+     * @Route("/banner/1", name="banner", methods={"GET"})
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function banner(MovieRepository $movieRepository): Response
+    {
+        $bannerMovie = $movieRepository->findOneById(30);
+        return $this->json($bannerMovie, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+    /**
+     * 
+     * @Route("/banner/2", name="banner2", methods={"GET"})
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function banner2(MovieRepository $movieRepository): Response
+    {
+        $bannerMovie = $movieRepository->findOneById(135);
+        return $this->json($bannerMovie, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
     /**
      * 
      * @Route("/research", name="research", methods={"GET"})
@@ -55,6 +80,7 @@ class MovieController extends AbstractController
 
         return $this->json($randomMovie, Response::HTTP_OK, [], ['groups' => 'movie_read']);
     }
+
 
     /**
      * 
