@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/{tier}", name="browse", methods={"GET"})
+     * @Route("/banner/{tier}", name="browse", methods={"GET"})
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
