@@ -41,7 +41,7 @@ class MovieController extends AbstractController
 
     /**
      * 
-     * @Route("/banner/home", name="banner2", methods={"GET"})
+     * @Route("/banner/home", name="banner", methods={"GET"})
      * @param MovieRepository $movieRepository
      * @return Response
      */
