@@ -41,6 +41,18 @@ class MovieController extends AbstractController
 
     /**
      * 
+     * @Route("/banner/home", name="banner2", methods={"GET"})
+     * @param MovieRepository $movieRepository
+     * @return Response
+     */
+    public function bannerHome(MovieRepository $movieRepository): Response
+    {
+        $bannerMovie = $movieRepository->findOneById(139);
+        return $this->json($bannerMovie, Response::HTTP_OK, [], ['groups' => 'movie_read']);
+    }
+
+    /**
+     * 
      * @Route("/research", name="research", methods={"GET"})
      * @param MovieRepository $movieRepository
      * @param Request $request
