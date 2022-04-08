@@ -1,15 +1,5 @@
 
-<style>
-mark{
-    color:red;
-}
-h1 {
-    color: #FFE933;
-}
-.title {
-    background: #7F8C8D ;
-}
-</style>
+
 
 <div class= "title">
 <h1>Projet-Oldix</h1>
